@@ -22,12 +22,16 @@ public class RPlayerMove : MonoBehaviour
     // y 속력
     float yVelocity;
 
+    // 벽 점프 시간 변수 추가
+    private float wallJumpTime = 0.4f;
+
     // 벽 점프
-    public bool isWall;
+    public bool isWall = false;
 
     Vector3 dir;
     public float currentTime;
     public float MoveTime;
+
 
 
     // Start is called before the first frame update
@@ -40,6 +44,7 @@ public class RPlayerMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         // W,A,S,D 키를 누르면 앞뒤좌우로 움직이고 싶다.
 
         // 1. 사용자의 입력을 받자.
@@ -89,45 +94,62 @@ public class RPlayerMove : MonoBehaviour
         //그 방향으로 움직이자
         //transform.position += velocity * Time.deltaTime;
         cc.Move(dir * speed * Time.deltaTime);
+
+        if (cc.isGrounded)
+        {
+            isWall = false;
+        }
     }
 
 
+
+    // 벽점프
+
+    private float wallJumpPower = 5f;
+    private float wallJumpSpeed = 3f;
     private void UpdateWallJump()
     {
-        // 이동 방향이 없으면 함수를 종료합니다.
-        if (dir.magnitude == 0)
         {
-            return;
-        }
+            // 벽에 붙어 있는지 확인할 Raycast 설정
+            // 시작 위치 
+            Vector3 raycast = transform.position + Vector3.up * 0.1f;
 
-        // 점프 시간과 속도를 초기화 합니다.
-        MoveTime = 0.4f;
-        speed = 3f;
+            // 충돌 검사 거리 
+            float castDistance = 0.5f;
 
-        // 점프할 방향을 계산합니다. 기본 이동 방향의 반대 방향으로 2배만큼 이동합니다.
-        Vector3 newdir = -dir * 2;
+            // 바닥 레이어 마스크 설정
+            LayerMask groundLayerMask = LayerMask.GetMask("Ground");
 
-        // 점프할 방향에 위 방향으로 점프를 더합니다.
-        Vector3 updir = Vector3.up * jumpPower;
+            // Raycast 또는 SphereCast를 사용하여 충돌 검사를 수행합니다.
+            bool isTouchingWall = Physics.Raycast(raycast, transform.forward, castDistance, groundLayerMask);
 
-        // characterController를 이용해 점프 방향으로 이동합니다
-        cc.Move((newdir + updir) * Time.deltaTime * speed);
+            // 벽에 붙어 있으면 벽 점프 로직을 수행합니다.
+            if (isTouchingWall)
+            {
+                // 이동 방향이 없으면 함수를 종료합니다.
+                if (dir.magnitude == 0)
+                {
+                    return;
+                }
 
-        // 새로운 방향으로 플레이어를 회전합니다.
-        if (newdir.magnitude == 0) return;
-        else
-        {
-            transform.forward = newdir;
-        }
+                // 벽점프 시간과 속도를 초기화 합니다.
+                float wallJumpTimer = 0f;
+                float currentWallJumpSpeed = wallJumpSpeed;
 
-        // 이동 시간을 기록합니다.
-        currentTime += Time.deltaTime;
+                // 점프할 방향을 계산합니다. 기본 이동 방향의 반대 방향으로 2배만큼 이동합니다.
+                Vector3 newdir = -dir.normalized * 2;
 
-        // 이동 시간이 MoveTime 보다 크거나 같으면 현재 시간을 초기화 합니다.
-        if (currentTime >= MoveTime)
-        {
-            currentTime = 0;
+                // charactercontroller를 이용해서 점프방향으로 이동합니다.
+                // 새로운 방향으로 플레이어를 회전합니다.
+                if (newdir.magnitude == 0) return;
+                else
+                {
+                    transform.forward = newdir;
+                }
+            }
         }
     }
 }
+
+
 
