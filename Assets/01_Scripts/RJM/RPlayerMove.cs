@@ -1,155 +1,132 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class RPlayerMove : MonoBehaviour
 {
-
-    // ¼Ó·Â
-    public float speed = 5;
-
-    public int maxJumps = 1;
-    private int jumpCount = 0;
-    private bool isJumping = false;
-
-    // character controller ´ãÀ» º¯¼ö
-    CharacterController cc;
-
-    // Á¡ÇÁÆÄ¿ö
-    float jumpPower = 5;
-    // Áß·Â
-    float gravity = -9.81f;
-    // y ¼Ó·Â
-    float yVelocity;
-
-    // º® Á¡ÇÁ ½Ã°£ º¯¼ö Ãß°¡
-    private float wallJumpTime = 0.4f;
-
-    // º® Á¡ÇÁ
-    public bool isWall = false;
+    Rigidbody rb;
 
     Vector3 dir;
+
+    public float speed = 5;
+    public float jumpPower = 5;
+
+    //ìµœëŒ€ ì í”„ ì‹œê°„
+    public float maxJumpTime = 1.0f;
+
+    //ìµœëŒ€ ì í”„ ë†’ì´
+    public float maxJumpHeight = 3.0f;
+
+    //ì í”„ë¥¼ í•œ í˜„ì¬ ì‹œê°„
     public float currentTime;
-    public float MoveTime;
 
-
+    //ì í”„ì˜ ë†’ì´ ì²´í¬
+    public bool jumpTime = true;
 
     // Start is called before the first frame update
     void Start()
     {
-        //character controller °¡Á®¿ÀÀÚ
-        cc = GetComponent<CharacterController>();
+        rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
-    void Update()
+    void Update()  
     {
-
-        // W,A,S,D Å°¸¦ ´©¸£¸é ¾ÕµÚÁÂ¿ì·Î ¿òÁ÷ÀÌ°í ½Í´Ù.
-
-        // 1. »ç¿ëÀÚÀÇ ÀÔ·ÂÀ» ¹ŞÀÚ.
         float h = Input.GetAxis("Horizontal");
-        float v = Input.GetAxis("Vertical");
 
-        // 2. ¹æÇâÀ» ¸¸µç´Ù.
-        //ÁÂ¿ì
-        Vector3 dirH = transform.right * h;
-        //À§¾Æ·¡
-        Vector3 dirV = transform.up * v;
-        //ÃÖÁ¾
-        Vector3 dir = dirH + dirV;
-
-        //Vector3 dir = h * Vector3.right + v * Vector3.up;
-
+        dir = Vector3.right * h;
         dir.Normalize();
 
-        Vector3 velocity = dir * speed;
-
-        //¸¸¾à¿¡ ¶¥¿¡ ´ê¾ÆÀÖ´Ù¸é
-        if (cc.isGrounded == true)
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            //yVelocity¸¦ 0À¸·Î ÇÏÀÚ
-            yVelocity = 0;
-
-            jumpCount = 0;
+            //rb.AddForce(Vector3.forward * 1);            
+            //rb.velocity = Vector3.forward * 2;
+            rb.AddForce(new Vector3(1, 0, 0), ForceMode.VelocityChange);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            rb.AddForce(new Vector3(-2, 0, 0), ForceMode.VelocityChange);
+        }
+        // ì í”„ ì…ë ¥ì„ ë°›ìœ¼ë©´ ì í”„ ì‹œì‘
+       
+        if (Input.GetKey(KeyCode.Space) && IsGround())
+        {
+            jumpTime = true;
+            currentTime = 0;
+            jumpPower = 2;
         }
 
-        // ½ºÆäÀÌ½º¹Ù¸¦ ´©¸£¸é Á¡ÇÁÇÑ´Ù.
-        if (Input.GetKeyDown(KeyCode.Space))
+        // ì í”„ ì…ë ¥ì„ ë–¼ë©´ ì í”„ ì¤‘ì§€
+        if (Input.GetKeyUp(KeyCode.Space))
         {
-            if (jumpCount < maxJumps)
-            {
-                //yVelocity¿¡ jumpPower ¸¦ ¼ÂÆÃ
-                yVelocity = jumpPower;
-                jumpCount++;
-            }
-        }
-
-        //yVelocity ¸¦ Áß·Â¸¸Å­ °¨¼Ò½ÃÅ°ÀÚ
-        yVelocity += gravity * Time.deltaTime;
-
-        //yVelocity °ªÀ» dirÀÇ y °ª¿¡ ¼ÂÆÃ
-        dir.y = yVelocity;
-
-        //±× ¹æÇâÀ¸·Î ¿òÁ÷ÀÌÀÚ
-        //transform.position += velocity * Time.deltaTime;
-        cc.Move(dir * speed * Time.deltaTime);
-
-        if (cc.isGrounded)
-        {
-            isWall = false;
+            jumpTime = false;
         }
     }
 
-
-
-    // º®Á¡ÇÁ
-
-    private float wallJumpPower = 5f;
-    private float wallJumpSpeed = 3f;
-    private void UpdateWallJump()
+    private void FixedUpdate()
     {
+        //ë§Œì•½ì— ë•…ì— ë‹¿ì•„ìˆë‹¤ë©´
+        if (IsGround() == true)
         {
-            // º®¿¡ ºÙ¾î ÀÖ´ÂÁö È®ÀÎÇÒ Raycast ¼³Á¤
-            // ½ÃÀÛ À§Ä¡ 
-            Vector3 raycast = transform.position + Vector3.up * 0.1f;
+            //í˜„ì¬ ì†ë„
+            Vector3 currVelocity = rb.velocity;
+            //ì›€ì§ì—¬ì•¼ í•˜ëŠ” ì†ë„
+            Vector3 targetVelocity = dir * speed;
+            rb.AddForce(targetVelocity - currVelocity, ForceMode.VelocityChange);
 
-            // Ãæµ¹ °Ë»ç °Å¸® 
-            float castDistance = 0.5f;
 
-            // ¹Ù´Ú ·¹ÀÌ¾î ¸¶½ºÅ© ¼³Á¤
-            LayerMask groundLayerMask = LayerMask.GetMask("Ground");
 
-            // Raycast ¶Ç´Â SphereCast¸¦ »ç¿ëÇÏ¿© Ãæµ¹ °Ë»ç¸¦ ¼öÇàÇÕ´Ï´Ù.
-            bool isTouchingWall = Physics.Raycast(raycast, transform.forward, castDistance, groundLayerMask);
+            //// ì í”„ ì…ë ¥ì´ ìœ ì§€ë˜ê³  ìˆìœ¼ë©´ ì í”„ ì§„í–‰
+            //if (jumpTime)
+            //{
+            //    if (currentTime < maxJumpTime)
+            //    {
+            //        rb.AddForce(new Vector3(0, jumpPower, 0), ForceMode.VelocityChange);
+            //        currentTime += Time.fixedDeltaTime;
 
-            // º®¿¡ ºÙ¾î ÀÖÀ¸¸é º® Á¡ÇÁ ·ÎÁ÷À» ¼öÇàÇÕ´Ï´Ù.
-            if (isTouchingWall)
-            {
-                // ÀÌµ¿ ¹æÇâÀÌ ¾øÀ¸¸é ÇÔ¼ö¸¦ Á¾·áÇÕ´Ï´Ù.
-                if (dir.magnitude == 0)
-                {
-                    return;
-                }
+            //        // ìµœëŒ€ ì í”„ ë†’ì´ì— ë„ë‹¬í•˜ë©´ ì í”„ ì¤‘ì§€
+            //        if (rb.position.y >= maxJumpHeight)
+            //        {
+            //            jumpTime = false;
+            //        }
+            //    }
+            //    else
+            //    {
+            //        jumpTime = false;
+            //    }
+            //}
 
-                // º®Á¡ÇÁ ½Ã°£°ú ¼Óµµ¸¦ ÃÊ±âÈ­ ÇÕ´Ï´Ù.
-                float wallJumpTimer = 0f;
-                float currentWallJumpSpeed = wallJumpSpeed;
-
-                // Á¡ÇÁÇÒ ¹æÇâÀ» °è»êÇÕ´Ï´Ù. ±âº» ÀÌµ¿ ¹æÇâÀÇ ¹İ´ë ¹æÇâÀ¸·Î 2¹è¸¸Å­ ÀÌµ¿ÇÕ´Ï´Ù.
-                Vector3 newdir = -dir.normalized * 2;
-
-                // charactercontroller¸¦ ÀÌ¿ëÇØ¼­ Á¡ÇÁ¹æÇâÀ¸·Î ÀÌµ¿ÇÕ´Ï´Ù.
-                // »õ·Î¿î ¹æÇâÀ¸·Î ÇÃ·¹ÀÌ¾î¸¦ È¸ÀüÇÕ´Ï´Ù.
-                if (newdir.magnitude == 0) return;
-                else
-                {
-                    transform.forward = newdir;
-                }
-            }
         }
+
+        if (jumpTime)
+        {
+            rb.AddForce(new Vector3(0, jumpPower, 0), ForceMode.VelocityChange);
+            //jumpTime = false;
+        }
+
+        // ì¤‘ë ¥
+        rb.AddForce(new Vector3(0, -9.81f, 0));
+
+
+
+    }
+
+    bool IsGround()
+    {
+        Ray ray = new Ray(transform.position, Vector3.down);
+
+        //if(Physics.Raycast(ray, 1.01f))
+        //{
+        //    //ë•…ì— ë‹¿ì•˜ë‹¤.
+        //    return true;
+        //}
+        //else
+        //{
+        //    //ê³µì¤‘ì— ìˆë‹¤.
+        //    return false;
+        //}
+
+        return Physics.Raycast(ray, 1.02f);
     }
 }
-
-
 
