@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2821429717249912519}
   m_Layer: 0
-  m_Name: barbWire
+  m_Name: BarbWire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
