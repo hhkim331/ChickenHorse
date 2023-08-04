@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,8 +6,8 @@ using UnityEngine;
 public class TestController : MonoBehaviour
 {
 
-    //ÇÃ·¹ÀÌ¾î¸¦ ÀÌµ¿½ÃÅ°°í ½Í´Ù.
-    private float speed = 5f;
+    //í”Œë ˆì´ì–´ë¥¼ ì´ë™ì‹œí‚¤ê³  ì‹¶ë‹¤.
+    private float speed = 10f;
     public Rigidbody rigid;
 
     void Update()
@@ -19,7 +19,7 @@ public class TestController : MonoBehaviour
 
     private void Jump()
     {
-        // Á¡ÇÁ ¹öÆ° ´©¸£¸é Á¡ÇÁ
+        // ì í”„ ë²„íŠ¼ ëˆ„ë¥´ë©´ ì í”„
         if (Input.GetButtonDown("Jump"))
         {
             rigid.AddForce(Vector3.up * 8, ForceMode.Impulse);
@@ -28,10 +28,10 @@ public class TestController : MonoBehaviour
 
     private void Move()
     {
-        //ÇÃ·¹ÀÌ¾î¸¦ x, yÃàÀ¸·Î ÀÌµ¿½ÃÅ°°í½Í´Ù.
+        //í”Œë ˆì´ì–´ë¥¼ x, yì¶•ìœ¼ë¡œ ì´ë™ì‹œí‚¤ê³ ì‹¶ë‹¤.
         float hAxis = Input.GetAxis("Horizontal");
 
-        //¿Ş.¿À¸¥ÂÊ ¼³Á¤
+        //ì™¼.ì˜¤ë¥¸ìª½ ì„¤ì •
         Vector3 dir = transform.right * hAxis;
 
         rigid.AddForce(dir * speed * Time.deltaTime, ForceMode.Impulse);
