@@ -1734,8 +1734,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectData:
     objectType: 1
-    objectRotType: 2
-    objectSize: {x: 2, y: 1}
+    objectRotType: 1
+    objectSize: {x: 4, y: 4}
     objectTileList:
     - {x: 0, y: 0}
     - {x: 0, y: 1}

@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,8 +6,8 @@ public class StageObject : MonoBehaviour
 {
     public StageObjectData objectData;
 
-    public Transform cursor;    //ÇöÀç ³ª¸¦ Àâ°í ÀÖ´Â Ä¿¼­
-    bool isPlace = false;   //¹èÄ¡µÇ¾ú´ÂÁö ¿©ºÎ
+    public Transform cursor;    //í˜„ìž¬ ë‚˜ë¥¼ ìž¡ê³  ìžˆëŠ” ì»¤ì„œ
+    bool isPlace = false;   //ë°°ì¹˜ë˜ì—ˆëŠ”ì§€ ì—¬ë¶€
 
     // Start is called before the first frame update
     void Start()
@@ -31,13 +31,13 @@ public class StageObject : MonoBehaviour
         if (isPlace == false)
         {
             Move();
-            if (Input.GetKeyDown(KeyCode.X))   //¹èÄ¡
+            if (Input.GetKeyDown(KeyCode.X))   //ë°°ì¹˜
             {
                 isPlace = true;
                 Place();
             }
 
-            if (Input.GetKeyDown(KeyCode.C))    //È¸Àü
+            if (Input.GetKeyDown(KeyCode.C))    //íšŒì „
             {
                 switch (objectData.objectRotType)
                 {
@@ -52,12 +52,12 @@ public class StageObject : MonoBehaviour
         }
     }
 
-    public void Move()  //ÀÌµ¿
+    public void Move()  //ì´ë™
     {
         Vector2 cursorPos = Camera.main.ScreenToWorldPoint(cursor.position);
         Vector2 newPos;
 
-        //¼Ò¼ýÁ¡ÀÌ 0.5ÀÌ»óÀÌ¸é ¿Ã¸², 0.5¹Ì¸¸ÀÌ¸é ³»¸²
+        //ì†Œìˆ«ì ì´ 0.5ì´ìƒì´ë©´ ì˜¬ë¦¼, 0.5ë¯¸ë§Œì´ë©´ ë‚´ë¦¼
         if (cursorPos.x - (int)cursorPos.x >= 0.5f)
             newPos.x = (int)cursorPos.x + 1;
         else
@@ -71,14 +71,14 @@ public class StageObject : MonoBehaviour
         transform.position = newPos - objectData.objectPickUpPos;
     }
 
-    public void Spin()  //È¸Àü
+    public void Spin()  //íšŒì „
     {
         for (int i = 0; i < objectData.objectTileList.Count; i++)
         {
-            //È¸ÀüÃàÀ» ±âÁØÀ¸·Î ÁÂÇ¥¸¦ ¿À¸¥ÂÊ 90µµ È¸Àü ÁÂÇ¥·Î º¯°æ
+            //íšŒì „ì¶•ì„ ê¸°ì¤€ìœ¼ë¡œ ì¢Œí‘œë¥¼ ì˜¤ë¥¸ìª½ 90ë„ íšŒì „ ì¢Œí‘œë¡œ ë³€ê²½
             Vector2 tilePos = objectData.objectTileList[i] - objectData.objectRotAxis;
 
-            //tilePos¸¦ ¿À¸¥ÂÊ 90µµ È¸Àü
+            //tilePosë¥¼ ì˜¤ë¥¸ìª½ 90ë„ íšŒì „
             Vector2 newTilePos = new Vector2(tilePos.y, -tilePos.x);
             objectData.objectTileList[i] = newTilePos + objectData.objectRotAxis;
         }
@@ -86,14 +86,14 @@ public class StageObject : MonoBehaviour
         transform.Rotate(new Vector3(0, 0, -90));
     }
 
-    public void FlipY() //YÃà µÚÁý±â
+    public void FlipY() //Yì¶• ë’¤ì§‘ê¸°
     {
         for (int i = 0; i < objectData.objectTileList.Count; i++)
         {
-            //È¸ÀüÃàÀ» ±âÁØÀ¸·Î ÁÂÇ¥¸¦ ¿À¸¥ÂÊ 90µµ È¸Àü ÁÂÇ¥·Î º¯°æ
+            //íšŒì „ì¶•ì„ ê¸°ì¤€ìœ¼ë¡œ ì¢Œí‘œë¥¼ ì˜¤ë¥¸ìª½ 90ë„ íšŒì „ ì¢Œí‘œë¡œ ë³€ê²½
             Vector2 tilePos = objectData.objectTileList[i] - objectData.objectRotAxis;
 
-            //tilePos¸¦ ¿À¸¥ÂÊ 90µµ È¸Àü
+            //tilePosë¥¼ ì˜¤ë¥¸ìª½ 90ë„ íšŒì „
             Vector2 newTilePos = new Vector2(-tilePos.x, tilePos.y);
             objectData.objectTileList[i] = newTilePos + objectData.objectRotAxis;
         }
@@ -101,7 +101,7 @@ public class StageObject : MonoBehaviour
         transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
     }
 
-    //¿ÀºêÁ§Æ® ¹èÄ¡
+    //ì˜¤ë¸Œì íŠ¸ ë°°ì¹˜
     public void Place()
     {
         for (int i = 0; i < objectData.objectTileList.Count; i++)
@@ -109,6 +109,7 @@ public class StageObject : MonoBehaviour
             Vector2 tilePos = new Vector2(transform.position.x + objectData.objectLeftBottomPos.x + objectData.objectTileList[i].x,
                 transform.position.y + objectData.objectLeftBottomPos.y + objectData.objectTileList[i].y);
             MapManager.instance.mapObjectDic[tilePos] = this;
+            Debug.Log(tilePos);
         }
     }
 }
