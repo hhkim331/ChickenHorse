@@ -303,6 +303,63 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 1
   m_SpriteSortPoint: 0
+--- !u!1001 &185037778
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 191784368490329527, guid: 6bfbe14ad7bca894db1e3cb812ff1206, type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 191784368490329527, guid: 6bfbe14ad7bca894db1e3cb812ff1206, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 191784368490329527, guid: 6bfbe14ad7bca894db1e3cb812ff1206, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 191784368490329527, guid: 6bfbe14ad7bca894db1e3cb812ff1206, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 191784368490329527, guid: 6bfbe14ad7bca894db1e3cb812ff1206, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 191784368490329527, guid: 6bfbe14ad7bca894db1e3cb812ff1206, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 191784368490329527, guid: 6bfbe14ad7bca894db1e3cb812ff1206, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 191784368490329527, guid: 6bfbe14ad7bca894db1e3cb812ff1206, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 191784368490329527, guid: 6bfbe14ad7bca894db1e3cb812ff1206, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 191784368490329527, guid: 6bfbe14ad7bca894db1e3cb812ff1206, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 191784368490329527, guid: 6bfbe14ad7bca894db1e3cb812ff1206, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 191784368490329528, guid: 6bfbe14ad7bca894db1e3cb812ff1206, type: 3}
+      propertyPath: m_Name
+      value: RPlayer
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6bfbe14ad7bca894db1e3cb812ff1206, type: 3}
 --- !u!4 &209405071 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4000013258905692, guid: df8b2e05e6bc70e4eb740280ce078f7f, type: 3}
@@ -408,6 +465,7 @@ MonoBehaviour:
     objectPickUpPos: {x: 0, y: 0}
     objectRotAxis: {x: 0, y: 0}
   cursor: {fileID: 0}
+  meshTransform: {fileID: 0}
 --- !u!1 &227797412
 GameObject:
   m_ObjectHideFlags: 0
@@ -514,6 +572,7 @@ MonoBehaviour:
     objectPickUpPos: {x: 0, y: 0}
     objectRotAxis: {x: 0, y: 0}
   cursor: {fileID: 0}
+  meshTransform: {fileID: 0}
 --- !u!1 &266162726
 GameObject:
   m_ObjectHideFlags: 0
@@ -1380,6 +1439,7 @@ MonoBehaviour:
     objectPickUpPos: {x: 0, y: 0}
     objectRotAxis: {x: 0, y: 0}
   cursor: {fileID: 0}
+  meshTransform: {fileID: 0}
 --- !u!1 &700059432
 GameObject:
   m_ObjectHideFlags: 0
@@ -2352,6 +2412,7 @@ MonoBehaviour:
     objectPickUpPos: {x: 0, y: 0}
     objectRotAxis: {x: 0, y: 0}
   cursor: {fileID: 0}
+  meshTransform: {fileID: 0}
 --- !u!65 &1534150000
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2598,6 +2659,7 @@ MonoBehaviour:
     objectPickUpPos: {x: 0, y: 0}
     objectRotAxis: {x: 0, y: 0}
   cursor: {fileID: 0}
+  meshTransform: {fileID: 0}
 --- !u!1 &1731693068
 GameObject:
   m_ObjectHideFlags: 0
