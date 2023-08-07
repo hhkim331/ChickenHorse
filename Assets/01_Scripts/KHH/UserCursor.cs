@@ -59,7 +59,7 @@ public class UserCursor : MonoBehaviour
         {
             myObject.Move(new Vector2(transform.position.x, transform.position.y));
 
-            if (Input.GetMouseButtonDown(0))   //배치
+            if (Input.GetMouseButtonDown(0) && myObject.CanPlace)   //배치
             {
                 myObject.Place();
                 isPlace = true;
@@ -71,6 +71,13 @@ public class UserCursor : MonoBehaviour
                 myObject.Rotate();
             }
         }
+    }
+
+    public void Set()
+    {
+        isSelect = false;
+        isPlace = false;
+        myObject = null;
     }
 
     //커서 활성화

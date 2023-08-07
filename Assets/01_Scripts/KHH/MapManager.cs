@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,17 +6,17 @@ public class MapManager : MonoBehaviour
 {
     public static MapManager instance;
 
-    [Header("¸Ê µ¥ÀÌÅÍ")]
-    public Vector2 mapSize; //¸Ê Å©±â
-    public StageObject startBlock;  //°íÁ¤ Å¸ÀÏ µ¥ÀÌÅÍ
-    public StageObject endBlock;    //°íÁ¤ Å¸ÀÏ µ¥ÀÌÅÍ
+    [Header("ë§µ ë°ì´í„°")]
+    public Vector2 mapSize; //ë§µ í¬ê¸°
+    public StageObject startBlock;  //ê³ ì • íƒ€ì¼ ë°ì´í„°
+    public StageObject endBlock;    //ê³ ì • íƒ€ì¼ ë°ì´í„°
 
-    [Header("°íÁ¤ Å¸ÀÏ")]
-    public StageObject[] fixedObjects; //°íÁ¤ Å¸ÀÏ µ¥ÀÌÅÍ
+    [Header("ê³ ì • íƒ€ì¼")]
+    public StageObject[] fixedObjects; //ê³ ì • íƒ€ì¼ ë°ì´í„°
 
-    //ÇöÀç Å¸ÀÏ µ¥ÀÌÅÍ
-    public Dictionary<Vector2, StageObject> mapObjectDic = new Dictionary<Vector2, StageObject>();  //°¢ Å¸ÀÏÀÌ °¡Áö°í ÀÖ´Â ¿ÀºêÁ§Æ® µ¥ÀÌÅÍ
-    List<StageObject> objectList = new List<StageObject>();    //ÇöÀç ¹èÄ¡µÇ¾îÀÖ´Â ¿ÀºêÁ§Æ®ÀÇ ¸®½ºÆ®
+    //í˜„ì¬ íƒ€ì¼ ë°ì´í„°
+    public Dictionary<Vector2, StageObject> mapObjectDic = new Dictionary<Vector2, StageObject>();  //ê° íƒ€ì¼ì´ ê°€ì§€ê³  ìˆëŠ” ì˜¤ë¸Œì íŠ¸ ë°ì´í„°
+    List<StageObject> objectList = new List<StageObject>();    //í˜„ì¬ ë°°ì¹˜ë˜ì–´ìˆëŠ” ì˜¤ë¸Œì íŠ¸ì˜ ë¦¬ìŠ¤íŠ¸
 
     private void Awake()
     {
@@ -26,7 +26,7 @@ public class MapManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //¸Ê µ¥ÀÌÅÍ¸¦ ±â¹İÀ¸·Î ÃÊ¹İ ¹èÄ¡
+        //ë§µ ë°ì´í„°ë¥¼ ê¸°ë°˜ìœ¼ë¡œ ì´ˆë°˜ ë°°ì¹˜
         for (int i = 0; i < mapSize.x; i++)
         {
             for (int j = 0; j < mapSize.y; j++)
@@ -35,10 +35,13 @@ public class MapManager : MonoBehaviour
             }
         }
 
+        startBlock.Set();
         startBlock.Place();
+        endBlock.Set();
         endBlock.Place();
         for (int i = 0; i < fixedObjects.Length; i++)
         {
+            fixedObjects[i].Set();
             fixedObjects[i].Place();
             objectList.Add(fixedObjects[i]);
         }

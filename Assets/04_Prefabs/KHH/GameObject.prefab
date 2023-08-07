@@ -258,4 +258,4 @@ MonoBehaviour:
     objectPickUpPos: {x: -1.5, y: -0.5}
     objectRotAxis: {x: 1.5, y: 1.5}
   cursor: {fileID: 0}
-  meshTransform: {fileID: 0}
+  meshTransform: {fileID: 8706265591579667810}

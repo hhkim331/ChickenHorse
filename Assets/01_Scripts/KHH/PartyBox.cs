@@ -47,6 +47,7 @@ public class PartyBox : MonoBehaviour
                 go.transform.localPosition = sixSeats[i].localPosition;
 
             StageObject stageObject = go.GetComponent<StageObject>();
+            stageObject.Set();
             stageObjects.Add(stageObject);
         }
     }

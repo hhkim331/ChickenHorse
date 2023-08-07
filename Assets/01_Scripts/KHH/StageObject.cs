@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR;
 
 public class StageObject : MonoBehaviour
 {
@@ -9,13 +10,17 @@ public class StageObject : MonoBehaviour
 
     public Transform cursor;    //현재 나를 잡고 있는 커서
     bool isFocus = false;   //현재 커서가 나를 잡고 있는지 여부
+
+    Vector2 moveCurPos = Vector2.zero;
+    bool canPlace = false;  //배치 가능 여부
+    public bool CanPlace { get { return canPlace; } }
     bool isPlace = false;   //배치되었는지 여부
 
     public Transform meshTransform; //스케일 조정을 위한 현재 오브젝트의 메쉬
     Vector3 meshDefaultScale;   //메쉬의 기본 스케일
 
     // Start is called before the first frame update
-    void Start()
+    public void Set()
     {
         if (objectData.objectType == StageObjectData.ObjectType.Fixed)
         {
@@ -78,6 +83,8 @@ public class StageObject : MonoBehaviour
         cursor = cursorTr;
         transform.parent = null;
         transform.localScale = Vector3.one;
+        meshTransform.DOKill();
+        meshTransform.localScale = meshDefaultScale;
         gameObject.SetActive(false);
 
         isFocus = false;
@@ -91,19 +98,53 @@ public class StageObject : MonoBehaviour
     /// </summary>
     public void Move(Vector2 cursorPos)
     {
-        Vector2 newPos;
+        Vector2 moveNewPos;
         //소숫점이 0.5이상이면 올림, 0.5미만이면 내림
         if (cursorPos.x - (int)cursorPos.x >= 0.5f)
-            newPos.x = (int)cursorPos.x + 1;
+            moveNewPos.x = (int)cursorPos.x + 1;
         else
-            newPos.x = (int)cursorPos.x;
+            moveNewPos.x = (int)cursorPos.x;
 
         if (cursorPos.y - (int)cursorPos.y >= 0.5f)
-            newPos.y = (int)cursorPos.y + 1;
+            moveNewPos.y = (int)cursorPos.y + 1;
         else
-            newPos.y = (int)cursorPos.y;
+            moveNewPos.y = (int)cursorPos.y;
 
-        transform.position = newPos - objectData.objectPickUpPos;
+        if (moveCurPos != moveNewPos)
+        {
+            moveCurPos = moveNewPos;
+            transform.position = moveNewPos - objectData.objectPickUpPos;
+            //배치 가능 체크
+            if (CheckCanPlace())
+            {
+                Debug.Log(true);
+                canPlace = true;
+                if (meshTransform != null)
+                    meshTransform.GetComponent<MeshRenderer>().material.color = Color.white;
+            }
+            else
+            {
+                Debug.Log(false);
+                canPlace = false;
+                if (meshTransform != null)
+                    meshTransform.GetComponent<MeshRenderer>().material.color = Color.red;
+            }
+        }
+    }
+
+    bool CheckCanPlace()
+    {
+        for (int i = 0; i < objectData.objectTileList.Count; i++)
+        {
+            Vector2 tilePos = new Vector2(transform.position.x + objectData.objectLeftBottomPos.x + objectData.objectTileList[i].x,
+                transform.position.y + objectData.objectLeftBottomPos.y + objectData.objectTileList[i].y);
+
+            if (tilePos.x < 0 || tilePos.x >= MapManager.instance.mapSize.x) return false;
+            if (tilePos.y < 0 || tilePos.y >= MapManager.instance.mapSize.y) return false;
+            if (MapManager.instance.mapObjectDic[tilePos] != null) return false;
+        }
+
+        return true;
     }
 
     /// <summary>
