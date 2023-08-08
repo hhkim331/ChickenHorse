@@ -120,7 +120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arrowFactory: {fileID: 4574652027436220107, guid: 3796f25ce2d1a484ab3d9555861a046d, type: 3}
-  fireTransform: {fileID: 6407535486656441819}
+  arrowFireTransform: {fileID: 6407535486656441819}
 --- !u!1 &6407535486656441820
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,14 +5,13 @@ using UnityEngine;
 
 public class TestController : MonoBehaviour
 {
-
     //플레이어를 이동시키고 싶다.
-    private float speed = 10f;
+    public float speed = 10f;
+
     public Rigidbody rigid;
 
-    void Update()
+    private void Update()
     {
-
         Move();
         Jump();
     }
