@@ -23,6 +23,11 @@ public class RPlayerMove : MonoBehaviour
     //점프의 높이 체크
     public bool jumpTime = true;
 
+    //RPlayerWallJump의 스크립트를 알고 싶다
+    public RPlayerWallJump rPWJ;
+
+    // jump의 높이를 제한하기 위한 addForce에 들어가는 power의 횟수 제한
+     int fCount = 3;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,8 +35,12 @@ public class RPlayerMove : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()  
+    void Update()
     {
+        // 만약에 벽을 만나면
+        // 작동을 멈추고 싶다.
+        if (rPWJ.IsWall() == true) return;
+
         float h = Input.GetAxis("Horizontal");
 
         dir = Vector3.right * h;
@@ -48,8 +57,8 @@ public class RPlayerMove : MonoBehaviour
             rb.AddForce(new Vector3(-2, 0, 0), ForceMode.VelocityChange);
         }
         // 점프 입력을 받으면 점프 시작
-       
-        if (Input.GetKey(KeyCode.Space) && IsGround())
+
+        if (Input.GetKey(KeyCode.Space)&& IsGround())
         {
             jumpTime = true;
             currentTime = 0;
@@ -60,11 +69,17 @@ public class RPlayerMove : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Space))
         {
             jumpTime = false;
+            fCount = 3;
         }
     }
 
     private void FixedUpdate()
     {
+        // 만약에 벽을 만나면
+        // 작동을 멈추고 싶다.
+        if (rPWJ.IsWall() == true) return;
+        
+
         //만약에 땅에 닿아있다면
         if (IsGround() == true)
         {
@@ -72,9 +87,8 @@ public class RPlayerMove : MonoBehaviour
             Vector3 currVelocity = rb.velocity;
             //움직여야 하는 속도
             Vector3 targetVelocity = dir * speed;
+
             rb.AddForce(targetVelocity - currVelocity, ForceMode.VelocityChange);
-
-
 
             //// 점프 입력이 유지되고 있으면 점프 진행
             //if (jumpTime)
@@ -97,10 +111,33 @@ public class RPlayerMove : MonoBehaviour
             //}
 
         }
+        else
+        {
+            //현재 속도
+            Vector3 currVelocity = rb.velocity;
+            //움직여야 하는 속도
+            Vector3 targetVelocity = dir * speed * 1.0f;
+
+            // 평행으로 움직이는 y의 값과 점프하고 내려올 때의 y 값을 같게 하자.
+            targetVelocity.y = currVelocity.y;
+
+            rb.AddForce(targetVelocity - currVelocity, ForceMode.VelocityChange);
+        }
+
+        
+
 
         if (jumpTime)
         {
-            rb.AddForce(new Vector3(0, jumpPower, 0), ForceMode.VelocityChange);
+
+            if (fCount > 0)
+            {
+                rb.AddForce(new Vector3(0, jumpPower, 0), ForceMode.VelocityChange);
+                fCount--;
+            }
+
+
+
             //jumpTime = false;
         }
 
