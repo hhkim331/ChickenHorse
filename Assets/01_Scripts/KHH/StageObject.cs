@@ -6,8 +6,17 @@ public class StageObject : MonoBehaviour
 {
     public StageObjectData objectData;
 
+<<<<<<< Updated upstream
     public Transform cursor;    //���� ���� ��� �ִ� Ŀ��
     bool isPlace = false;   //��ġ�Ǿ����� ����
+=======
+    public Transform cursor;    //현재 나를 잡고 있는 커서
+    private bool isFocus = false;   //현재 커서가 나를 잡고 있는지 여부
+    private bool isPlace = false;   //배치되었는지 여부
+
+    public Transform meshTransform; //스케일 조정을 위한 현재 오브젝트의 메쉬
+    Vector3 meshDefaultScale;   //메쉬의 기본 스케일
+>>>>>>> Stashed changes
 
     // Start is called before the first frame update
     void Start()
