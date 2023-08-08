@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 61bfe55b8a64c914b803601f12e145a2
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - KG Next to Me Solid
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 1151e54f210f97847b9f5e1839466a0a, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
