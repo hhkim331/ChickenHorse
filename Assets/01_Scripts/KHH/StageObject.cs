@@ -34,6 +34,10 @@ public class StageObject : MonoBehaviour
 
         if (meshTransform != null)
             meshDefaultScale = meshTransform.localScale;
+
+        //해당 오브젝트의 모든 레이어를 PartyBox로 변경
+        foreach (Transform item in transform)
+            item.gameObject.layer = LayerMask.NameToLayer("PartyBox");
     }
 
     //// Update is called once per frame
@@ -89,6 +93,10 @@ public class StageObject : MonoBehaviour
 
         isFocus = false;
         //크기 애니메이션 상태 초기화
+
+        //해당 오브젝트의 모든 레이어를 Default로 변경
+        foreach (Transform item in transform)
+            item.gameObject.layer = LayerMask.NameToLayer("Default");
 
         KHHGameManager.instance.partyBox.RemoveItem(this);
     }
@@ -210,5 +218,9 @@ public class StageObject : MonoBehaviour
                 transform.position.y + objectData.objectLeftBottomPos.y + objectData.objectTileList[i].y);
             MapManager.instance.mapObjectDic[tilePos] = this;
         }
+
+        //해당 오브젝트의 모든 레이어를 Default로 변경
+        foreach (Transform item in transform)
+            item.gameObject.layer = LayerMask.NameToLayer("Default");
     }
 }

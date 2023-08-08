@@ -18,17 +18,20 @@ public class PartyBox : MonoBehaviour
     [SerializeField] Transform topBlankLeft;
     [SerializeField] Transform topBlankRight;
 
+    Animator animator;
+
     public void Init()
     {
         totalStageObjectData = Resources.Load<TotalStageObjectData>("ScriptableObject/TotalStageObjectData");
         stageObjects = new List<StageObject>();
+        animator = GetComponent<Animator>();
     }
 
-    //// Update is called once per frame
-    //void Update()
-    //{
+    // Update is called once per frame
+    void Update()
+    {
 
-    //}
+    }
 
     public void SetBox()
     {
@@ -61,17 +64,14 @@ public class PartyBox : MonoBehaviour
         topBlankRight.gameObject.SetActive(false);
 
         KHHGameManager.instance.cursor.Active();
-        //이건 애니메이터로 하는게 맞는듯
+
+        //애니메이션
+        animator.SetTrigger("Open");
     }
 
     public void Close()
     {
-        gameObject.SetActive(false);
-
-        //이건 애니메이터로 하는게 맞는듯
-
-        //남은 오브젝트 제거
-        RemoveItemAll();
+        animator.SetTrigger("Close");
     }
 
     /// <summary>
@@ -92,5 +92,7 @@ public class PartyBox : MonoBehaviour
             Destroy(item.gameObject);
         }
         stageObjects.Clear();
+
+        gameObject.SetActive(false);
     }
 }

@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 191784368490329524}
   - component: {fileID: 191784368490329525}
   - component: {fileID: 191784368490329530}
-  - component: {fileID: 191784368490329531}
   - component: {fileID: 191784368490329526}
   - component: {fileID: -3388719495947049739}
+  - component: {fileID: 1330788186128385488}
   m_Layer: 0
   m_Name: KPlayerTest
   m_TagString: Untagged
@@ -100,24 +100,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &191784368490329531
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 191784368490329528}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb72736fa25ea684d838d621f8610ccc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 5
-  jumpPower: 10
-  maxJumpTime: 3
-  maxJumpHeight: 3
-  currentTime: 0
-  jumpTime: 0
 --- !u!54 &191784368490329526
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -146,3 +128,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 788342f6a98d567428e6978b6ca828e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isActive: 1
+--- !u!114 &1330788186128385488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 191784368490329528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb7d65817da192a4a953821fb2f96b68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rB: {fileID: 0}
+  speed: 20
+  jumpPower: 500
+  maxVelocity: 5
+  jumpTime: 1
+  fCount: 3

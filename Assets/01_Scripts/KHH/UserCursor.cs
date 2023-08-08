@@ -9,13 +9,10 @@ public class UserCursor : MonoBehaviour
     bool isPlace = false;
     public bool IsPlace { get { return isPlace; } }
 
+    public Camera mainCamera;
+    public Camera partyBoxCamera;
+
     StageObject myObject;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
 
     // Update is called once per frame
     void Update()
@@ -28,7 +25,7 @@ public class UserCursor : MonoBehaviour
         {
             //현재 마우스가 올라와 있는 오브젝트를 가져옴
             RaycastHit hit;
-            Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit);
+            Physics.Raycast(partyBoxCamera.ScreenPointToRay(Input.mousePosition), out hit);
             StageObject hitObject = null;
             if (hit.collider != null)
             {

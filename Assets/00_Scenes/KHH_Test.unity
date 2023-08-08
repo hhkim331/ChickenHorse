@@ -123,6 +123,81 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &5525235
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5525238}
+  - component: {fileID: 5525237}
+  m_Layer: 0
+  m_Name: PartyBoxCamera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!20 &5525237
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5525235}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 3
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_FocalLength: 50
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.3
+  far clip plane: 1000
+  field of view: 60
+  orthographic: 1
+  orthographic size: 10
+  m_Depth: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 1024
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 1
+  m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
+--- !u!4 &5525238
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5525235}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &46532971
 GameObject:
   m_ObjectHideFlags: 0
@@ -300,7 +375,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 66625774}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Seat1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -331,7 +406,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 112237418}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Seat4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -452,7 +527,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 216204808}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: TopBlankRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -895,7 +970,7 @@ GameObject:
   m_Component:
   - component: {fileID: 427084344}
   - component: {fileID: 427084345}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BoxTop.000
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1057,7 +1132,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 500387591}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: FiveSeats
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1116,7 +1191,7 @@ Transform:
   - {fileID: 49048565}
   - {fileID: 209405071}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &502585324
 MonoBehaviour:
@@ -1145,7 +1220,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 507764186}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: FourSeats
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1265,13 +1340,14 @@ GameObject:
   m_Component:
   - component: {fileID: 544061859}
   - component: {fileID: 544061858}
-  m_Layer: 0
+  - component: {fileID: 544061860}
+  m_Layer: 10
   m_Name: PartyBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &544061858
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1314,8 +1390,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 544061857}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 41.5, y: 20, z: -10}
-  m_LocalScale: {x: 3.78, y: 3.78, z: 3.78}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2070244401}
@@ -1325,8 +1401,29 @@ Transform:
   - {fileID: 216204808}
   - {fileID: 1393329067}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &544061860
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 544061857}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f87dd851d7a672144b746052a9164d8b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &550806942
 GameObject:
   m_ObjectHideFlags: 0
@@ -1549,7 +1646,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 576621848}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SixSeats
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1586,7 +1683,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 579885386}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Seat4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1693,7 +1790,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 650164984}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Seat3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1831,7 +1928,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 700059433}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: TopBlankLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1946,7 +2043,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &722739748
 GameObject:
@@ -2033,7 +2130,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 732527755}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Seat2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2362,7 +2459,7 @@ GameObject:
   m_Component:
   - component: {fileID: 863588575}
   - component: {fileID: 863588576}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BoxTopBlank.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2474,7 +2571,7 @@ Transform:
   - {fileID: 684776835}
   - {fileID: 227797413}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &912615868
 GameObject:
@@ -2609,7 +2706,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 55
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -2827,7 +2924,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1029939001}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Seat6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3113,7 +3210,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1233282629
 GameObject:
@@ -3124,7 +3221,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1233282630}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Seat4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3337,6 +3434,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 811381b719d0e37479ffe1b2e44054b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainCamera: {fileID: 963194227}
+  partyBoxCamera: {fileID: 5525237}
 --- !u!212 &1391407608
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3402,7 +3501,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1393329066
 GameObject:
@@ -3413,7 +3512,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1393329067}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Seats
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3447,7 +3546,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1395987535}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Seat3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3478,7 +3577,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1410979850}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: TopLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3586,7 +3685,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1437765002}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Seat2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3617,7 +3716,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1463217230}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: TopRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3649,7 +3748,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1509728605}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Seat5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3680,7 +3779,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1528103557}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Seat1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3917,7 +4016,7 @@ RectTransform:
   - {fileID: 446119617}
   - {fileID: 834624524}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -4009,7 +4108,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1641618816}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Seat5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4413,7 +4512,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1733027762}
   - component: {fileID: 1733027763}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BoxTop.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4496,7 +4595,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1777868835}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Seat1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4527,7 +4626,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1781955201}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Seat3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4559,7 +4658,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1826085717}
   - component: {fileID: 1826085718}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BoxTopBlank.000
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4777,7 +4876,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1921964880}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Seat2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5282,7 +5381,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2070244401}
   - component: {fileID: 2070244402}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BoxBottom.000
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5387,7 +5486,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2081024330
 MonoBehaviour:
