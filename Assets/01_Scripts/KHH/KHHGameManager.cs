@@ -1,10 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class KHHGameManager : MonoBehaviour
 {
     public static KHHGameManager instance;
+    ScoreManager scoreMgr;
+    public ScoreManager ScoreMgr { get { return scoreMgr; } }
+
     public PartyBox partyBox;
     public UserCursor cursor;
 
@@ -38,8 +42,6 @@ public class KHHGameManager : MonoBehaviour
     void Start()
     {
         partyBox.Init();
-        partyBox.SetBox();
-        partyBox.Open();
 
         //자신의 커서 생성
         //커서 비활성화
@@ -50,7 +52,9 @@ public class KHHGameManager : MonoBehaviour
         ChangeState(GameState.Select);
         CreatePlayer();
 
-        ScoreManager.instance.playerTest = myPlayer;
+        scoreMgr = GetComponent<ScoreManager>();
+        scoreMgr.playerTest = myPlayer;
+        scoreMgr.Init();
     }
 
     void CreatePlayer()
@@ -91,17 +95,17 @@ public class KHHGameManager : MonoBehaviour
         //플레이어 움직임 활성화
 
         //플레이어 상태 확인
-        bool allDie = true;
+        bool allActive = false;
         foreach (var player in playerList)
-            if (!player.GetComponent<KHHPlayerTest>().isDie)
+            if (player.GetComponent<KHHPlayerTest>().isActive)
             {
-                allDie = false;
+                allActive = true;
                 break;
             }
 
-        if (allDie)
+        if (!allActive)
         {
-            //모든 플레이어가 죽었을 때
+            //모든 플레이어가 못움직일때
             ChangeState(GameState.Score);
         }
     }
@@ -124,7 +128,7 @@ public class KHHGameManager : MonoBehaviour
                 ResetPlayer();
                 break;
             case GameState.Score:
-                ScoreManager.instance.ScoreCalc();
+                scoreMgr.ScoreCalc();
                 break;
             case GameState.End:
                 break;
