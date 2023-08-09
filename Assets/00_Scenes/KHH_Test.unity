@@ -503,7 +503,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: e5eccbdd008ccc74da14564a594a5e28, type: 3}
-  m_Color: {r: 0.41960785, g: 0.6392157, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -695,7 +695,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 0bb1f248c480abd4f9382ca0064ad6be, type: 3}
-  m_Color: {r: 0.41960785, g: 0.6392157, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -815,7 +815,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: e5eccbdd008ccc74da14564a594a5e28, type: 3}
-  m_Color: {r: 0.41960785, g: 0.6392157, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1347,7 +1347,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &544061858
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1887,7 +1887,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 75b12f526a3d1e0409315dbb11a90eab, type: 3}
-  m_Color: {r: 0.41960785, g: 0.6392157, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -2227,7 +2227,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: e5eccbdd008ccc74da14564a594a5e28, type: 3}
-  m_Color: {r: 0.41960785, g: 0.6392157, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -2660,6 +2660,7 @@ GameObject:
   - component: {fileID: 963194228}
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
+  - component: {fileID: 963194229}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2733,6 +2734,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &963194229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 748f03baade6bfd4cbf131af8a5d108d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &993466325
 GameObject:
   m_ObjectHideFlags: 0
@@ -3394,7 +3407,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: e5eccbdd008ccc74da14564a594a5e28, type: 3}
-  m_Color: {r: 0.41960785, g: 0.6392157, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -4973,7 +4986,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: e5eccbdd008ccc74da14564a594a5e28, type: 3}
-  m_Color: {r: 0.41960785, g: 0.6392157, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -5361,7 +5374,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: e5eccbdd008ccc74da14564a594a5e28, type: 3}
-  m_Color: {r: 0.41960785, g: 0.6392157, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -5500,8 +5513,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a165d2120890964d84bafdc6a51685b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  followCamera: {fileID: 963194229}
+  mapMgr: {fileID: 502585324}
+  graphSprites:
+  - {fileID: 1273464003}
+  - {fileID: 266162728}
+  - {fileID: 117143157}
+  - {fileID: 1946262351}
+  - {fileID: 2029796459}
+  - {fileID: 827792341}
+  - {fileID: 684776836}
+  - {fileID: 227797414}
+  - {fileID: 2015583437}
+  graphFadeSprites:
+  - {fileID: 1731693070}
+  - {fileID: 2004776057}
+  - {fileID: 536678035}
+  - {fileID: 2097254079}
+  - {fileID: 1668353234}
+  - {fileID: 550806944}
   partyBox: {fileID: 544061858}
-  cursor: {fileID: 1391407607}
+  cursors:
+  - {fileID: 1391407607}
   myCharacterIndex: 0
   playerPrefab:
   - {fileID: 191784368490329528, guid: 6a0214ad0b327a54ea78a46e004e8235, type: 3}

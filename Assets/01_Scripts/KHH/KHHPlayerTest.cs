@@ -6,7 +6,7 @@ public class KHHPlayerTest : MonoBehaviour
 {
     public bool isActive = true;
     bool isDie = false;
-    bool isGoal = false;
+    public bool isGoal = false;
 
     public void ResetPlayer()
     {

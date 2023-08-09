@@ -31,15 +31,15 @@ public class Point
 
 public class ScoreManager : MonoBehaviour
 {
-    const int maxScore = 25;
-
-    const int goal = 5;
-    const int solo = 3;
-    const int death = 2;
-    const int trap = 1;
-    const int coin = 3;
-    const int comeback = 4;
-    const int first = 1;
+    readonly int maxScore = 25;
+    
+    readonly int goal = 5;
+    readonly int solo = 3;
+    readonly int death = 2;
+    readonly int trap = 1;
+    readonly int coin = 3;
+    readonly int comeback = 4;
+    readonly int first = 1;
 
     Color goalColor = new Color(0f, 0f, 0.5f);
     Color soloColor = Color.blue;
@@ -118,6 +118,7 @@ public class ScoreManager : MonoBehaviour
         if (playerScoreDic.Count > 0)
             needCalc = true;
 
+        yield return new WaitForSeconds(1f);
         //ui등장
         scorePaper.DOLocalMoveY(0, 0.5f).From(-1200);
         if (needCalc == false)
@@ -168,6 +169,8 @@ public class ScoreManager : MonoBehaviour
 
         //각각의 state에 맞게 점수계산
         yield return new WaitForSeconds(0.5f);
+        playerScoreDic.Clear();
+
         //게임이 종료된 경우
         if (CheckGameEnd())
             KHHGameManager.instance.ChangeState(KHHGameManager.GameState.End);

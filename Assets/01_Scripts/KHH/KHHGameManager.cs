@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using DG.Tweening;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -6,11 +7,18 @@ using UnityEngine.SceneManagement;
 public class KHHGameManager : MonoBehaviour
 {
     public static KHHGameManager instance;
+
     ScoreManager scoreMgr;
     public ScoreManager ScoreMgr { get { return scoreMgr; } }
 
+    [SerializeField] FollowCamera followCamera;
+    [SerializeField] MapManager mapMgr;
+
+    //좌표격자
+    public SpriteRenderer[] graphSprites;
+    public SpriteRenderer[] graphFadeSprites;
     public PartyBox partyBox;
-    public UserCursor cursor;
+    public List<UserCursor> cursors;
 
     Vector3 startPos;
 
@@ -45,12 +53,15 @@ public class KHHGameManager : MonoBehaviour
 
         //자신의 커서 생성
         //커서 비활성화
-        cursor.Deactive();
+        cursors[0].Deactive();
 
         startPos = new Vector3(MapManager.instance.startBlock.transform.position.x, MapManager.instance.startBlock.transform.position.y, 0);
 
         ChangeState(GameState.Select);
         CreatePlayer();
+
+        followCamera.Init(mapMgr.mapSize);
+        followCamera.Set(playerList, cursors);
 
         scoreMgr = GetComponent<ScoreManager>();
         scoreMgr.playerTest = myPlayer;
@@ -70,11 +81,11 @@ public class KHHGameManager : MonoBehaviour
         switch (state)
         {
             case GameState.Select:
-                if (cursor.IsSelect)
+                if (cursors[0].IsSelect)
                     ChangeState(GameState.Place);
                 break;
             case GameState.Place:
-                if (cursor.IsPlace)
+                if (cursors[0].IsPlace)
                     ChangeState(GameState.Play);
                 break;
             case GameState.Play:
@@ -103,9 +114,13 @@ public class KHHGameManager : MonoBehaviour
                 break;
             }
 
+        //모든 플레이어가 못움직일때
         if (!allActive)
         {
-            //모든 플레이어가 못움직일때
+            if (myPlayer.GetComponent<KHHPlayerTest>().isGoal)
+                followCamera.SetGoal(new List<GameObject>() { myPlayer });
+
+
             ChangeState(GameState.Score);
         }
     }
@@ -116,21 +131,33 @@ public class KHHGameManager : MonoBehaviour
         switch (state)
         {
             case GameState.Select:
-                cursor.Set();
+                followCamera.State = FollowCamera.CameraState.FullScreen;
+                foreach (var sprite in graphSprites)
+                    sprite.DOFade(1, 0.5f);
+                foreach (var sprite in graphFadeSprites)
+                    sprite.DOFade(0.2f, 0.5f);
+                cursors[0].Set();
                 partyBox.SetBox();
                 partyBox.Open();
                 break;
             case GameState.Place:
+                followCamera.State = FollowCamera.CameraState.Place;
                 partyBox.Close();
-                cursor.Active();
+                cursors[0].Active();
                 break;
             case GameState.Play:
+                followCamera.State = FollowCamera.CameraState.Play;
+                foreach (var sprite in graphSprites)
+                    sprite.DOFade(0, 0.5f);
+                foreach (var sprite in graphFadeSprites)
+                    sprite.DOFade(0, 0.5f);
                 ResetPlayer();
                 break;
             case GameState.Score:
                 scoreMgr.ScoreCalc();
                 break;
             case GameState.End:
+                End();
                 break;
         }
     }
@@ -143,5 +170,10 @@ public class KHHGameManager : MonoBehaviour
         myPlayer.GetComponent<KHHPlayerTest>().ResetPlayer();
 
         myPlayer.GetComponent<Rigidbody>().velocity = Vector3.zero;
+    }
+
+    void End()
+    {
+        followCamera.SetEnd(myPlayer.transform.position);
     }
 }
