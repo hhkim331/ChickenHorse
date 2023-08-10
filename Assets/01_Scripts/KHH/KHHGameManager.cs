@@ -154,6 +154,7 @@ public class KHHGameManager : MonoBehaviour
                 ResetPlayer();
                 break;
             case GameState.Score:
+                //myPlayer.SetActive(false);  //플레이어 비활성화
                 scoreMgr.ScoreCalc();
                 break;
             case GameState.End:
@@ -174,6 +175,7 @@ public class KHHGameManager : MonoBehaviour
 
     void End()
     {
+        myPlayer.SetActive(true);  //우승 플레이어만 활성화
         followCamera.SetEnd(myPlayer.transform.position);
     }
 }

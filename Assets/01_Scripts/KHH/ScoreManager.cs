@@ -1,6 +1,7 @@
 ﻿using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Point
@@ -32,7 +33,7 @@ public class Point
 public class ScoreManager : MonoBehaviour
 {
     readonly int maxScore = 25;
-    
+
     readonly int goal = 5;
     readonly int solo = 3;
     readonly int death = 2;
@@ -60,11 +61,16 @@ public class ScoreManager : MonoBehaviour
     CharacterData characterData;
 
     [Header("UI")]
+    [Header("ScorePaper")]
     [SerializeField] RectTransform scorePaper;
     [SerializeField] RectTransform noPointPaper;
     [SerializeField] RectTransform playerInfoParent;
     [SerializeField] GameObject playerInfoFactory;
     [SerializeField] GameObject pointAreaFactory;
+
+    [Header("ScorePaper")]
+    [SerializeField] GameObject winnerObj;
+    [SerializeField] TextMeshProUGUI winnerCharacterText;
 
     List<PlayerInfo> playerInfos = new List<PlayerInfo>();
 
@@ -119,6 +125,12 @@ public class ScoreManager : MonoBehaviour
             needCalc = true;
 
         yield return new WaitForSeconds(1f);
+        //플레이어 비활성화
+        foreach(var player in playerScore.Keys)
+        {
+            player.SetActive(false);
+        }
+
         //ui등장
         scorePaper.DOLocalMoveY(0, 0.5f).From(-1200);
         if (needCalc == false)
@@ -168,14 +180,21 @@ public class ScoreManager : MonoBehaviour
         }
 
         //각각의 state에 맞게 점수계산
-        yield return new WaitForSeconds(0.5f);
         playerScoreDic.Clear();
 
         //게임이 종료된 경우
         if (CheckGameEnd())
+        {
+            yield return new WaitForSeconds(0.3f);
+            winnerObj.SetActive(true);
+            winnerCharacterText.text = playerInfos[0].Character.characterName;
             KHHGameManager.instance.ChangeState(KHHGameManager.GameState.End);
+        }
         else
+        {
+            yield return new WaitForSeconds(0.5f);
             KHHGameManager.instance.ChangeState(KHHGameManager.GameState.Select);
+        }
     }
 
     bool CheckGameEnd()

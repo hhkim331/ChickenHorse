@@ -64,6 +64,8 @@ public class StageObject : MonoBehaviour
     /// </summary>
     public void Focus(bool isFocus)
     {
+        if (objectData.objectType == StageObjectData.ObjectType.Fixed) return;
+
         this.isFocus = isFocus;
         if (isFocus)
         {
@@ -84,6 +86,8 @@ public class StageObject : MonoBehaviour
     /// </summary>
     public void Select(Transform cursorTr)
     {
+        if (objectData.objectType == StageObjectData.ObjectType.Fixed) return;
+
         cursor = cursorTr;
         transform.parent = null;
         transform.localScale = Vector3.one;
