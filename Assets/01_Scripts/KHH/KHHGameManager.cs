@@ -143,7 +143,6 @@ public class KHHGameManager : MonoBehaviour
             case GameState.Place:
                 followCamera.State = FollowCamera.CameraState.Place;
                 partyBox.Close();
-                cursors[0].Active();
                 break;
             case GameState.Play:
                 followCamera.State = FollowCamera.CameraState.Play;

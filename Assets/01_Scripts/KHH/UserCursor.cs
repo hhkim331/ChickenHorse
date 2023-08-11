@@ -12,7 +12,10 @@ public class UserCursor : MonoBehaviour
     public Camera mainCamera;
     public Camera partyBoxCamera;
 
+    public SpriteRenderer spriteRenderer;
+    public Sprite[] sprites;
     StageObject myObject;
+
 
     // Update is called once per frame
     void Update()
@@ -30,10 +33,13 @@ public class UserCursor : MonoBehaviour
             if (hit.collider != null)
             {
                 hitObject = hit.collider.GetComponentInParent<StageObject>();
-                if (myObject != hitObject)
-                    myObject?.Focus(false);
-                myObject = hitObject;
-                myObject.Focus(true);
+                if (!hitObject.IsPlace)
+                {
+                    if (myObject != hitObject)
+                        myObject?.Focus(false);
+                    myObject = hitObject;
+                    myObject.Focus(true);
+                }
             }
             else
             {
@@ -55,6 +61,11 @@ public class UserCursor : MonoBehaviour
         else if (KHHGameManager.instance.state == KHHGameManager.GameState.Place && !isPlace)
         {
             myObject.Move(new Vector2(transform.position.x, transform.position.y));
+            if (myObject.CanPlace)
+                spriteRenderer.sprite = sprites[0];
+            else
+                spriteRenderer.sprite = sprites[1];
+
 
             if (Input.GetMouseButtonDown(0) && myObject.CanPlace)   //배치
             {

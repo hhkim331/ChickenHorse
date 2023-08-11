@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FollowCamera : MonoBehaviour
 {
-    Camera myCamera;
+    [SerializeField] Camera[] cameras;
 
     public enum CameraState
     {
@@ -29,11 +29,6 @@ public class FollowCamera : MonoBehaviour
     Vector2 mapSize;
     List<KHHPlayerTest> players = new List<KHHPlayerTest>();
     List<UserCursor> playerCursors = new List<UserCursor>();
-
-    private void Awake()
-    {
-        myCamera = GetComponent<Camera>();
-    }
 
     public void Init(Vector2 mapSize)
     {
@@ -76,7 +71,8 @@ public class FollowCamera : MonoBehaviour
 
         Clamp();
         transform.position = Vector3.Lerp(transform.position, newCameraPos, Time.deltaTime);
-        myCamera.orthographicSize = Mathf.Lerp(myCamera.orthographicSize, newCameraSize, Time.deltaTime);
+        foreach (var cam in cameras)
+            cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, newCameraSize, Time.deltaTime);
     }
 
     void Place()
@@ -194,8 +190,8 @@ public class FollowCamera : MonoBehaviour
     //카메라가 영역바깥으로 못나가게
     void Clamp()
     {
-        float x = myCamera.orthographicSize * myCamera.aspect;
-        float y = myCamera.orthographicSize;
+        float x = cameras[0].orthographicSize * cameras[0].aspect;
+        float y = cameras[0].orthographicSize;
         float minX = cameraCenterPos.x - mapSize.x * 0.5f - 10 + x;
         float maxX = cameraCenterPos.x + mapSize.x * 0.5f + 10 - x;
         float minY = cameraCenterPos.y - mapSize.y * 0.5f - 10 + y;

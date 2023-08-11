@@ -63,10 +63,13 @@ public class PartyBox : MonoBehaviour
         topBlankLeft.gameObject.SetActive(false);
         topBlankRight.gameObject.SetActive(false);
 
-        KHHGameManager.instance.cursors[0].Active();
-
         //애니메이션
         animator.SetTrigger("Open");
+    }
+
+    public void ActiveCursor()
+    {
+        KHHGameManager.instance.cursors[0].Active();
     }
 
     public void Close()

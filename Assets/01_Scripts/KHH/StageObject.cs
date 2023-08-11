@@ -15,9 +15,10 @@ public class StageObject : MonoBehaviour
     bool canPlace = false;  //배치 가능 여부
     public bool CanPlace { get { return canPlace; } }
     bool isPlace = false;   //배치되었는지 여부
+    public bool IsPlace { get { return isPlace; } }
 
-    public Transform meshTransform; //스케일 조정을 위한 현재 오브젝트의 메쉬
-    Vector3 meshDefaultScale;   //메쉬의 기본 스케일
+    public Transform rendererTransform; //스케일 조정을 위한 현재 오브젝트의 메쉬
+    Vector3 rendererDefaultScale;   //메쉬의 기본 스케일
 
     // Start is called before the first frame update
     public void Set()
@@ -32,11 +33,11 @@ public class StageObject : MonoBehaviour
             }
         }
 
-        if (meshTransform != null)
-            meshDefaultScale = meshTransform.localScale;
+        if (rendererTransform != null)
+            rendererDefaultScale = rendererTransform.localScale;
 
         //해당 오브젝트의 모든 레이어를 PartyBox로 변경
-        foreach (Transform item in transform)
+        foreach (Transform item in GetComponentsInChildren<Transform>())
             item.gameObject.layer = LayerMask.NameToLayer("PartyBox");
     }
 
@@ -70,14 +71,14 @@ public class StageObject : MonoBehaviour
         if (isFocus)
         {
             transform.DOKill();
-            if (meshTransform != null)
-                meshTransform.DOScale(meshDefaultScale * 1.2f, 0.3f);
+            if (rendererTransform != null)
+                rendererTransform.DOScale(rendererDefaultScale * 1.2f, 0.3f);
         }
         else
         {
             transform.DOKill();
-            if (meshTransform != null)
-                meshTransform.DOScale(meshDefaultScale, 0.3f);
+            if (rendererTransform != null)
+                rendererTransform.DOScale(rendererDefaultScale, 0.3f);
         }
     }
 
@@ -91,15 +92,15 @@ public class StageObject : MonoBehaviour
         cursor = cursorTr;
         transform.parent = null;
         transform.localScale = Vector3.one;
-        meshTransform.DOKill();
-        meshTransform.localScale = meshDefaultScale;
+        rendererTransform.DOKill();
+        rendererTransform.localScale = rendererDefaultScale;
         gameObject.SetActive(false);
 
         isFocus = false;
         //크기 애니메이션 상태 초기화
 
         //해당 오브젝트의 모든 레이어를 Default로 변경
-        foreach (Transform item in transform)
+        foreach (Transform item in GetComponentsInChildren<Transform>())
             item.gameObject.layer = LayerMask.NameToLayer("Default");
 
         KHHGameManager.instance.partyBox.RemoveItem(this);
@@ -131,15 +132,29 @@ public class StageObject : MonoBehaviour
             {
                 Debug.Log(true);
                 canPlace = true;
-                if (meshTransform != null)
-                    meshTransform.GetComponent<MeshRenderer>().material.color = Color.white;
+                if (rendererTransform != null)
+                {
+                    MeshRenderer[] meshRenderers = rendererTransform.GetComponentsInChildren<MeshRenderer>();
+                    if (meshRenderers != null)
+                        foreach (MeshRenderer meshRenderer in meshRenderers)
+                            meshRenderer.material.color = Color.white;
+                    SpriteRenderer[] spriteRenderers = rendererTransform.GetComponentsInChildren<SpriteRenderer>();
+                    if (spriteRenderers != null)
+                        foreach (SpriteRenderer spriteRenderer in spriteRenderers)
+                            spriteRenderer.material.color = Color.white;
+                }
             }
             else
             {
                 Debug.Log(false);
                 canPlace = false;
-                if (meshTransform != null)
-                    meshTransform.GetComponent<MeshRenderer>().material.color = Color.red;
+                if (rendererTransform != null)
+                {
+                    MeshRenderer meshRenderer = rendererTransform.GetComponent<MeshRenderer>();
+                    if (meshRenderer != null) meshRenderer.material.color = Color.red;
+                    SpriteRenderer spriteRenderer = rendererTransform.GetComponent<SpriteRenderer>();
+                    if (spriteRenderer != null) spriteRenderer.material.color = Color.red;
+                }
             }
         }
     }

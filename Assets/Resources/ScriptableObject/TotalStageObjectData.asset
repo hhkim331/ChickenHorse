@@ -13,4 +13,11 @@ MonoBehaviour:
   m_Name: TotalStageObjectData
   m_EditorClassIdentifier: 
   stageObjectDataList:
-  - {fileID: 8706265593345711495, guid: 42aa6aaa7270742428ad8272bb8f93a5, type: 3}
+  - {fileID: 6407535487335710132, guid: 6f316e40955b6ef4c8a48eec926bab27, type: 3}
+  - {fileID: 1712577404228606889, guid: 441ef47b0e7d666479a22abc12ff57ea, type: 3}
+  - {fileID: 730092996619959238, guid: 2727ab581904d0b48bedad8edbd87080, type: 3}
+  - {fileID: 6526302601037374922, guid: 42cb48bf05f22ea4180279a57908c63f, type: 3}
+  - {fileID: 2554277821557027243, guid: 1b854d40582d10340b59ef47fcb178db, type: 3}
+  - {fileID: 9054597370750853151, guid: d594baa199adcdf429beb1a01387c795, type: 3}
+  - {fileID: 7220232275143496741, guid: b079a0da096b0fb4dbd5db3df33f2753, type: 3}
+  - {fileID: 2821429717249912516, guid: e46c3582e2e43c64283a092fc072ca85, type: 3}
