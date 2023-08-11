@@ -10,6 +10,7 @@ public class ChangeCursor : MonoBehaviour
     //시작할때 커서 이미지를 가져와서 변경한다.
     private void Start()
     {
-        Cursor.SetCursor(cursorImage, Vector2.zero, CursorMode.ForceSoftware);
+        Vector2 cursorPosition = new Vector2(cursorImage.width / 2, cursorImage.height / 2);
+        Cursor.SetCursor(cursorImage, cursorPosition, CursorMode.ForceSoftware);
     }
 }
