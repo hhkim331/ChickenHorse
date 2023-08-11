@@ -13,4 +13,24 @@ public class ChangeCursor : MonoBehaviour
         Vector2 cursorPosition = new Vector2(cursorImage.width / 2, cursorImage.height / 2);
         Cursor.SetCursor(cursorImage, cursorPosition, CursorMode.ForceSoftware);
     }
+
+    private void Update()
+    {
+        CursorEnable();
+    }
+
+    public void CursorDisable()
+    {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    public void CursorEnable()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+    }
 }
