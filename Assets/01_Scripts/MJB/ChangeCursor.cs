@@ -7,6 +7,8 @@ public class ChangeCursor : MonoBehaviour
     //커서 이미지를 가져온다.
     [SerializeField] private Texture2D cursorImage;
 
+    public GameObject player;
+
     //시작할때 커서 이미지를 가져와서 변경한다.
     private void Start()
     {
@@ -29,6 +31,8 @@ public class ChangeCursor : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            //플레이어의 컨트롤러를 끈다. // 플레이어의 컨트롤러 작업
+            player.GetComponent<TestController>().enabled = false;
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
         }
