@@ -11,34 +11,49 @@ public class UserCursor : MonoBehaviour
 
     public Camera mainCamera;
     public Camera partyBoxCamera;
+    public Camera cursorCamera;
 
     public SpriteRenderer spriteRenderer;
     public Sprite[] sprites;
     StageObject myObject;
 
+    private void Start()
+    {
+        Cursor.visible = false;
+
+        transform.position = new Vector3(mainCamera.transform.position.x, mainCamera.transform.position.y, -15);
+    }
 
     // Update is called once per frame
     void Update()
     {
+        float x = Input.GetAxis("Mouse X") * Time.deltaTime * 100;
+        float y = Input.GetAxis("Mouse Y") * Time.deltaTime * 100;
+
         //마우스 좌표로 커서 이동
-        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mousePos.z = -15;
-        transform.position = mousePos;
+        //Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //mousePos.z = -15;
+        transform.position = new Vector3(transform.position.x + x, transform.position.y + y, -15);
         if (KHHGameManager.instance.state == KHHGameManager.GameState.Select && !isSelect)
         {
+            Vector3 screenPoint = cursorCamera.WorldToScreenPoint(transform.position);
+            Vector3 rayPoint = partyBoxCamera.ScreenToWorldPoint(screenPoint);
+
             //현재 마우스가 올라와 있는 오브젝트를 가져옴
             RaycastHit hit;
-            Physics.Raycast(partyBoxCamera.ScreenPointToRay(Input.mousePosition), out hit);
-            StageObject hitObject = null;
+            Physics.Raycast(rayPoint, Vector3.forward, out hit);
             if (hit.collider != null)
             {
-                hitObject = hit.collider.GetComponentInParent<StageObject>();
-                if (!hitObject.IsPlace)
+                StageObject hitObject = hit.collider.GetComponentInParent<StageObject>();
+                if (hitObject != null)
                 {
-                    if (myObject != hitObject)
-                        myObject?.Focus(false);
-                    myObject = hitObject;
-                    myObject.Focus(true);
+                    if (!hitObject.IsPlace)
+                    {
+                        if (myObject != hitObject)
+                            myObject?.Focus(false);
+                        myObject = hitObject;
+                        myObject.Focus(true);
+                    }
                 }
             }
             else

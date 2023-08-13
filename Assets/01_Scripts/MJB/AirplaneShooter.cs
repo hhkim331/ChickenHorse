@@ -10,8 +10,13 @@ public class AirplaneShooter : MonoBehaviour
     // 발사 위치
     public Transform airPlaneFireTransform;
 
+    //오브젝트 생성 가능확인을 위한 StageObject
+    public StageObject stageObject;
+
     private void FireAirplane()
     {
+        if (stageObject != null) if (!stageObject.IsPlay) return;
+
         //종이 발사 공장을 가동한다.
         GameObject airplane = Instantiate(airPlaneFactory);
         // 발사 물체를 발사 위치에 놓는다.
