@@ -33,7 +33,7 @@ public class PaperAirplane : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             //플레이어 transform은 종이 비행기의 tranform으로 한다.
-            other.gameObject.transform.SetParent(transform);
+            other.gameObject.transform.parent.SetParent(transform);
         }
     }
 
@@ -44,7 +44,7 @@ public class PaperAirplane : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             //플레이어의 transform을 null로 만든다.
-            other.gameObject.transform.SetParent(null);
+            other.gameObject.transform.parent.SetParent(null);
         }
     }
 }

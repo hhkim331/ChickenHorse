@@ -6291,7 +6291,7 @@ MonoBehaviour:
   - {fileID: 1391407607}
   myCharacterIndex: 0
   playerPrefab:
-  - {fileID: 4055202769452008533, guid: b5fb4ef512bf7174ab034c5f7ffbd076, type: 3}
+  - {fileID: 4055202769452008533, guid: 13eb02bd005eb6c438e136c1ea5cdf05, type: 3}
   readyTextObject: {fileID: 839583909}
   myPlayer: {fileID: 0}
   state: 0

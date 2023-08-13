@@ -266,7 +266,7 @@ public class StageObject : MonoBehaviour
         }
 
         //해당 오브젝트의 모든 레이어를 Default로 변경
-        foreach (Transform item in transform)
+        foreach (Transform item in GetComponentsInChildren<Transform>())
             item.gameObject.layer = LayerMask.NameToLayer("Default");
     }
 
