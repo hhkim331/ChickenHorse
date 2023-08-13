@@ -85,6 +85,8 @@ public class UserCursor : MonoBehaviour
             if (Input.GetMouseButtonDown(0) && myObject.CanPlace)   //배치
             {
                 myObject.Place();
+                KHHGameManager.instance.AddStageObject(myObject);
+                myObject = null;
                 isPlace = true;
                 Deactive();
             }

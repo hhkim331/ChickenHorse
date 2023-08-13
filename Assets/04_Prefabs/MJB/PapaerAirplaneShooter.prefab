@@ -467,6 +467,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   airPlaneFactory: {fileID: 269817499510675641, guid: ded383285d2b62e408f77d4f133f5596, type: 3}
   airPlaneFireTransform: {fileID: 7220232273753118456}
+  stageObject: {fileID: 2168896796528607113}
 --- !u!1 &7220232274348054612
 GameObject:
   m_ObjectHideFlags: 0
@@ -578,5 +579,7 @@ MonoBehaviour:
     objectPickUpPos: {x: -0.5, y: -0.5}
     objectRotAxis: {x: 0.5, y: 1.5}
   cursor: {fileID: 0}
-  animator: {fileID: 7220232274205466579}
+  animators:
+  - {fileID: 7220232274205466579}
+  - {fileID: 7220232273999588470}
   rendererTransform: {fileID: 8950715750999256219}

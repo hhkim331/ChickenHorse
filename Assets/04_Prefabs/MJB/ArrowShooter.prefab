@@ -121,6 +121,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   arrowFactory: {fileID: 4574652027436220107, guid: 3796f25ce2d1a484ab3d9555861a046d, type: 3}
   arrowFireTransform: {fileID: 6407535486656441819}
+  stageObject: {fileID: 557810282464079491}
 --- !u!1 &6407535486656441820
 GameObject:
   m_ObjectHideFlags: 0
@@ -210,6 +211,8 @@ MonoBehaviour:
     objectPickUpPos: {x: 0, y: 0}
     objectRotAxis: {x: 0, y: 0}
   cursor: {fileID: 0}
+  animators:
+  - {fileID: 6407535486591093573}
   rendererTransform: {fileID: 6407535486591093571}
 --- !u!1 &6407535488146570099
 GameObject:
