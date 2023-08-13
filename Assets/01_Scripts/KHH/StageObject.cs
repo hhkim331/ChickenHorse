@@ -16,7 +16,10 @@ public class StageObject : MonoBehaviour
     public bool CanPlace { get { return canPlace; } }
     bool isPlace = false;   //배치되었는지 여부
     public bool IsPlace { get { return isPlace; } }
+    bool isPlay = false;   //배치되었는지 여부
+    public bool IsPlay { get { return isPlay; } }
 
+    [SerializeField] Animator[] animators;
     public Transform rendererTransform; //스케일 조정을 위한 현재 오브젝트의 메쉬
     Vector3 rendererDefaultScale;   //메쉬의 기본 스케일
 
@@ -73,12 +76,29 @@ public class StageObject : MonoBehaviour
             transform.DOKill();
             if (rendererTransform != null)
                 rendererTransform.DOScale(rendererDefaultScale * 1.2f, 0.3f);
+
+            if (animators.Length>0)
+            {
+                foreach (var anim in animators)
+                {
+                    anim.enabled = true;
+                }
+            }
         }
         else
         {
             transform.DOKill();
             if (rendererTransform != null)
                 rendererTransform.DOScale(rendererDefaultScale, 0.3f);
+
+            if (animators.Length > 0)
+            {
+                foreach (var anim in animators)
+                {
+                    anim.Rebind();
+                    anim.enabled = false;
+                }
+            }
         }
     }
 
@@ -104,6 +124,15 @@ public class StageObject : MonoBehaviour
             item.gameObject.layer = LayerMask.NameToLayer("Default");
 
         KHHGameManager.instance.partyBox.RemoveItem(this);
+
+        if (animators.Length > 0)
+        {
+            foreach (var anim in animators)
+            {
+                anim.Rebind();
+                anim.enabled = false;
+            }
+        }
     }
 
     /// <summary>
@@ -130,7 +159,6 @@ public class StageObject : MonoBehaviour
             //배치 가능 체크
             if (CheckCanPlace())
             {
-                Debug.Log(true);
                 canPlace = true;
                 if (rendererTransform != null)
                 {
@@ -146,7 +174,6 @@ public class StageObject : MonoBehaviour
             }
             else
             {
-                Debug.Log(false);
                 canPlace = false;
                 if (rendererTransform != null)
                 {
@@ -241,5 +268,30 @@ public class StageObject : MonoBehaviour
         //해당 오브젝트의 모든 레이어를 Default로 변경
         foreach (Transform item in transform)
             item.gameObject.layer = LayerMask.NameToLayer("Default");
+    }
+
+    public void Play()
+    {
+        isPlay = true;
+        if (animators.Length > 0)
+        {
+            foreach (var anim in animators)
+            {
+                anim.enabled = true;
+            }
+        }
+    }
+
+    public void Stop()
+    {
+        isPlay = false;
+        if (animators.Length > 0)
+        {
+            foreach (var anim in animators)
+            {
+                anim.Rebind();
+                anim.enabled = false;
+            }
+        }
     }
 }

@@ -578,4 +578,5 @@ MonoBehaviour:
     objectPickUpPos: {x: -0.5, y: -0.5}
     objectRotAxis: {x: 0.5, y: 1.5}
   cursor: {fileID: 0}
+  animator: {fileID: 7220232274205466579}
   rendererTransform: {fileID: 8950715750999256219}
