@@ -42,6 +42,17 @@ public class RPlayer : MonoBehaviour
         dir = Vector3.right * h;
         dir.Normalize();
 
+        if(h < 0)
+        {
+            transform.localScale = new Vector3(-1, 1, 1);
+        }
+
+
+        if (h > 0)
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+        }
+
 
 
         if (IsGround())
@@ -89,8 +100,8 @@ public class RPlayer : MonoBehaviour
         else if (h < 0)
         {
             // 왼쪽으로 움직임을 나타내는 애니메이션 파라미터 설정
-            anim.SetBool("IsWalkingRight", false);
-            anim.SetBool("IsWalkingLeft", true);
+            
+            anim.SetBool("IsWalkingRight", true);
         }
         else
         {
