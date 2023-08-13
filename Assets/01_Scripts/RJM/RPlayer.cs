@@ -26,7 +26,7 @@ public class RPlayer : MonoBehaviour
     public float walljumpPower = 5;
 
     //애니메이션
-    public Animator ani;
+    public Animator anim;
    
     // Start is called before the first frame update
     void Start()
@@ -63,7 +63,43 @@ public class RPlayer : MonoBehaviour
         {
             //jumpStart = Time.time;
             jumpTime = true;
+
+
+            if (h > 0)
+            {
+                // 오른쪽으로 점프를 나타내는 애니메이션 파라미터 설정
+                anim.SetBool("IsJumpingRight", true);
+                anim.SetBool("IsJumpingLeft", false);
+            }
+            else if (h < 0)
+            {
+                // 왼쪽으로 점프를 나타내는 애니메이션 파라미터 설정
+                anim.SetBool("IsJumpingRight", false);
+                anim.SetBool("IsJumpingLeft", true);
+            }
         }
+
+
+        if (h > 0)
+        {
+            // 오른쪽으로 움직임을 나타내는 애니메이션 파라미터 설정
+            anim.SetBool("IsWalkingRight", true);
+            anim.SetBool("IsWalkingLeft", false);
+        }
+        else if (h < 0)
+        {
+            // 왼쪽으로 움직임을 나타내는 애니메이션 파라미터 설정
+            anim.SetBool("IsWalkingRight", false);
+            anim.SetBool("IsWalkingLeft", true);
+        }
+        else
+        {
+            // 가만히 있을 때 모든 파라미터 비활성화
+            anim.SetBool("IsWalkingRight", false);
+            anim.SetBool("IsWalkingLeft", false);
+            anim.SetTrigger("Idle");
+        }
+
 
 
         //스페이스바를 누르면
@@ -71,20 +107,24 @@ public class RPlayer : MonoBehaviour
         {
             jumpTime = false;
             fCount = 3;
+
+            anim.SetBool("IsWalkingLeft", false);
+            anim.SetBool("IsJumpingRight", false);
+
             //float jumpHold = Time.time - jumpStart;
 
             //// 시간에 따라 jumpPower결정
 
             //float dJump = Mathf.Lerp(300f, 500f, jumpHold / longJump);
 
-            
+
             //if (transform.position.y <= 1.1f)
             //{
             //    //윗방향으로 힘을 가한다
             //    rB.AddForce(Vector3.up * dJump);
             //    jumpTime = false;
             //}
-           
+
             //// 벽점프
 
             ////벽에 닿으면
@@ -123,7 +163,9 @@ public class RPlayer : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
+
                 // 벽에 붙어 있는 경우
+                anim.SetTrigger("Slide");
                 rB.velocity = new Vector3(-dir.x * walljumpPower, walljumpPower, 0);
                // walljumpPower++;
                 //rB.AddForce(Vector3.left * jumpPower);
@@ -141,12 +183,13 @@ public class RPlayer : MonoBehaviour
         else
         {
             rB.AddForce(dir * speed * 0.5f);
+
         }
 
         //만약에 jumpTime 이 true 라면
         if(jumpTime == true)
         {
-            if(fCount>0)
+            if (fCount>0)
             {
                 //위로 힘을 준다.
                 rB.AddForce(Vector3.up * jumpPower);
@@ -167,9 +210,10 @@ public class RPlayer : MonoBehaviour
 
     bool IsWall()
     {
-        Ray ray = new Ray(transform.position, Vector3.right);
+        Ray rayRight = new Ray(transform.position, Vector3.right);
+        Ray rayLeft = new Ray(transform.position, Vector3.left);
 
-        return Physics.Raycast(ray, 1.02f);
+        return Physics.Raycast(rayRight, 1.02f) || Physics.Raycast(rayLeft, 1.02f);
     }
 }
 
