@@ -9,9 +9,10 @@ public class barbWire : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            //플레이어의 물리 현상을 정지한다.
-            collision.rigidbody.isKinematic = true;
-            Destroy(collision.gameObject, 1f);
+            collision.gameObject.GetComponent<KHHPlayerMain>().Hit();
+            ////플레이어의 물리 현상을 정지한다.
+            //collision.rigidbody.isKinematic = true;
+            //Destroy(collision.gameObject, 1f);
         }
     }
 }

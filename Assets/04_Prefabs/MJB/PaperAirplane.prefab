@@ -32,103 +32,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &269817499675001996
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 269817499675001999}
-  - component: {fileID: 269817499675002224}
-  - component: {fileID: 269817499675002225}
-  - component: {fileID: 269817499675001998}
-  m_Layer: 0
-  m_Name: PaperAirplane Wing
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &269817499675001999
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 269817499675001996}
-  m_LocalRotation: {x: 0, y: 0, z: 0.5966451, w: 0.80250525}
-  m_LocalPosition: {x: 0.06373387, y: -2.244752, z: -0.06333321}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 269817499875954581}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 73.26}
---- !u!33 &269817499675002224
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 269817499675001996}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &269817499675002225
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 269817499675001996}
-  m_Enabled: 0
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &269817499675001998
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 269817499675001996}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.67, y: 1.19, z: 1}
-  m_Center: {x: -0, y: 0.29, z: 0}
 --- !u!1 &269817499875954578
 GameObject:
   m_ObjectHideFlags: 0
@@ -162,7 +65,6 @@ Transform:
   m_Children:
   - {fileID: 269817500621951413}
   - {fileID: 269817500601790255}
-  - {fileID: 269817499675001999}
   - {fileID: 269817499958012608}
   m_Father: {fileID: 269817499510675640}
   m_RootOrder: 0
@@ -209,7 +111,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 2.34, y: 1, z: 1}
-  m_Center: {x: 0, y: -1.2, z: 0}
+  m_Center: {x: 0, y: -1.5, z: 0}
 --- !u!1 &269817499958012609
 GameObject:
   m_ObjectHideFlags: 0
@@ -242,7 +144,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 269817499875954581}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &269817499958012613
 MeshFilter:
@@ -305,8 +207,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.14, y: 0.47, z: 1}
-  m_Center: {x: 0.67, y: -0.18, z: 0}
+  m_Size: {x: 0.5164134, y: 0.47000003, z: 1}
+  m_Center: {x: 0.9817933, y: -0.18, z: 0}
 --- !u!1 &269817500601790251
 GameObject:
   m_ObjectHideFlags: 0
@@ -402,8 +304,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.76, y: 1.15, z: 1}
-  m_Center: {x: -0.83, y: 0, z: 0}
+  m_Size: {x: 1.886648, y: 0.7622237, z: 1}
+  m_Center: {x: -0.30859774, y: -0.19388819, z: 0}
 --- !u!1 &269817500621951411
 GameObject:
   m_ObjectHideFlags: 0

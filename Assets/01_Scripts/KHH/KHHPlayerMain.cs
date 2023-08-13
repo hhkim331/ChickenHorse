@@ -10,17 +10,35 @@ public class KHHPlayerMain : MonoBehaviour
     bool isDie = false;
     public bool isGoal = false;
     [SerializeField] RPlayer rPlayer;
+    [SerializeField] Animator animator;
+    [SerializeField] SpriteRenderer[] spriteRenderers;
 
     public void ResetPlayer()
     {
         isActive = true;
         isDie = false;
         isGoal = false;
+        animator.enabled = true;
+        foreach (var spriteRenderer in spriteRenderers)
+        {
+            spriteRenderer.color = Color.white;
+        }
     }
 
     public void ActiveMove()
     {
         rPlayer.enabled = true;
+    }
+
+    public void Hit()
+    {
+        isActive = false;
+        rPlayer.enabled = false;
+        animator.enabled = false;
+        foreach (var spriteRenderer in spriteRenderers)
+        {
+            spriteRenderer.color = Color.red;
+        }
     }
 
     // Update is called once per frame

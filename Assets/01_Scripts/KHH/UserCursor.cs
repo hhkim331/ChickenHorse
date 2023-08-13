@@ -19,6 +19,7 @@ public class UserCursor : MonoBehaviour
 
     private void Start()
     {
+        Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = false;
 
         transform.position = new Vector3(mainCamera.transform.position.x, mainCamera.transform.position.y, -15);
