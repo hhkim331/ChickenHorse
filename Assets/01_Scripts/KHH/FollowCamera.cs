@@ -27,7 +27,7 @@ public class FollowCamera : MonoBehaviour
     float cameraMaxSize;
 
     Vector2 mapSize;
-    List<KHHPlayerTest> players = new List<KHHPlayerTest>();
+    List<KHHPlayerMain> players = new List<KHHPlayerMain>();
     List<UserCursor> playerCursors = new List<UserCursor>();
 
     public void Init(Vector2 mapSize)
@@ -47,7 +47,7 @@ public class FollowCamera : MonoBehaviour
     {
         for (int i = 0; i < playerObjs.Count; i++)
         {
-            players.Add(playerObjs[i].GetComponent<KHHPlayerTest>());
+            players.Add(playerObjs[i].GetComponent<KHHPlayerMain>());
         }
 
         playerCursors = cursors;
@@ -129,7 +129,7 @@ public class FollowCamera : MonoBehaviour
         {
             if (players[i] == null)
                 continue;
-            if (!players[i].isActive)
+            if (!players[i].IsActive)
                 continue;
 
             activePlayerCount++;

@@ -25,10 +25,13 @@ public class KHHGameManager : MonoBehaviour
     public int myCharacterIndex;
     public GameObject[] playerPrefab;
 
+    //텍스트
+    [SerializeField] GameObject readyTextObject;
+
     //활성화 플레이어
     public GameObject myPlayer;
     List<GameObject> playerList = new List<GameObject>();
-
+    List<StageObject> stageObjects = new List<StageObject>();
 
     public enum GameState
     {
@@ -108,7 +111,7 @@ public class KHHGameManager : MonoBehaviour
         //플레이어 상태 확인
         bool allActive = false;
         foreach (var player in playerList)
-            if (player.GetComponent<KHHPlayerTest>().isActive)
+            if (player.GetComponent<KHHPlayerMain>().IsActive)
             {
                 allActive = true;
                 break;
@@ -117,7 +120,7 @@ public class KHHGameManager : MonoBehaviour
         //모든 플레이어가 못움직일때
         if (!allActive)
         {
-            if (myPlayer.GetComponent<KHHPlayerTest>().isGoal)
+            if (myPlayer.GetComponent<KHHPlayerMain>().isGoal)
                 followCamera.SetGoal(new List<GameObject>() { myPlayer });
 
 
@@ -151,10 +154,12 @@ public class KHHGameManager : MonoBehaviour
                 foreach (var sprite in graphFadeSprites)
                     sprite.DOFade(0, 0.5f);
                 ResetPlayer();
+                PlayStageObject();
                 break;
             case GameState.Score:
                 //myPlayer.SetActive(false);  //플레이어 비활성화
                 scoreMgr.ScoreCalc();
+                StopStageObject();
                 break;
             case GameState.End:
                 End();
@@ -167,14 +172,44 @@ public class KHHGameManager : MonoBehaviour
     {
         myPlayer.SetActive(true);
         myPlayer.transform.position = startPos;
-        myPlayer.GetComponent<KHHPlayerTest>().ResetPlayer();
-
         myPlayer.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        myPlayer.GetComponent<KHHPlayerMain>().ResetPlayer();
+        StartCoroutine(ResetPlayerCoroutine());
+    }
+
+    IEnumerator ResetPlayerCoroutine()
+    {
+        readyTextObject.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        myPlayer.GetComponent<KHHPlayerMain>().ActiveMove();
+        readyTextObject.SetActive(false);
     }
 
     void End()
     {
         myPlayer.SetActive(true);  //우승 플레이어만 활성화
         followCamera.SetEnd(myPlayer.transform.position);
+    }
+
+    public void AddStageObject(StageObject stageObject)
+    {
+        stageObjects.Add(stageObject);
+    }
+
+    public void RemoveStageObject(StageObject stageObject)
+    {
+        stageObjects.Remove(stageObject);
+    }
+
+    void PlayStageObject()
+    {
+        foreach (var stageObject in stageObjects)
+            stageObject.Play();
+    }
+
+    void StopStageObject()
+    {
+        foreach (var stageObject in stageObjects)
+            stageObject.Stop();
     }
 }

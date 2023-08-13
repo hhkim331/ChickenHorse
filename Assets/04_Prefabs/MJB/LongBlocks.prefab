@@ -130,9 +130,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectData:
-    objectType: 0
-    objectRotType: 0
-    objectSize: {x: 0, y: 0}
+    objectType: 1
+    objectRotType: 1
+    objectSize: {x: 4, y: 1}
     objectTileList:
     - {x: 0, y: 0}
     - {x: 1, y: 0}
@@ -142,7 +142,8 @@ MonoBehaviour:
     objectPickUpPos: {x: 0, y: 0}
     objectRotAxis: {x: 0, y: 0}
   cursor: {fileID: 0}
-  rendererTransform: {fileID: 0}
+  animators: []
+  rendererTransform: {fileID: 2554277821045301645}
 --- !u!1 &6843937774197302873
 GameObject:
   m_ObjectHideFlags: 0

@@ -96,7 +96,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1.49, z: 1}
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &8489316777594545713
 MonoBehaviour:
@@ -120,6 +120,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8489316778674236758}
+  - component: {fileID: 3049547825145238901}
   m_Layer: 0
   m_Name: SunCoin
   m_TagString: Untagged
@@ -144,6 +145,31 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3049547825145238901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8489316778674236753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be51ab9b65547d64e8119e31bb087c0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectData:
+    objectType: 1
+    objectRotType: 0
+    objectSize: {x: 1, y: 1}
+    objectTileList:
+    - {x: 0, y: 0}
+    objectLeftBottomPos: {x: 0, y: 0}
+    objectPickUpPos: {x: 0, y: 0}
+    objectRotAxis: {x: 0, y: 0}
+  cursor: {fileID: 0}
+  animators:
+  - {fileID: 8489316779379488513}
+  rendererTransform: {fileID: 8489316779379488519}
 --- !u!1 &8489316779379488512
 GameObject:
   m_ObjectHideFlags: 0
@@ -172,7 +198,7 @@ Transform:
   m_GameObject: {fileID: 8489316779379488512}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.5, y: 2.5, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8489316778674236758}
