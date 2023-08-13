@@ -68,14 +68,14 @@ public class RPlayer : MonoBehaviour
             if (h > 0)
             {
                 // 오른쪽으로 점프를 나타내는 애니메이션 파라미터 설정
-                anim.SetBool("IsJumpingRight", true);
-                anim.SetBool("IsJumpingLeft", false);
+                anim.SetTrigger("RightJump");
+               
             }
             else if (h < 0)
             {
                 // 왼쪽으로 점프를 나타내는 애니메이션 파라미터 설정
-                anim.SetBool("IsJumpingRight", false);
-                anim.SetBool("IsJumpingLeft", true);
+                anim.SetTrigger("LeftJump");
+
             }
         }
 
@@ -108,9 +108,6 @@ public class RPlayer : MonoBehaviour
             jumpTime = false;
             fCount = 3;
 
-            anim.SetBool("IsWalkingLeft", false);
-            anim.SetBool("IsJumpingRight", false);
-
             //float jumpHold = Time.time - jumpStart;
 
             //// 시간에 따라 jumpPower결정
@@ -134,8 +131,6 @@ public class RPlayer : MonoBehaviour
             //    // 점프를 할 때 부딪힌 방향의 반대 방향으로 점프한다
             //    // 
             //}
-
-
 
         }
 
@@ -167,9 +162,20 @@ public class RPlayer : MonoBehaviour
                 // 벽에 붙어 있는 경우
                 anim.SetTrigger("Slide");
                 rB.velocity = new Vector3(-dir.x * walljumpPower, walljumpPower, 0);
-               // walljumpPower++;
+                // walljumpPower++;
                 //rB.AddForce(Vector3.left * jumpPower);
-                
+                if (h > 0)
+                {
+                    // 오른쪽으로 점프를 나타내는 애니메이션 파라미터 설정
+                    anim.SetTrigger("RightJump");
+
+                }
+                else if (h < 0)
+                {
+                    // 왼쪽으로 점프를 나타내는 애니메이션 파라미터 설정
+                    anim.SetTrigger("LeftJump");
+
+                }
             }
         }
     }
@@ -183,8 +189,8 @@ public class RPlayer : MonoBehaviour
         else
         {
             rB.AddForce(dir * speed * 0.5f);
-
         }
+
 
         //만약에 jumpTime 이 true 라면
         if(jumpTime == true)
