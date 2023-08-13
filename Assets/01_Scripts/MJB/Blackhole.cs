@@ -11,8 +11,9 @@ public class Blackhole : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            other.attachedRigidbody.isKinematic = true;
-            Destroy(other.gameObject, 1f);
+            other.GetComponent<KHHPlayerMain>().Hit();
+            //other.attachedRigidbody.isKinematic = true;W
+            //Destroy(other.gameObject, 1f);
         }
         else
         {
