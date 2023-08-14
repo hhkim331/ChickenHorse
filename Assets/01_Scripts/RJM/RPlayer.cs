@@ -222,7 +222,7 @@ public class RPlayer : MonoBehaviour
     {
         Ray ray = new Ray(transform.position, Vector3.down);
 
-        return Physics.Raycast(ray, 1.02f);
+        return Physics.Raycast(ray, 1.02f, (-1) - (1 << LayerMask.NameToLayer("Player")));
     }
 
     bool IsWall()

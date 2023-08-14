@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1677582687
+--- !u!1 &444090195898856953
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,38 +8,38 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1677582688}
-  - component: {fileID: 1677582689}
-  m_Layer: 0
-  m_Name: PlayerCollder
-  m_TagString: Player
+  - component: {fileID: 3503410392242742345}
+  - component: {fileID: 6315553763186907807}
+  m_Layer: 12
+  m_Name: BodyCollider
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1677582688
+--- !u!4 &3503410392242742345
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1677582687}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 2, z: 1}
+  m_GameObject: {fileID: 444090195898856953}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.100000024, z: 0}
+  m_LocalScale: {x: 1, y: 1.8, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4055202769452008529}
   m_RootOrder: 48
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!64 &1677582689
+--- !u!64 &6315553763186907807
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1677582687}
-  m_Material: {fileID: 0}
+  m_GameObject: {fileID: 444090195898856953}
+  m_Material: {fileID: 13400000, guid: c619db39cbfad2b47ad9142e731b746f, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
@@ -56,7 +56,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4055202767487300755}
   - component: {fileID: 4055202767487300752}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Horse_WalkL.005
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -140,7 +140,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4055202767514458972}
   - component: {fileID: 4055202767514458973}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Horse_RunToJump.001
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -224,7 +224,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4055202767696047981}
   - component: {fileID: 4055202767696047978}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Horse_IdleL.001
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -308,7 +308,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4055202767768366407}
   - component: {fileID: 4055202767768366404}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Horse_JumpingTop.002
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -392,7 +392,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4055202767837970967}
   - component: {fileID: 4055202767837970964}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Horse_Walk.005
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -476,7 +476,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4055202767913333337}
   - component: {fileID: 4055202767913333334}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Horse_Idle.002
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -560,7 +560,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4055202767914188185}
   - component: {fileID: 4055202767914188182}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Horse_Run.004
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -644,7 +644,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4055202767960253226}
   - component: {fileID: 4055202767960253227}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Horse_Walk.004
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -728,7 +728,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4055202767976266171}
   - component: {fileID: 4055202767976266168}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Horse_ToWallSlide.000
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -812,7 +812,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4055202768010654313}
   - component: {fileID: 4055202768010654310}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Horse_JumpingTopL.001
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -896,7 +896,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4055202768014835561}
   - component: {fileID: 4055202768014835558}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Horse_Idle.000
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -980,7 +980,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4055202768254128737}
   - component: {fileID: 4055202768254128766}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Horse_IdleL.000
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1064,7 +1064,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4055202768270216131}
   - component: {fileID: 4055202768270216128}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Horse_WalkL.001
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1148,7 +1148,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4055202768273591550}
   - component: {fileID: 4055202768273591551}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Horse_Walk.000
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1232,7 +1232,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4055202768343455071}
   - component: {fileID: 4055202768343455068}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: HorseWallSlide.000
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1316,7 +1316,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4055202768374881391}
   - component: {fileID: 4055202768374881388}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Horse_ToWallSlide.001
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1400,7 +1400,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4055202768442018376}
   - component: {fileID: 4055202768442018377}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Horse_Walk.003
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1484,7 +1484,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4055202768471086357}
   - component: {fileID: 4055202768471086354}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: HorseWallSlide.002
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1568,7 +1568,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4055202768480575218}
   - component: {fileID: 4055202768480575219}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Horse_Run.000
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1652,7 +1652,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4055202768516120596}
   - component: {fileID: 4055202768516120597}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Horse_Run.002
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1736,7 +1736,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4055202768517913596}
   - component: {fileID: 4055202768517913597}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Horse_Run.003
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1820,7 +1820,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4055202768518447521}
   - component: {fileID: 4055202768518447550}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Horse_JumpingTop.001
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1904,7 +1904,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4055202768530922827}
   - component: {fileID: 4055202768530922824}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Horse_JumpingUp.001
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1988,7 +1988,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4055202768581301755}
   - component: {fileID: 4055202768581301752}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Horse_JumpingDown.002
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -2072,7 +2072,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4055202768617115205}
   - component: {fileID: 4055202768617115202}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Horse_Run.001
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -2156,7 +2156,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4055202768721834775}
   - component: {fileID: 4055202768721834772}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Horse_JumpingUp.000
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -2240,7 +2240,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4055202768795729096}
   - component: {fileID: 4055202768795729097}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Horse_Idle.001
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -2324,7 +2324,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4055202768836255437}
   - component: {fileID: 4055202768836255434}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Horse_WalkL.000
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -2408,7 +2408,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4055202768846884875}
   - component: {fileID: 4055202768846884872}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Horse_JumpingDown.001
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -2492,7 +2492,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4055202768853856166}
   - component: {fileID: 4055202768853856167}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Horse_WalkL.007
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -2576,7 +2576,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4055202768911302011}
   - component: {fileID: 4055202768911302008}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Horse_JumpingDown.000
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -2660,7 +2660,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4055202768959156522}
   - component: {fileID: 4055202768959156523}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Horse_WalkL.004
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -2744,7 +2744,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4055202768970025329}
   - component: {fileID: 4055202768970025230}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Horse_Run.006
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -2828,7 +2828,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4055202768979655124}
   - component: {fileID: 4055202768979655125}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: HorseWallSlide.001
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -2912,7 +2912,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4055202769006660762}
   - component: {fileID: 4055202769006660763}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Horse_RunToJump.000
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -2996,7 +2996,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4055202769026775542}
   - component: {fileID: 4055202769026775543}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Horse_JumpingUp.002
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -3080,7 +3080,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4055202769151475964}
   - component: {fileID: 4055202769151475965}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Horse_JumpingTop.000
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -3164,7 +3164,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4055202769164873254}
   - component: {fileID: 4055202769164873255}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Horse_Walk.007
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -3248,7 +3248,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4055202769252546767}
   - component: {fileID: 4055202769252546764}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Horse_Run.005
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -3332,7 +3332,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4055202769265675625}
   - component: {fileID: 4055202769265675622}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Horse_Walk.000 (1)
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -3416,7 +3416,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4055202769289661969}
   - component: {fileID: 4055202769289661998}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Horse_IdleL.002
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -3500,7 +3500,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4055202769337824586}
   - component: {fileID: 4055202769337824587}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Horse_JumpingTopL.000
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -3584,7 +3584,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4055202769448547727}
   - component: {fileID: 4055202769448547724}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Horse_Walk.002
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -3668,7 +3668,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4055202769451707128}
   - component: {fileID: 4055202769451707129}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Horse_WalkL.003
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -3755,7 +3755,7 @@ GameObject:
   - component: {fileID: 4055202769452008558}
   - component: {fileID: 4055202769452008556}
   - component: {fileID: -5326740505839518042}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: RHorsePlayerMain
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -3822,7 +3822,8 @@ Transform:
   - {fileID: 4055202768254128737}
   - {fileID: 4055202767696047981}
   - {fileID: 4055202769289661969}
-  - {fileID: 1677582688}
+  - {fileID: 3503410392242742345}
+  - {fileID: 4646071539192804352}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3957,7 +3958,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4055202769521556944}
   - component: {fileID: 4055202769521556945}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Horse_Run.007
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -4041,7 +4042,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4055202769589861310}
   - component: {fileID: 4055202769589861311}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Horse_WalkL.002
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -4125,7 +4126,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4055202769598305258}
   - component: {fileID: 4055202769598305259}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Horse_WalkL.006
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -4209,7 +4210,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4055202769609349009}
   - component: {fileID: 4055202769609349038}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Horse_Walk.006
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -4283,3 +4284,49 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &8219181911410961473
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4646071539192804352}
+  - component: {fileID: 2265834959788977711}
+  m_Layer: 12
+  m_Name: FootCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4646071539192804352
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8219181911410961473}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.9, z: 0}
+  m_LocalScale: {x: 0.9, y: 0.19999999, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4055202769452008529}
+  m_RootOrder: 49
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!64 &2265834959788977711
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8219181911410961473}
+  m_Material: {fileID: 13400000, guid: 495cdeeba5014e74d8841a419d36002d, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
