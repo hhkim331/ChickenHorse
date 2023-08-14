@@ -49,6 +49,7 @@ public class KHHPlayerMain : MonoBehaviour
         {
             isActive = false;
             isDie = true;
+            rPlayer.enabled = false;
         }
     }
 
