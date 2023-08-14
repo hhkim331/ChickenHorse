@@ -29,9 +29,22 @@ public class AirplaneShooter : MonoBehaviour
                 transform.gameObject.layer = LayerMask.NameToLayer("PartyBox");
             }
 
-            airplane.transform.position += Vector3.back*2;
+            airplane.transform.parent = stageObject.transform.parent;
+            // 발사 물체를 발사 위치에 놓는다.
+            airplane.transform.position = airPlaneFireTransform.position;
+            // 발사 물체의 옆 방향을 발사 위치의 옆 방향이다.
+            airplane.transform.right = airPlaneFireTransform.right;
+
+            airplane.transform.position += Vector3.back * 2;
 
             Destroy(airplane, 0.5f);
+        }
+        else
+        {
+            // 발사 물체를 발사 위치에 놓는다.
+            airplane.transform.position = airPlaneFireTransform.position;
+            // 발사 물체의 옆 방향을 발사 위치의 옆 방향이다.
+            airplane.transform.right = airPlaneFireTransform.right;
         }
     }
 }

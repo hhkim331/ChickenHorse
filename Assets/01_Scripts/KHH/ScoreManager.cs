@@ -15,6 +15,9 @@ public class Point
         Coin,
         Comeback,
         First,
+        Second,
+        Third,
+        Fourth,
         Length
     }
 
@@ -77,6 +80,8 @@ public class ScoreManager : MonoBehaviour
     //테스트용 플레이어
     public GameObject playerTest;
 
+    int goalNum = 0;
+
     private void Awake()
     {
         characterData = Resources.Load<CharacterData>("ScriptableObject/CharacterData");
@@ -109,11 +114,46 @@ public class ScoreManager : MonoBehaviour
         if (playerScoreDic.ContainsKey(scoreType) == false)
             playerScoreDic.Add(scoreType, new List<GameObject>());
         playerScoreDic[scoreType].Add(player);
+
+        if (scoreType == Point.PointType.Goal)
+        {
+            switch (goalNum)
+            {
+                case 0:
+                    playerScoreDic.Add(Point.PointType.First, new List<GameObject>());
+                    playerScoreDic[Point.PointType.First].Add(player);
+                    break;
+                case 1:
+                    playerScoreDic.Add(Point.PointType.Second, new List<GameObject>());
+                    playerScoreDic[Point.PointType.Second].Add(player);
+                    break;
+                case 2:
+                    playerScoreDic.Add(Point.PointType.Third, new List<GameObject>());
+                    playerScoreDic[Point.PointType.Third].Add(player);
+                    break;
+                case 3:
+                    playerScoreDic.Add(Point.PointType.Fourth, new List<GameObject>());
+                    playerScoreDic[Point.PointType.Fourth].Add(player);
+                    break;
+            }
+            goalNum++;
+        }
     }
 
     //점수 정산
     public void ScoreCalc()
     {
+        if (playerScoreDic.Count > 0)
+        {
+            if (playerScoreDic[Point.PointType.Goal].Count == 1)
+            {
+                playerScoreDic.Add(Point.PointType.Solo, new List<GameObject>());
+                playerScoreDic[Point.PointType.Solo].Add(playerScoreDic[Point.PointType.Goal][0]);
+                playerScoreDic[Point.PointType.First].Remove(playerScoreDic[Point.PointType.Goal][0]);
+                playerScoreDic.Remove(Point.PointType.First);
+            }
+        }
+
         StartCoroutine(ScoreCalcCoroutine());
     }
 
@@ -126,7 +166,7 @@ public class ScoreManager : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
         //플레이어 비활성화
-        foreach(var player in playerScore.Keys)
+        foreach (var player in playerScore.Keys)
         {
             player.SetActive(false);
         }
@@ -179,8 +219,9 @@ public class ScoreManager : MonoBehaviour
             noPointPaper.DOLocalRotate(new Vector3(0, 0, -90), 0.5f);
         }
 
-        //각각의 state에 맞게 점수계산
+        //점수관련 변수 초기화
         playerScoreDic.Clear();
+        goalNum = 0;
 
         //게임이 종료된 경우
         if (CheckGameEnd())
