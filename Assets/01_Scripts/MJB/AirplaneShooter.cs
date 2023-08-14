@@ -15,13 +15,23 @@ public class AirplaneShooter : MonoBehaviour
 
     private void FireAirplane()
     {
-        if (stageObject != null) if (!stageObject.IsPlay) return;
-
         //종이 발사 공장을 가동한다.
         GameObject airplane = Instantiate(airPlaneFactory);
         // 발사 물체를 발사 위치에 놓는다.
         airplane.transform.position = airPlaneFireTransform.position;
         // 발사 물체의 옆 방향을 발사 위치의 옆 방향이다.
         airplane.transform.right = airPlaneFireTransform.right;
+
+        if (!stageObject.IsPlay)
+        {
+            foreach (var transform in airplane.GetComponentsInChildren<Transform>())
+            {
+                transform.gameObject.layer = LayerMask.NameToLayer("PartyBox");
+            }
+
+            airplane.transform.position += Vector3.back*2;
+
+            Destroy(airplane, 0.5f);
+        }
     }
 }

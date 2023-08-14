@@ -17,13 +17,20 @@ public class ArrowShooter : MonoBehaviour
 
     private void FireArrow()
     {
-        if (stageObject != null) if (!stageObject.IsPlay) return;
-
         // 화살 발사 공장을 가동한다.
         GameObject arrow = Instantiate(arrowFactory);
         // 발사 물체를 발사 위치에 놓는다.
         arrow.transform.position = arrowFireTransform.position;
         // 발사 물체의 위 방향을 발사 위치의 위 방향이다.
         arrow.transform.up = arrowFireTransform.up;
+
+        if (!stageObject.IsPlay)
+        {
+            foreach(var transform in arrow.GetComponentsInChildren<Transform>())
+            {
+                transform.gameObject.layer = LayerMask.NameToLayer("PartyBox");
+            }
+            Destroy(arrow, 0.5f);
+        }
     }
 }
