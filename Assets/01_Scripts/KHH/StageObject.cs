@@ -1,10 +1,10 @@
 ﻿using DG.Tweening;
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.XR;
 
-public class StageObject : MonoBehaviour
+public class StageObject : MonoBehaviourPun, IPunObservable
 {
     public StageObjectData objectData;
 
@@ -23,8 +23,7 @@ public class StageObject : MonoBehaviour
     public Transform rendererTransform; //스케일 조정을 위한 현재 오브젝트의 메쉬
     Vector3 rendererDefaultScale;   //메쉬의 기본 스케일
 
-    // Start is called before the first frame update
-    public void Set()
+    public void FixedSet()
     {
         if (objectData.objectType == StageObjectData.ObjectType.Fixed)
         {
@@ -35,6 +34,20 @@ public class StageObject : MonoBehaviour
                         objectData.objectTileList.Add(new Vector2(i, j));
             }
         }
+        //if (rendererTransform != null)
+        //    rendererDefaultScale = rendererTransform.localScale;
+    }
+
+    public void Set(Vector3 newPos)
+    {
+        photonView.RPC("SetRPC", RpcTarget.All, newPos);
+    }
+
+    [PunRPC]
+    void SetRPC( Vector3 newPos)
+    {
+        transform.localScale = Vector3.one * 0.75f;
+        transform.position = newPos;
 
         if (rendererTransform != null)
             rendererDefaultScale = rendererTransform.localScale;
@@ -43,25 +56,6 @@ public class StageObject : MonoBehaviour
         foreach (Transform item in GetComponentsInChildren<Transform>())
             item.gameObject.layer = LayerMask.NameToLayer("PartyBox");
     }
-
-    //// Update is called once per frame
-    //void Update()
-    //{
-    //    if (objectData.objectType == StageObjectData.ObjectType.Fixed) return;
-
-    //    if (KHHGameManager.instance.state == KHHGameManager.GameState.Select)
-    //    {
-    //        //Select();
-    //    }
-    //    else if (KHHGameManager.instance.state == KHHGameManager.GameState.Place && !isPlace)
-    //    {
-    //        //Place();
-    //        if (isPlace == false)
-    //        {
-    //            Move();
-    //        }
-    //    }
-    //}
 
     /// <summary>
     /// 포커스
@@ -77,7 +71,7 @@ public class StageObject : MonoBehaviour
             if (rendererTransform != null)
                 rendererTransform.DOScale(rendererDefaultScale * 1.2f, 0.3f);
 
-            if (animators.Length>0)
+            if (animators.Length > 0)
             {
                 foreach (var anim in animators)
                 {
@@ -108,7 +102,12 @@ public class StageObject : MonoBehaviour
     public void Select(Transform cursorTr)
     {
         if (objectData.objectType == StageObjectData.ObjectType.Fixed) return;
+        photonView.RPC("SelectRPC", RpcTarget.All, cursorTr);
+    }
 
+    [PunRPC]
+    void SelectRPC(Transform cursorTr)
+    {
         cursor = cursorTr;
         transform.parent = null;
         transform.localScale = Vector3.one;
@@ -206,6 +205,12 @@ public class StageObject : MonoBehaviour
     /// </summary>
     public void Rotate()
     {
+        photonView.RPC(nameof(RotateRPC), RpcTarget.All);
+    }
+
+    [PunRPC]
+    void RotateRPC()
+    {
         switch (objectData.objectRotType)
         {
             case StageObjectData.ObjectRotType.Spin:
@@ -252,10 +257,7 @@ public class StageObject : MonoBehaviour
         transform.Rotate(new Vector3(0, 180, 0));
     }
 
-    /// <summary>
-    /// 오브젝트 배치
-    /// </summary>
-    public void Place()
+    public void FixedPlace()
     {
         isPlace = true;
         for (int i = 0; i < objectData.objectTileList.Count; i++)
@@ -264,13 +266,43 @@ public class StageObject : MonoBehaviour
                 transform.position.y + objectData.objectLeftBottomPos.y + objectData.objectTileList[i].y);
             MapManager.instance.mapObjectDic[tilePos] = this;
         }
+    }
+
+    /// <summary>
+    /// 오브젝트 배치
+    /// </summary>
+    public void Place()
+    {
+        photonView.RPC(nameof(PlaceRPC), RpcTarget.All, transform.position);
+    }
+
+    [PunRPC]
+    void PlaceRPC(Vector3 pos)
+    {
+        isPlace = true;
+        transform.position = pos;
+        for (int i = 0; i < objectData.objectTileList.Count; i++)
+        {
+            Vector2 tilePos = new Vector2(pos.x + objectData.objectLeftBottomPos.x + objectData.objectTileList[i].x,
+                pos.y + objectData.objectLeftBottomPos.y + objectData.objectTileList[i].y);
+            MapManager.instance.mapObjectDic[tilePos] = this;
+        }
 
         //해당 오브젝트의 모든 레이어를 Default로 변경
         foreach (Transform item in GetComponentsInChildren<Transform>())
             item.gameObject.layer = LayerMask.NameToLayer("Default");
     }
 
+    /// <summary>
+    /// 오브젝트 동작
+    /// </summary>
     public void Play()
+    {
+        photonView.RPC(nameof(PlayRPC), RpcTarget.All);
+    }
+
+    [PunRPC]
+    void PlayRPC()
     {
         isPlay = true;
         if (animators.Length > 0)
@@ -282,7 +314,16 @@ public class StageObject : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 오브젝트 동작 정지
+    /// </summary>
     public void Stop()
+    {
+        photonView.RPC(nameof(StopRPC), RpcTarget.All);
+    }
+
+    [PunRPC]
+    void StopRPC()
     {
         isPlay = false;
         if (animators.Length > 0)
@@ -292,6 +333,18 @@ public class StageObject : MonoBehaviour
                 anim.Rebind();
                 anim.enabled = false;
             }
+        }
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting) //데이터를 보내는 중
+        {
+            stream.SendNext(transform.position);
+        }
+        else //데이터를 받는 중
+        {
+            transform.position = (Vector3)stream.ReceiveNext();
         }
     }
 }

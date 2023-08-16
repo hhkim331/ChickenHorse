@@ -16,16 +16,16 @@ MonoBehaviour:
   - characterType: 0
     characterImage: {fileID: 21300000, guid: 6a7f4cc2b1189314395eb22a52c72d7f, type: 3}
     characterName: "\uB9D0"
-    characterPrefab: {fileID: 0}
+    prefabDirectory: RHorsePlayerMain
   - characterType: 1
     characterImage: {fileID: 21300000, guid: 6a8f5241c49fdc44f8aa8bc6a6673fba, type: 3}
     characterName: "\uB2ED"
-    characterPrefab: {fileID: 0}
+    prefabDirectory: RHorsePlayerMain
   - characterType: 2
     characterImage: {fileID: 21300000, guid: 30051f1a9f59dbf489c3c9e4ce666008, type: 3}
-    characterName: "\uB2ED"
-    characterPrefab: {fileID: 0}
+    characterName: "\uC591"
+    prefabDirectory: RHorsePlayerMain
   - characterType: 3
     characterImage: {fileID: 21300000, guid: dcf411f4dfd828e409ccdad946bd4809, type: 3}
-    characterName: "\uB2ED"
-    characterPrefab: {fileID: 0}
+    characterName: "\uB77C\uCFE4"
+    prefabDirectory: RHorsePlayerMain

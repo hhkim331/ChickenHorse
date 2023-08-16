@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,12 +8,14 @@ public class PartyBox : MonoBehaviour
     TotalStageObjectData totalStageObjectData;
     List<StageObject> stageObjects;
 
+    [SerializeField] GameObject box;
+
     [Header("자리배치")]
     [SerializeField] Transform[] fourSeats;
     [SerializeField] Transform[] fiveSeats;
     [SerializeField] Transform[] sixSeats;
 
-    [Header("연출용")] //나중에 애니메이터로 바꿔야함
+    [Header("연출용")]
     [SerializeField] Transform topLeft;
     [SerializeField] Transform topRight;
     [SerializeField] Transform topBlankLeft;
@@ -24,40 +27,45 @@ public class PartyBox : MonoBehaviour
     {
         totalStageObjectData = Resources.Load<TotalStageObjectData>("ScriptableObject/TotalStageObjectData");
         stageObjects = new List<StageObject>();
-        animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
+    //// Update is called once per frame
+    //void Update()
+    //{
+    //}
 
     public void SetBox()
     {
-        int randCount = Random.Range(4, 7);
-        for (int i = 0; i < randCount; i++)
+        if (PhotonNetwork.LocalPlayer.IsMasterClient)
         {
-            int randItem = Random.Range(0, totalStageObjectData.stageObjectDataList.Count);
-            GameObject go = Instantiate(totalStageObjectData.stageObjectDataList[randItem], transform);
-            go.transform.localScale = Vector3.one * 0.5f;
-            //자리배치
-            if (randCount == 4)
-                go.transform.localPosition = fourSeats[i].localPosition;
-            else if (randCount == 5)
-                go.transform.localPosition = fiveSeats[i].localPosition;
-            else if (randCount == 6)
-                go.transform.localPosition = sixSeats[i].localPosition;
+            int randCount = Random.Range(4, 7);
+            for (int i = 0; i < randCount; i++)
+            {
+                int randItem = Random.Range(0, totalStageObjectData.stageObjectDataList.Count);
+                GameObject go = PhotonNetwork.Instantiate(totalStageObjectData.stageObjectDataList[randItem].name, Vector3.zero, Quaternion.identity);
 
-            StageObject stageObject = go.GetComponent<StageObject>();
-            stageObject.Set();
-            stageObjects.Add(stageObject);
+                Vector3 newPos = Vector3.zero;
+                //자리배치
+                if (randCount == 4)
+                    newPos = fourSeats[i].position;
+                else if (randCount == 5)
+                    newPos = fiveSeats[i].position;
+                else if (randCount == 6)
+                    newPos = sixSeats[i].position;
+
+                StageObject stageObject = go.GetComponent<StageObject>();
+                stageObject.Set(newPos);
+                stageObjects.Add(stageObject);
+            }
         }
+
+        Open();
     }
 
-    public void Open()
+    void Open()
     {
-        gameObject.SetActive(true);
+        box.SetActive(true);
         topLeft.gameObject.SetActive(false);
         topRight.gameObject.SetActive(false);
         topBlankLeft.gameObject.SetActive(false);
@@ -69,7 +77,7 @@ public class PartyBox : MonoBehaviour
 
     public void ActiveCursor()
     {
-        MainGameManager.instance.cursors[0].Active();
+        MainGameManager.instance.MyCursor.Active();
     }
 
     public void Close()
@@ -82,7 +90,8 @@ public class PartyBox : MonoBehaviour
     /// </summary>
     public void RemoveItem(StageObject stageObject)
     {
-        stageObjects.Remove(stageObject);
+        if (PhotonNetwork.LocalPlayer.IsMasterClient)
+            stageObjects.Remove(stageObject);
     }
 
     /// <summary>
@@ -90,12 +99,15 @@ public class PartyBox : MonoBehaviour
     /// </summary>
     void RemoveItemAll()
     {
-        foreach (var item in stageObjects)
+        if (PhotonNetwork.LocalPlayer.IsMasterClient)
         {
-            Destroy(item.gameObject);
+            foreach (var item in stageObjects)
+            {
+                PhotonNetwork.Destroy(item.gameObject);
+            }
+            stageObjects.Clear();
         }
-        stageObjects.Clear();
 
-        gameObject.SetActive(false);
+        box.SetActive(false);
     }
 }

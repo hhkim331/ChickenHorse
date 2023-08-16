@@ -27,7 +27,7 @@ public class FollowCamera : MonoBehaviour
     float cameraMaxSize;
 
     Vector2 mapSize;
-    List<KHHPlayerMain> players = new List<KHHPlayerMain>();
+    List<KHHPlayerMain> playerMains = new List<KHHPlayerMain>();
     List<UserCursor> playerCursors = new List<UserCursor>();
 
     public void Init(Vector2 mapSize)
@@ -43,13 +43,9 @@ public class FollowCamera : MonoBehaviour
         //    cameraMaxSize = cameraMinSize;
     }
 
-    public void Set(List<GameObject> playerObjs, List<UserCursor> cursors)
+    public void Set(List<KHHPlayerMain> players, List<UserCursor> cursors)
     {
-        for (int i = 0; i < playerObjs.Count; i++)
-        {
-            players.Add(playerObjs[i].GetComponent<KHHPlayerMain>());
-        }
-
+        playerMains = players;
         playerCursors = cursors;
     }
 
@@ -125,22 +121,22 @@ public class FollowCamera : MonoBehaviour
         float maxDistance = 0;
         float playerDistance = 0;
         Vector3 playersCenterPos = Vector3.zero;
-        for (int i = 0; i < players.Count; i++)
+        for (int i = 0; i < playerMains.Count; i++)
         {
-            if (players[i] == null)
+            if (playerMains[i] == null)
                 continue;
-            if (!players[i].IsActive)
+            if (!playerMains[i].IsActive)
                 continue;
 
             activePlayerCount++;
-            playersCenterPos += players[i].transform.position;
+            playersCenterPos += playerMains[i].transform.position;
 
-            distance = Vector3.Distance(players[i].transform.position, cameraCenterPos);
+            distance = Vector3.Distance(playerMains[i].transform.position, cameraCenterPos);
             if (distance > maxDistance)
                 maxDistance = distance;
-            for (int j = i + 1; j < players.Count; j++)
+            for (int j = i + 1; j < playerMains.Count; j++)
             {
-                distance = Vector3.Distance(players[i].transform.position, players[j].transform.position);
+                distance = Vector3.Distance(playerMains[i].transform.position, playerMains[j].transform.position);
                 if (distance > maxDistance)
                     maxDistance = distance;
                 if (distance > playerDistance)

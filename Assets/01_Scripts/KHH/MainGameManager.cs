@@ -1,5 +1,6 @@
 ﻿using DG.Tweening;
 using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,25 +14,31 @@ public class MainGameManager : MonoBehaviourPunCallbacks
     public ScoreManager ScoreMgr { get { return scoreMgr; } }
 
     [SerializeField] FollowCamera followCamera;
+    [SerializeField] Camera mainCamera;
+    [SerializeField] Camera partyBoxCamera;
+    [SerializeField] Camera cursorCamera;
     [SerializeField] MapManager mapMgr;
 
     //좌표격자
     public SpriteRenderer[] graphSprites;
     public SpriteRenderer[] graphFadeSprites;
     public PartyBox partyBox;
-    public List<UserCursor> cursors;
+
+    List<UserCursor> cursors;
+    UserCursor myCursor;
+    public UserCursor MyCursor { get { return myCursor; } }
 
     Vector3 startPos;
 
     public int myCharacterIndex;
-    public GameObject[] playerPrefab;
+    //public GameObject[] playerPrefab;
 
     //텍스트
     [SerializeField] GameObject readyTextObject;
 
     //활성화 플레이어
-    public GameObject myPlayer;
-    List<GameObject> playerList = new List<GameObject>();
+    List<KHHPlayerMain> players;
+    KHHPlayerMain myPlayer;
     List<StageObject> stageObjects = new List<StageObject>();
 
     public enum GameState
@@ -51,53 +58,79 @@ public class MainGameManager : MonoBehaviourPunCallbacks
     }
 
     // Start is called before the first frame update
-    void Start()
+    IEnumerator Start()
     {
-        //Character myCharacter = PlayerData.instance.PlayerCharacterDic[photonView.Owner.ActorNumber];
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = false;
+        followCamera.State = FollowCamera.CameraState.FullScreen;
 
-        ////나의 Player 생성
-        //PhotonNetwork.Instantiate("Player", spawnPos[idx], Quaternion.identity);
-
-
-
+        Init();
         partyBox.Init();
-
-        //자신의 커서 생성
-        //커서 비활성화
-        cursors[0].Deactive();
-
         startPos = new Vector3(MapManager.instance.startBlock.transform.position.x, MapManager.instance.startBlock.transform.position.y, 0);
 
-        ChangeState(GameState.Select);
-        CreatePlayer();
-
         followCamera.Init(mapMgr.mapSize);
-        followCamera.Set(playerList, cursors);
+        followCamera.Set(players, cursors);
 
         scoreMgr = GetComponent<ScoreManager>();
-        scoreMgr.playerTest = myPlayer;
+        scoreMgr.playerTest = myPlayer.gameObject;
         scoreMgr.Init();
+
+        yield return new WaitForSeconds(1f);
+
+        cursors = new List<UserCursor>(FindObjectsOfType<UserCursor>());
+        players = new List<KHHPlayerMain>(FindObjectsOfType<KHHPlayerMain>());
+
+        if (PhotonNetwork.LocalPlayer.IsMasterClient)
+            photonView.RPC(nameof(ChangeState), RpcTarget.All, GameState.Select);
     }
 
-    void CreatePlayer()
+    void Init()
     {
-        //플레이어 생성
-        myPlayer = Instantiate(playerPrefab[myCharacterIndex]);
-        myPlayer.SetActive(false);
-        playerList.Add(myPlayer);
+        Character myCharacter = PlayerData.instance.PlayerCharacterDic[photonView.Owner.ActorNumber];
+
+        //자신의 커서 생성
+        myCursor = PhotonNetwork.Instantiate("UserCursor" + myCharacter.characterType, Vector3.zero, Quaternion.identity).GetComponent<UserCursor>();
+        myCursor.Init(mainCamera, partyBoxCamera, cursorCamera);
+        myCursor.Deactive();
+
+        //나의 Player 생성
+        myPlayer = PhotonNetwork.Instantiate(myCharacter.prefabDirectory, Vector3.zero, Quaternion.identity).GetComponent<KHHPlayerMain>();
+        myPlayer.gameObject.SetActive(false);
     }
+
+    //void CreatePlayer()
+    //{
+    //    //플레이어 생성
+    //    myPlayer = Instantiate(playerPrefab[myCharacterIndex]);
+    //}
 
     private void Update()
     {
+        if (!photonView.Owner.IsMasterClient) return;
+
         switch (state)
         {
             case GameState.Select:
-                if (cursors[0].IsSelect)
-                    ChangeState(GameState.Place);
+                bool allSelect = true;
+                foreach (var cursor in cursors)
+                    if (!cursor.IsSelect)
+                    {
+                        allSelect = false;
+                        break;
+                    }
+                if (allSelect)
+                    photonView.RPC(nameof(ChangeState), RpcTarget.All, GameState.Place);
                 break;
             case GameState.Place:
-                if (cursors[0].IsPlace)
-                    ChangeState(GameState.Play);
+                bool allPlace = true;
+                foreach (var cursor in cursors)
+                    if (!cursor.IsPlace)
+                    {
+                        allPlace = false;
+                        break;
+                    }
+                if (allPlace)
+                    photonView.RPC(nameof(ChangeState), RpcTarget.All, GameState.Play);
                 break;
             case GameState.Play:
                 UpdatePlay();
@@ -111,31 +144,48 @@ public class MainGameManager : MonoBehaviourPunCallbacks
 
     void UpdatePlay()
     {
-        //모든 플레이어가 준비가 되었는지 확인
-        if (!myPlayer.activeSelf) return;
+        ////모든 플레이어가 준비가 되었는지 확인
+        //if (!myPlayer.gameObject.activeSelf) return;
 
         //플레이어 움직임 활성화
 
         //플레이어 상태 확인
-        bool allActive = false;
-        foreach (var player in playerList)
-            if (player.GetComponent<KHHPlayerMain>().IsActive)
+        bool isActivePlayer = false;
+        foreach (var player in players)
+            if (player.IsActive)
             {
-                allActive = true;
+                isActivePlayer = true;
                 break;
             }
 
         //모든 플레이어가 못움직일때
-        if (!allActive)
+        if (!isActivePlayer)
         {
-            if (myPlayer.GetComponent<KHHPlayerMain>().isGoal)
-                followCamera.SetGoal(new List<GameObject>() { myPlayer });
-
-
-            ChangeState(GameState.Score);
+            photonView.RPC(nameof(CurPlayEnd), RpcTarget.All);
         }
     }
 
+    [PunRPC]
+    void CurPlayEnd()
+    {
+        bool isGoal = false;
+        foreach (var player in players)
+        {
+            if (player.isGoal)
+            {
+                isGoal = true;
+                break;
+            }
+        }
+
+        if (isGoal)
+            followCamera.SetGoal(new List<GameObject>() { myPlayer.gameObject });
+
+        ChangeState(GameState.Score);
+    }
+
+
+    [PunRPC]
     public void ChangeState(GameState state)
     {
         this.state = state;
@@ -147,9 +197,8 @@ public class MainGameManager : MonoBehaviourPunCallbacks
                     sprite.DOFade(1, 0.5f);
                 foreach (var sprite in graphFadeSprites)
                     sprite.DOFade(0.2f, 0.5f);
-                cursors[0].Set();
+                myCursor.Set();
                 partyBox.SetBox();
-                partyBox.Open();
                 break;
             case GameState.Place:
                 followCamera.State = FollowCamera.CameraState.Place;
@@ -178,7 +227,7 @@ public class MainGameManager : MonoBehaviourPunCallbacks
     //플레이어 초기화
     void ResetPlayer()
     {
-        myPlayer.SetActive(true);
+        myPlayer.gameObject.SetActive(true);
         myPlayer.transform.position = startPos;
         myPlayer.GetComponent<Rigidbody>().velocity = Vector3.zero;
         myPlayer.GetComponent<KHHPlayerMain>().ResetPlayer();
@@ -195,7 +244,7 @@ public class MainGameManager : MonoBehaviourPunCallbacks
 
     void End()
     {
-        myPlayer.SetActive(true);  //우승 플레이어만 활성화
+        myPlayer.gameObject.SetActive(true);  //우승 플레이어만 활성화
         followCamera.SetEnd(myPlayer.transform.position);
     }
 
@@ -219,5 +268,13 @@ public class MainGameManager : MonoBehaviourPunCallbacks
     {
         foreach (var stageObject in stageObjects)
             stageObject.Stop();
+    }
+
+    //새로운 인원이 방에 들어왔을때 호출되는 함수
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        base.OnPlayerEnteredRoom(newPlayer);
+
+        print(newPlayer.NickName + "님이 들어왔습니다!");
     }
 }

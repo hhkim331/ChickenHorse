@@ -35,14 +35,14 @@ public class MapManager : MonoBehaviour
             }
         }
 
-        startBlock.Set();
-        startBlock.Place();
-        endBlock.Set();
-        endBlock.Place();
+        startBlock.FixedSet();
+        startBlock.FixedPlace();
+        endBlock.FixedSet();
+        endBlock.FixedPlace();
         for (int i = 0; i < fixedObjects.Length; i++)
         {
-            fixedObjects[i].Set();
-            fixedObjects[i].Place();
+            fixedObjects[i].FixedSet();
+            fixedObjects[i].FixedPlace();
             objectList.Add(fixedObjects[i]);
         }
 
