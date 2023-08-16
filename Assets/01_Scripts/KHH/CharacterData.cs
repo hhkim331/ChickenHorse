@@ -7,8 +7,10 @@ public class Character
 {
     public enum CharacterType
     {
-        Horse,
-        Chicken,
+        Horse,      //기본
+        Chicken,    //red
+        Sheep,      //green
+        Racoon      //blue
     }
     public CharacterType characterType;
     public Sprite characterImage;

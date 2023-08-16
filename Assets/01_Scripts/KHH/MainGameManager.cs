@@ -1,12 +1,13 @@
 ﻿using DG.Tweening;
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class KHHGameManager : MonoBehaviour
+public class MainGameManager : MonoBehaviourPunCallbacks
 {
-    public static KHHGameManager instance;
+    public static MainGameManager instance;
 
     ScoreManager scoreMgr;
     public ScoreManager ScoreMgr { get { return scoreMgr; } }
@@ -52,6 +53,13 @@ public class KHHGameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Character myCharacter = PlayerData.instance.PlayerCharacterDic[photonView.Owner.ActorNumber];
+
+        ////나의 Player 생성
+        //PhotonNetwork.Instantiate("Player", spawnPos[idx], Quaternion.identity);
+
+
+
         partyBox.Init();
 
         //자신의 커서 생성

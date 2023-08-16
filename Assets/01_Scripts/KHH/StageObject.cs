@@ -123,7 +123,7 @@ public class StageObject : MonoBehaviour
         foreach (Transform item in GetComponentsInChildren<Transform>())
             item.gameObject.layer = LayerMask.NameToLayer("Default");
 
-        KHHGameManager.instance.partyBox.RemoveItem(this);
+        MainGameManager.instance.partyBox.RemoveItem(this);
 
         if (animators.Length > 0)
         {

@@ -229,12 +229,12 @@ public class ScoreManager : MonoBehaviour
             yield return new WaitForSeconds(0.3f);
             winnerObj.SetActive(true);
             winnerCharacterText.text = playerInfos[0].Character.characterName;
-            KHHGameManager.instance.ChangeState(KHHGameManager.GameState.End);
+            MainGameManager.instance.ChangeState(MainGameManager.GameState.End);
         }
         else
         {
             yield return new WaitForSeconds(0.5f);
-            KHHGameManager.instance.ChangeState(KHHGameManager.GameState.Select);
+            MainGameManager.instance.ChangeState(MainGameManager.GameState.Select);
         }
     }
 

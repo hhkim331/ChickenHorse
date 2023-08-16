@@ -69,7 +69,7 @@ public class PartyBox : MonoBehaviour
 
     public void ActiveCursor()
     {
-        KHHGameManager.instance.cursors[0].Active();
+        MainGameManager.instance.cursors[0].Active();
     }
 
     public void Close()

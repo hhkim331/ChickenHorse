@@ -61,7 +61,7 @@ public class KHHPlayerMain : MonoBehaviour
             isActive = false;
             isGoal = true;
             rPlayer.enabled = false;
-            KHHGameManager.instance.ScoreMgr.GetScore(Point.PointType.Goal, gameObject);
+            MainGameManager.instance.ScoreMgr.GetScore(Point.PointType.Goal, gameObject);
         }
     }
 }

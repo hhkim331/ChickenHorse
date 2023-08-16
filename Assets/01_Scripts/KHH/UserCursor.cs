@@ -35,7 +35,7 @@ public class UserCursor : MonoBehaviour
         //Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         //mousePos.z = -15;
         transform.position = new Vector3(transform.position.x + x, transform.position.y + y, -15);
-        if (KHHGameManager.instance.state == KHHGameManager.GameState.Select && !isSelect)
+        if (MainGameManager.instance.state == MainGameManager.GameState.Select && !isSelect)
         {
             Vector3 screenPoint = cursorCamera.WorldToScreenPoint(transform.position);
             Vector3 rayPoint = partyBoxCamera.ScreenToWorldPoint(screenPoint);
@@ -74,7 +74,7 @@ public class UserCursor : MonoBehaviour
                 Deactive();
             }
         }
-        else if (KHHGameManager.instance.state == KHHGameManager.GameState.Place && !isPlace)
+        else if (MainGameManager.instance.state == MainGameManager.GameState.Place && !isPlace)
         {
             myObject.Move(new Vector2(transform.position.x, transform.position.y));
             if (myObject.CanPlace)
@@ -86,7 +86,7 @@ public class UserCursor : MonoBehaviour
             if (Input.GetMouseButtonDown(0) && myObject.CanPlace)   //배치
             {
                 myObject.Place();
-                KHHGameManager.instance.AddStageObject(myObject);
+                MainGameManager.instance.AddStageObject(myObject);
                 myObject = null;
                 isPlace = true;
                 Deactive();
@@ -110,9 +110,9 @@ public class UserCursor : MonoBehaviour
     public void Active()
     {
         gameObject.SetActive(true);
-        if (KHHGameManager.instance.state == KHHGameManager.GameState.Select)
+        if (MainGameManager.instance.state == MainGameManager.GameState.Select)
             transform.localScale = Vector3.one * 7.5f;
-        else if (KHHGameManager.instance.state == KHHGameManager.GameState.Place)
+        else if (MainGameManager.instance.state == MainGameManager.GameState.Place)
         {
             transform.localScale = Vector3.one * 5f;
             myObject.gameObject.SetActive(true);
