@@ -246,6 +246,7 @@ GameObject:
   - component: {fileID: 9054597370750853150}
   - component: {fileID: 787943328827166744}
   - component: {fileID: -7032150144390333265}
+  - component: {fileID: 3236153301294800824}
   m_Layer: 0
   m_Name: Stair
   m_TagString: Untagged
@@ -299,6 +300,13 @@ MonoBehaviour:
     objectPickUpPos: {x: -0.5, y: -0.5}
     objectRotAxis: {x: 1.5, y: 1.5}
   cursor: {fileID: 0}
+  objs:
+  - {fileID: 9054597370918684169}
+  - {fileID: 5883658297869205023}
+  - {fileID: 1505209574081050742}
+  - {fileID: 4375360915938574609}
+  - {fileID: 2198665932106414488}
+  - {fileID: 9054597371038117218}
   animators: []
   rendererTransform: {fileID: 9054597371038117220}
 --- !u!114 &-7032150144390333265
@@ -317,12 +325,30 @@ MonoBehaviour:
   Group: 0
   prefixField: -1
   Synchronization: 3
-  OwnershipTransfer: 0
+  OwnershipTransfer: 1
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 787943328827166744}
+  - {fileID: 3236153301294800824}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &3236153301294800824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9054597370750853151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 1
+  m_UseLocal: 1
 --- !u!1 &9054597370918684169
 GameObject:
   m_ObjectHideFlags: 0

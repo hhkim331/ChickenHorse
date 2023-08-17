@@ -80,9 +80,9 @@ public class UserCursor : MonoBehaviourPun, IPunObservable
                 //선택
                 if (myObject != null && Input.GetMouseButtonDown(0))
                 {
-                    myObject.Select(transform);
+                    myObject.Select(transform, photonView.Owner);
                     isSelect = true;
-                    Deactive();
+                    Active(false);
                 }
             }
             else if (MainGameManager.instance.state == MainGameManager.GameState.Place && !isPlace)
@@ -100,7 +100,7 @@ public class UserCursor : MonoBehaviourPun, IPunObservable
                     MainGameManager.instance.AddStageObject(myObject);
                     myObject = null;
                     isPlace = true;
-                    Deactive();
+                    Active(false);
                 }
 
                 if (Input.GetMouseButtonDown(1))    //회전
@@ -123,24 +123,46 @@ public class UserCursor : MonoBehaviourPun, IPunObservable
     }
 
     //커서 활성화
-    public void Active()
+    public void Active(bool active)
     {
-        isActive = true;
-        spriteRenderer.gameObject.SetActive(true);
-        if (MainGameManager.instance.state == MainGameManager.GameState.Select)
-            transform.localScale = Vector3.one * 7.5f;
-        else if (MainGameManager.instance.state == MainGameManager.GameState.Place)
+        if (active)
         {
-            transform.localScale = Vector3.one * 5f;
-            myObject.gameObject.SetActive(true);
+            isActive = true;
+            spriteRenderer.gameObject.SetActive(true);
+            if (MainGameManager.instance.state == MainGameManager.GameState.Select)
+                transform.localScale = Vector3.one * 7.5f;
+            else if (MainGameManager.instance.state == MainGameManager.GameState.Place)
+            {
+                transform.localScale = Vector3.one * 5f;
+                myObject.Active(true);
+            }
         }
+        else
+        {
+            isActive = false;
+            spriteRenderer.gameObject.SetActive(false);
+        }
+
+        photonView.RPC(nameof(ActiveRPC), RpcTarget.Others, active);
     }
 
-    //커서 비활성화
-    public void Deactive()
+    [PunRPC]
+    void ActiveRPC(bool active)
     {
-        isActive = false;
-        spriteRenderer.gameObject.SetActive(false);
+        if (active)
+        {
+            isActive = true;
+            spriteRenderer.gameObject.SetActive(true);
+            if (MainGameManager.instance.state == MainGameManager.GameState.Select)
+                transform.localScale = Vector3.one * 7.5f;
+            else if (MainGameManager.instance.state == MainGameManager.GameState.Place)
+                transform.localScale = Vector3.one * 5f;
+        }
+        else
+        {
+            isActive = false;
+            spriteRenderer.gameObject.SetActive(false);
+        }
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

@@ -64,14 +64,13 @@ public class MainGameManager : MonoBehaviourPunCallbacks
     {
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = false;
-        followCamera.State = FollowCamera.CameraState.FullScreen;
 
         Init();
         partyBox.Init();
         startPos = new Vector3(MapManager.instance.startBlock.transform.position.x, MapManager.instance.startBlock.transform.position.y, 0);
 
+        followCamera.State = FollowCamera.CameraState.FullScreen;
         followCamera.Init(mapMgr.mapSize);
-        followCamera.Set(players, cursors);
 
         scoreMgr = GetComponent<ScoreManager>();
         scoreMgr.playerTest = myPlayer.gameObject;
@@ -81,6 +80,8 @@ public class MainGameManager : MonoBehaviourPunCallbacks
 
         cursors = new List<UserCursor>(FindObjectsOfType<UserCursor>());
         players = new List<KHHPlayerMain>(FindObjectsOfType<KHHPlayerMain>());
+
+        followCamera.Set(players, cursors);
 
         if (PhotonNetwork.LocalPlayer.IsMasterClient)
             photonView.RPC(nameof(ChangeState), RpcTarget.All, GameState.Select);
@@ -93,7 +94,7 @@ public class MainGameManager : MonoBehaviourPunCallbacks
         //자신의 커서 생성
         myCursor = PhotonNetwork.Instantiate("UserCursor" + myCharacter.characterType, Vector3.zero, Quaternion.identity).GetComponent<UserCursor>();
         myCursor.Init(mainCamera, partyBoxCamera, cursorCamera);
-        myCursor.Deactive();
+        myCursor.Active(false);
 
         //나의 Player 생성
         myPlayer = PhotonNetwork.Instantiate(myCharacter.prefabDirectory, Vector3.zero, Quaternion.identity).GetComponent<KHHPlayerMain>();

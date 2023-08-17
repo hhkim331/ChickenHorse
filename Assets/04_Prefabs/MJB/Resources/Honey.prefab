@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1075158186154254251}
   - component: {fileID: 8582982599604594047}
   - component: {fileID: 8330628119941617425}
+  - component: {fileID: -402926467822078707}
   m_Layer: 0
   m_Name: Honey
   m_TagString: Untagged
@@ -57,6 +58,9 @@ MonoBehaviour:
     objectPickUpPos: {x: 0, y: 0}
     objectRotAxis: {x: 0, y: 0}
   cursor: {fileID: 0}
+  objs:
+  - {fileID: 1075158186493036058}
+  - {fileID: 1075158188231016649}
   animators: []
   rendererTransform: {fileID: 1075158186493036056}
 --- !u!114 &8330628119941617425
@@ -75,12 +79,30 @@ MonoBehaviour:
   Group: 0
   prefixField: -1
   Synchronization: 3
-  OwnershipTransfer: 0
+  OwnershipTransfer: 1
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 8582982599604594047}
+  - {fileID: -402926467822078707}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &-402926467822078707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1075158186154254250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 1
+  m_UseLocal: 1
 --- !u!1 &1075158186493036058
 GameObject:
   m_ObjectHideFlags: 0

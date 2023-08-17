@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2821429717249912519}
   - component: {fileID: 3065396742015457096}
   - component: {fileID: -6098719029036463872}
+  - component: {fileID: 8428787751732542864}
   m_Layer: 0
   m_Name: barbWire
   m_TagString: Untagged
@@ -58,6 +59,9 @@ MonoBehaviour:
     objectPickUpPos: {x: 0, y: 0}
     objectRotAxis: {x: 0, y: 0}
   cursor: {fileID: 0}
+  objs:
+  - {fileID: 2821429718619226294}
+  - {fileID: 2821429718642478466}
   animators: []
   rendererTransform: {fileID: 2821429718619226297}
 --- !u!114 &-6098719029036463872
@@ -76,12 +80,30 @@ MonoBehaviour:
   Group: 0
   prefixField: -1
   Synchronization: 3
-  OwnershipTransfer: 0
+  OwnershipTransfer: 1
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 3065396742015457096}
+  - {fileID: 8428787751732542864}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &8428787751732542864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2821429717249912516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 1
+  m_UseLocal: 1
 --- !u!1 &2821429718619226294
 GameObject:
   m_ObjectHideFlags: 0

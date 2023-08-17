@@ -122,6 +122,7 @@ GameObject:
   - component: {fileID: 8489316778674236758}
   - component: {fileID: 3049547825145238901}
   - component: {fileID: -1905371421229994993}
+  - component: {fileID: 8385233477803998932}
   m_Layer: 0
   m_Name: SunCoin
   m_TagString: Untagged
@@ -168,6 +169,9 @@ MonoBehaviour:
     objectPickUpPos: {x: 0, y: 0}
     objectRotAxis: {x: 0, y: 0}
   cursor: {fileID: 0}
+  objs:
+  - {fileID: 8489316779379488512}
+  - {fileID: 8489316777594545724}
   animators:
   - {fileID: 8489316779379488513}
   rendererTransform: {fileID: 8489316779379488519}
@@ -187,12 +191,30 @@ MonoBehaviour:
   Group: 0
   prefixField: -1
   Synchronization: 3
-  OwnershipTransfer: 0
+  OwnershipTransfer: 1
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 3049547825145238901}
+  - {fileID: 8385233477803998932}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &8385233477803998932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8489316778674236753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 1
+  m_UseLocal: 1
 --- !u!1 &8489316779379488512
 GameObject:
   m_ObjectHideFlags: 0

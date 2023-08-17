@@ -94,6 +94,7 @@ GameObject:
   - component: {fileID: 2554277821557027241}
   - component: {fileID: 6462221625378223640}
   - component: {fileID: -5575550410199744599}
+  - component: {fileID: 3512475474687083865}
   m_Layer: 0
   m_Name: LongBlocks
   m_TagString: Untagged
@@ -143,6 +144,9 @@ MonoBehaviour:
     objectPickUpPos: {x: 0, y: 0}
     objectRotAxis: {x: 0, y: 0}
   cursor: {fileID: 0}
+  objs:
+  - {fileID: 2554277821045301644}
+  - {fileID: 6843937774197302873}
   animators: []
   rendererTransform: {fileID: 2554277821045301645}
 --- !u!114 &-5575550410199744599
@@ -161,12 +165,30 @@ MonoBehaviour:
   Group: 0
   prefixField: -1
   Synchronization: 3
-  OwnershipTransfer: 0
+  OwnershipTransfer: 1
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 6462221625378223640}
+  - {fileID: 3512475474687083865}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &3512475474687083865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2554277821557027243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 1
+  m_UseLocal: 1
 --- !u!1 &6843937774197302873
 GameObject:
   m_ObjectHideFlags: 0

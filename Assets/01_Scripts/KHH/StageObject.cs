@@ -1,5 +1,6 @@
 ﻿using DG.Tweening;
 using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,8 @@ public class StageObject : MonoBehaviourPun, IPunObservable
     bool isFocus = false;   //현재 커서가 나를 잡고 있는지 여부
 
     Vector2 moveCurPos = Vector2.zero;
+    bool isActive = false;  //활성화 여부
+    public bool IsActive { get { return isActive; } }
     bool canPlace = false;  //배치 가능 여부
     public bool CanPlace { get { return canPlace; } }
     bool isPlace = false;   //배치되었는지 여부
@@ -19,9 +22,29 @@ public class StageObject : MonoBehaviourPun, IPunObservable
     bool isPlay = false;   //배치되었는지 여부
     public bool IsPlay { get { return isPlay; } }
 
+    [SerializeField] GameObject[] objs;
     [SerializeField] Animator[] animators;
     public Transform rendererTransform; //스케일 조정을 위한 현재 오브젝트의 메쉬
     Vector3 rendererDefaultScale;   //메쉬의 기본 스케일
+
+    public void Active(bool active)
+    {
+        if(photonView.IsMine)
+        {
+            foreach (GameObject obj in objs)
+                obj.SetActive(active);
+
+            photonView.RPC(nameof(ActiveRPC), RpcTarget.Others, active);
+        }
+    }
+
+    [PunRPC]
+    void ActiveRPC(bool active)
+    {
+        foreach (GameObject obj in objs)
+            obj.SetActive(active);
+    }
+
 
     public void FixedSet()
     {
@@ -106,21 +129,22 @@ public class StageObject : MonoBehaviourPun, IPunObservable
     /// <summary>
     /// 선택
     /// </summary>
-    public void Select(Transform cursorTr)
+    public void Select(Transform cursorTr, Player player)
     {
         if (objectData.objectType == StageObjectData.ObjectType.Fixed) return;
-        //photonView.RPC(nameof(SelectRPC), RpcTarget.All, cursorTr);
+        cursor = cursorTr;
+        //photonView 소유자 변경
+        photonView.TransferOwnership(player);
+        photonView.RPC(nameof(SelectRPC), RpcTarget.All);
     }
 
     [PunRPC]
-    void SelectRPC(Transform cursorTr)
+    void SelectRPC()
     {
-        cursor = cursorTr;
-        transform.parent = null;
         transform.localScale = Vector3.one;
         rendererTransform.DOKill();
         rendererTransform.localScale = rendererDefaultScale;
-        gameObject.SetActive(false);
+        Active(false);
 
         //isFocus = false;
         //크기 애니메이션 상태 초기화

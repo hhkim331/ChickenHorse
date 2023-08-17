@@ -77,7 +77,7 @@ public class PartyBox : MonoBehaviour
 
     public void ActiveCursor()
     {
-        MainGameManager.instance.MyCursor.Active();
+        MainGameManager.instance.MyCursor.Active(true);
     }
 
     public void Close()
