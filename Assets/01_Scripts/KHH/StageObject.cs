@@ -40,11 +40,11 @@ public class StageObject : MonoBehaviourPun, IPunObservable
 
     public void Set(Vector3 newPos)
     {
-        photonView.RPC("SetRPC", RpcTarget.All, newPos);
+        photonView.RPC(nameof(SetRPC), RpcTarget.All, newPos);
     }
 
     [PunRPC]
-    void SetRPC( Vector3 newPos)
+    void SetRPC(Vector3 newPos)
     {
         transform.localScale = Vector3.one * 0.75f;
         transform.position = newPos;
@@ -60,12 +60,19 @@ public class StageObject : MonoBehaviourPun, IPunObservable
     /// <summary>
     /// 포커스
     /// </summary>
-    public void Focus(bool isFocus)
+    public void Focus(bool focus)
     {
         if (objectData.objectType == StageObjectData.ObjectType.Fixed) return;
+        if (isFocus == focus) return;
+        isFocus = focus;
+        photonView.RPC(nameof(FocusRPC), RpcTarget.All, focus);
+    }
 
-        this.isFocus = isFocus;
-        if (isFocus)
+    [PunRPC]
+    void FocusRPC(bool focus)
+    {
+        isFocus = focus;
+        if (focus)
         {
             transform.DOKill();
             if (rendererTransform != null)
@@ -102,7 +109,7 @@ public class StageObject : MonoBehaviourPun, IPunObservable
     public void Select(Transform cursorTr)
     {
         if (objectData.objectType == StageObjectData.ObjectType.Fixed) return;
-        photonView.RPC("SelectRPC", RpcTarget.All, cursorTr);
+        //photonView.RPC(nameof(SelectRPC), RpcTarget.All, cursorTr);
     }
 
     [PunRPC]
@@ -115,7 +122,7 @@ public class StageObject : MonoBehaviourPun, IPunObservable
         rendererTransform.localScale = rendererDefaultScale;
         gameObject.SetActive(false);
 
-        isFocus = false;
+        //isFocus = false;
         //크기 애니메이션 상태 초기화
 
         //해당 오브젝트의 모든 레이어를 Default로 변경

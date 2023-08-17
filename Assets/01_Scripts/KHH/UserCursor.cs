@@ -152,7 +152,6 @@ public class UserCursor : MonoBehaviourPun, IPunObservable
             stream.SendNext(isActive);
             stream.SendNext(isSelect);
             stream.SendNext(isPlace);
-            stream.SendNext(myObject);
         }
         else    //데이터를 받는 중
         {
@@ -161,7 +160,6 @@ public class UserCursor : MonoBehaviourPun, IPunObservable
             isActive = (bool)stream.ReceiveNext();
             isSelect = (bool)stream.ReceiveNext();
             isPlace = (bool)stream.ReceiveNext();
-            myObject = (StageObject)stream.ReceiveNext();
         }
     }
 }

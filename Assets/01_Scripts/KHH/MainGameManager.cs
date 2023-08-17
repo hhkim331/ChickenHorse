@@ -55,6 +55,8 @@ public class MainGameManager : MonoBehaviourPunCallbacks
     private void Awake()
     {
         instance = this;
+
+        DOTween.SetTweensCapacity(500, 50);
     }
 
     // Start is called before the first frame update
