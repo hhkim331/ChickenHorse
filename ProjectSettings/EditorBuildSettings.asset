@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/00_Scenes/RJM_Test2.unity
+    guid: dc1aff94244d312488574f6763771057
+  - enabled: 1
     path: Assets/00_Scenes/NetworkScene.unity
     guid: ca9ce451c16141246b2b2986550d8a17
   - enabled: 1
@@ -14,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/00_Scenes/MainScene.unity
     guid: c31c37fe42ebe334c9f6b6e0c6d90551
+  - enabled: 1
+    path: Assets/00_Scenes/LobbyScene_Proto.unity
+    guid: 21580ee37d2c84e44944c68ed56fb21a
   m_configObjects: {}
