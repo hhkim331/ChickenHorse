@@ -9,8 +9,8 @@ EditorBuildSettings:
     path: Assets/00_Scenes/NetworkScene.unity
     guid: ca9ce451c16141246b2b2986550d8a17
   - enabled: 1
-    path: Assets/00_Scenes/LobbyScene_Alpha.unity
-    guid: ec4c22a2c9715e24ba0eea6688dfdbc3
+    path: Assets/00_Scenes/BMJ_Alpha_Test.unity
+    guid: 7d2e3ead6c2d2434bacf582a2797a015
   - enabled: 1
     path: Assets/00_Scenes/MainScene.unity
     guid: c31c37fe42ebe334c9f6b6e0c6d90551
