@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class RPlayer : MonoBehaviour
+public class RPlayer : MonoBehaviourPun
 {
-
     public Rigidbody rB;
     Vector3 dir;
     public float speed = 5;
@@ -37,6 +37,9 @@ public class RPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //소유권이 나한테 없다면 함수를 나가자
+        if (photonView.IsMine == false) return;
+
         float h = Input.GetAxis("Horizontal");
 
         dir = Vector3.right * h;
@@ -71,11 +74,11 @@ public class RPlayer : MonoBehaviour
 
         //스페이스바를 누르면
         if (Input.GetKeyDown(KeyCode.Space) && IsGround())
-        {
+        {                                     
             //jumpStart = Time.time;
             jumpTime = true;
 
-
+            //anim.SetTrigger("Jump");
             if (h > 0)
             {
                 // 오른쪽으로 점프를 나타내는 애니메이션 파라미터 설정
@@ -89,13 +92,19 @@ public class RPlayer : MonoBehaviour
 
             }
         }
-
+        if (h == 0 && IsGround())
+        {
+            // 움직임 입력이 없을 때 Idle 애니메이션 실행
+            anim.SetBool("IsWalkingRight", false);
+            
+            anim.SetTrigger("Idle");
+        }
 
         if (h > 0)
         {
             // 오른쪽으로 움직임을 나타내는 애니메이션 파라미터 설정
             anim.SetBool("IsWalkingRight", true);
-            anim.SetBool("IsWalkingLeft", false);
+            
         }
         else if (h < 0)
         {
@@ -232,6 +241,8 @@ public class RPlayer : MonoBehaviour
 
         return Physics.Raycast(rayRight, 1.02f) || Physics.Raycast(rayLeft, 1.02f);
     }
+
+    
 }
 
 
