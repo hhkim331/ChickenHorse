@@ -1,13 +1,9 @@
 ﻿using Cinemachine;
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.UIElements;
-using UnityEngine.WSA;
+using Photon.Pun;
 
-public class MultipleTargetCamera : MonoBehaviour
+public class MultipleTargetCamera : MonoBehaviourPun
 {
     //위치 리스트가 필요하다.
     public List<Transform> targets;
