@@ -1,10 +1,13 @@
 ﻿using Cinemachine;
 using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 //해당 플레이어를 클릭했을 때 권한 요청을 수행하여 움직이게 하고 싶다.
 public class OwnershipTransfer : MonoBehaviourPun
 {
+    public Character characterData;
     public bool hasPlayer;
 
     public void OnClick()
@@ -22,5 +25,18 @@ public class OwnershipTransfer : MonoBehaviourPun
     public void CheckHasPlayer(bool has)
     {
         hasPlayer = has;
+        if (photonView.IsMine)
+            GetComponent<Rigidbody>().isKinematic = !has;
+        if (has)
+        {
+
+            PlayerData.instance.AddPlayer(photonView.Owner.ActorNumber);
+            PlayerData.instance.SelectCharacter(photonView.Owner.ActorNumber, characterData);
+        }
+        else
+        {
+            //PlayerData.instance.RemovePlayer(photonView.Owner.ActorNumber);
+            PlayerData.instance.UnSelectCharacter(photonView.Owner.ActorNumber);
+        }
     }
 }

@@ -40,13 +40,15 @@ public class PlayerData : MonoBehaviour
 
     public void AddPlayer(int actorNum)
     {
-        playerCharacterDic.Add(actorNum, null);
+        Debug.Log("AddPlayer");
+        playerCharacterDic[actorNum] = null;
     }
 
-    public void RemovePlayer(int actorNum)
-    {
-        playerCharacterDic.Remove(actorNum);
-    }
+    //public void RemovePlayer(int actorNum)
+    //{
+    //    Debug.Log("RemovePlayer");
+    //    playerCharacterDic.Remove(actorNum);
+    //}
 
     public void SelectCharacter(int actorNum, Character character)
     {

@@ -414,7 +414,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &30707118
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1997,7 +1997,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
@@ -2049,6 +2049,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 126183c6be91eb2489679a9dab8c20ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterData:
+    characterType: 0
+    characterImage: {fileID: 0}
+    characterName: 
+    prefabDirectory: 
   hasPlayer: 0
 --- !u!1 &182372770
 GameObject:
@@ -11710,7 +11715,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
@@ -11762,6 +11767,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 126183c6be91eb2489679a9dab8c20ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterData:
+    characterType: 0
+    characterImage: {fileID: 0}
+    characterName: 
+    prefabDirectory: 
   hasPlayer: 0
 --- !u!1 &1313533415
 GameObject:
@@ -13743,7 +13753,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
@@ -13795,6 +13805,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 126183c6be91eb2489679a9dab8c20ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterData:
+    characterType: 1
+    characterImage: {fileID: 21300000, guid: 6a8f5241c49fdc44f8aa8bc6a6673fba, type: 3}
+    characterName: "\uB2ED"
+    prefabDirectory: RHorsePlayerMain
   hasPlayer: 0
 --- !u!114 &1546375861
 MonoBehaviour:
@@ -20508,7 +20523,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
@@ -20563,6 +20578,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 126183c6be91eb2489679a9dab8c20ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterData:
+    characterType: 0
+    characterImage: {fileID: 21300000, guid: 6a7f4cc2b1189314395eb22a52c72d7f, type: 3}
+    characterName: "\uB9D0"
+    prefabDirectory: RHorsePlayerMain
   hasPlayer: 0
 --- !u!114 &4055202769048596796
 MonoBehaviour:
