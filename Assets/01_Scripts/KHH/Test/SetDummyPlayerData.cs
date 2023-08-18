@@ -32,16 +32,16 @@ public class SetDummyPlayerData : MonoBehaviourPun
                 charater++;
             }
 
-            if (photonView.Owner.IsMasterClient)
-            {
-                StartCoroutine(enumerator());
-            }
+            //if (photonView.Owner.IsMasterClient)
+            //{
+            //    StartCoroutine(enumerator());
+            //}
         }
     }
 
-    IEnumerator enumerator()
-    {
-        yield return new WaitForSeconds(3f);
-        PhotonNetwork.LoadLevel("KHH_Test");
-    }
+    //IEnumerator enumerator()
+    //{
+    //    yield return new WaitForSeconds(3f);
+    //    PhotonNetwork.LoadLevel("KHH_Test");
+    //}
 }

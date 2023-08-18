@@ -1,11 +1,12 @@
-﻿using TMPro;
+﻿using Photon.Pun;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 //타이머 UI
 //시간이 지남에 따라 텍스트 UI 바뀜
 //플레이어가 나가면 시간 0으로 초기화
-public class StartGameManager : MonoBehaviour
+public class StartGameManager : MonoBehaviourPun
 {
     //시간을 증가시키는 카운트 다운을 만들고 싶다.
     public TextMeshProUGUI timerUI;
@@ -13,7 +14,7 @@ public class StartGameManager : MonoBehaviour
     //3초 시간이 제한
     private readonly float MAX_TIME = 3.4f, LIMIT_TIME = 0.5f;
 
-    private readonly int NEXT_SCENE_NUMBER = 1;
+    private readonly int NEXT_SCENE_NUMBER = 2;
     private readonly string START_GAME_TEXT = "게임 시작까지\n", PLAYER_TAG_NAME = "Player", DEMICAL_POINT_TRUNCATION = "0";
 
     //3초 시간이 되었다는 체크, 플레이어가 들어갔나요?
@@ -22,8 +23,12 @@ public class StartGameManager : MonoBehaviour
     //시간에 대한 접근
     private float currentTime;
 
+    bool load = false;
+
     private void Start()
     {
+        //씬이동 동기화
+        PhotonNetwork.AutomaticallySyncScene = true;
         //나 자신을 끈다.
         timerUI.enabled = false;
         // 처음 시간을 초기화
@@ -34,7 +39,7 @@ public class StartGameManager : MonoBehaviour
     {
         SetCountDown();
         //일정 시간이 지난다면 씬을 바꾼다.
-        if (hasLimit) ChangeScene();
+        if (hasLimit && !load) ChangeScene();
     }
 
     private void SetCountDown()
@@ -66,8 +71,11 @@ public class StartGameManager : MonoBehaviour
 
     private void ChangeScene()
     {
+        load = true;
         //만약에 일정시간이 된다면 다음씬으로 이동한다.
-        SceneManager.LoadScene(NEXT_SCENE_NUMBER);
+        if (PhotonNetwork.LocalPlayer.IsMasterClient)
+            PhotonNetwork.LoadLevel(NEXT_SCENE_NUMBER);
+        //SceneManager.LoadScene(NEXT_SCENE_NUMBER);
         //시간 UI 비활성화 한다.
         timerUI.enabled = false;
     }

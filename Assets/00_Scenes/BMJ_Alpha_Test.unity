@@ -397,6 +397,82 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &30707117
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 30707120}
+  - component: {fileID: 30707119}
+  - component: {fileID: 30707118}
+  m_Layer: 0
+  m_Name: SetDummyPlayerData
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &30707118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 30707117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 5
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &30707119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 30707117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c47802914f660354796ff11f6466140e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characters:
+  - characterType: 0
+    characterImage: {fileID: 21300000, guid: 6a7f4cc2b1189314395eb22a52c72d7f, type: 3}
+    characterName: "\uB9D0"
+    prefabDirectory: RHorsePlayerMain
+  - characterType: 1
+    characterImage: {fileID: 21300000, guid: 6a8f5241c49fdc44f8aa8bc6a6673fba, type: 3}
+    characterName: "\uB2ED"
+    prefabDirectory: RHorsePlayerMain
+--- !u!4 &30707120
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 30707117}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &36704795
 GameObject:
   m_ObjectHideFlags: 0
@@ -11181,7 +11257,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6064638def4abf49a9228028a258524, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myPhotonView: {fileID: 0}
+  cursorPhotonView: {fileID: 0}
   cinemachineVirtualCamera: {fileID: 663341170}
   rplayer: {fileID: 0}
 --- !u!1 &1265252436

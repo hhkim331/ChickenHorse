@@ -6,11 +6,11 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/00_Scenes/KHH_TestNet.unity
+    path: Assets/00_Scenes/NetworkScene.unity
     guid: 8162656ba5c268646937db4de60f2edc
   - enabled: 1
-    path: Assets/00_Scenes/KHH_TestNetMiddle.unity
-    guid: 4b8bcb26c6c5bfa479cc6296c184ec1f
+    path: Assets/00_Scenes/BMJ_Alpha_Test.unity
+    guid: 7d2e3ead6c2d2434bacf582a2797a015
   - enabled: 1
     path: Assets/00_Scenes/KHH_Test.unity
     guid: 892dc2cb192f0bf419de7c98b6f6fa49

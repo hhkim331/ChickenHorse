@@ -34,9 +34,11 @@ MonoBehaviour:
   RunInBackground: 1
   StartInOfflineMode: 0
   RpcList:
+  - CheckHasPlayer
   - ClickRpc
   - CSRPC
   - CurPlayEnd
+  - CursorDisable
   - DestroyRpc
   - DestroySpaceship
   - Fire
@@ -51,7 +53,6 @@ MonoBehaviour:
   - PSRPC
   - RespawnSpaceship
   - RotateRPC
-  - ScoreRPC
   - SelectRPC
   - SetRPC
   - SOActRPC

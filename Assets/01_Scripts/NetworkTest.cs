@@ -72,6 +72,6 @@ public class NetworkTest : MonoBehaviourPunCallbacks
         base.OnJoinedRoom();
         print(nameof(OnJoinedRoom));
         //Game Scene 으로 이동
-        PhotonNetwork.LoadLevel("LobbyScene_Alpha");
+        PhotonNetwork.LoadLevel("BMJ_Alpha_Test");
     }
 }
