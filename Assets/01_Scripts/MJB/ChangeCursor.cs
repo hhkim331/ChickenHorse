@@ -1,27 +1,32 @@
-﻿using DG.Tweening.Core;
-using Photon.Pun;
+﻿using Photon.Pun;
 using UnityEngine;
 
-//
 public class ChangeCursor : MonoBehaviourPun
 {
-    public GameObject player;
-
     private void Awake()
     {
         Cursor.lockState = CursorLockMode.Confined;
         transform.GetChild(0).gameObject.SetActive(true);
+
+        //내가 아니면
+        if (photonView.IsMine)
+        {
+            //커서 포톤을 가진다.
+            LobbyManager.instance.cursorPhotonView = photonView;
+        }
     }
 
     private void Update()
     {
+        //내가 아니면 이 함수를 나간다.
+        if (photonView.IsMine == false) return;
+        //내꺼만 커서를 활성화 하고 실행한다.
         InitCursorPos();
         CursorEnable();
     }
 
     private void InitCursorPos()
     {
-        //마우스 커서의 위치 x, y 값을 가져온다
         if (photonView.IsMine)
         {
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -31,23 +36,36 @@ public class ChangeCursor : MonoBehaviourPun
         }
     }
 
-    public void CursorDisable()
-    {
-        //나 자신을 끈다.
-        transform.GetChild(0).gameObject.SetActive(false);
-        Cursor.lockState = CursorLockMode.Locked;
-    }
-
     public void CursorEnable()
     {
+        //내것의 플레이어 일 때
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            //플레이어의 컨트롤러를 끈다. // 플레이어의 컨트롤러 작업
-            //player.GetComponent<RPlayer>().enabled = false;
-            //나 자신을 켠다.
-            transform.GetChild(0).gameObject.SetActive(true);
-            //커서를 게임 뷰에 나가지 못하게 한다.
-            Cursor.lockState = CursorLockMode.Confined;
+            //커서 비활성화를 모든 컴퓨터에 동기화 한다..
+            photonView.RPC("CursorDisable", RpcTarget.All, true);
+            LobbyManager.instance.SetActivePlayer(false);
+        }
+    }
+
+    [PunRPC]
+    public void CursorDisable(bool cursorDisable)
+    {
+        transform.GetChild(0).gameObject.SetActive(cursorDisable);
+        //내가 아니라면
+        if (photonView.IsMine)
+        {
+            //커서가 비활성화 되어있다면
+            if (cursorDisable)
+            {
+                //커서 잠금을 끈다.
+                Cursor.lockState = CursorLockMode.Confined;
+            }
+            //커서가 비활성화 되어있지 않다면
+            else
+            {
+                //커서 잠금을 한다.
+                Cursor.lockState = CursorLockMode.Locked;
+            }
         }
     }
 }
