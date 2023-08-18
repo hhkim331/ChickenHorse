@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -33,7 +34,7 @@ public class Point
     }
 }
 
-public class ScoreManager : MonoBehaviour
+public class ScoreManager : MonoBehaviourPun
 {
     readonly int maxScore = 25;
 
@@ -57,9 +58,9 @@ public class ScoreManager : MonoBehaviour
     Dictionary<Point.PointType, Point> points = new Dictionary<Point.PointType, Point>();
 
     // 플레이어 점수
-    Dictionary<GameObject, int> playerScore = new Dictionary<GameObject, int>();
+    Dictionary<int, int> playerScore = new Dictionary<int, int>();
     // 스테이지 각 점수를 획득한 플레이어 확인
-    Dictionary<Point.PointType, List<GameObject>> playerScoreDic = new Dictionary<Point.PointType, List<GameObject>>();
+    Dictionary<Point.PointType, List<int>> playerScoreDic = new Dictionary<Point.PointType, List<int>>();
 
     CharacterData characterData;
 
@@ -77,8 +78,8 @@ public class ScoreManager : MonoBehaviour
 
     List<PlayerInfo> playerInfos = new List<PlayerInfo>();
 
-    //테스트용 플레이어
-    public GameObject playerTest;
+    ////테스트용 플레이어
+    //public GameObject playerTest;
 
     int goalNum = 0;
 
@@ -101,53 +102,66 @@ public class ScoreManager : MonoBehaviour
     public void Init()
     {
         //플레이어의 수만큼 유저인포 생성
-        //테스트용
-        PlayerInfo info = Instantiate(playerInfoFactory, playerInfoParent).GetComponent<PlayerInfo>();
-        info.Set(characterData.GetCharaterData(Character.CharacterType.Horse));
-        playerInfos.Add(info);
 
-        playerScore.Add(playerTest, 0);
+        foreach (var player in PhotonNetwork.CurrentRoom.Players.Values)
+        {
+            PlayerInfo info = Instantiate(playerInfoFactory, playerInfoParent).GetComponent<PlayerInfo>();
+            info.Set(characterData.GetCharaterData(Character.CharacterType.Horse));
+            playerInfos.Add(info);
+            playerScore.Add(player.ActorNumber, 0);
+        }
     }
 
-    public void GetScore(Point.PointType scoreType, GameObject player)
+    public void GetScore(Point.PointType scoreType, int playerNum)
     {
         if (playerScoreDic.ContainsKey(scoreType) == false)
-            playerScoreDic.Add(scoreType, new List<GameObject>());
-        playerScoreDic[scoreType].Add(player);
+            playerScoreDic.Add(scoreType, new List<int>());
+        playerScoreDic[scoreType].Add(playerNum);
 
         if (scoreType == Point.PointType.Goal)
         {
             switch (goalNum)
             {
                 case 0:
-                    playerScoreDic.Add(Point.PointType.First, new List<GameObject>());
-                    playerScoreDic[Point.PointType.First].Add(player);
+                    playerScoreDic.Add(Point.PointType.First, new List<int>());
+                    playerScoreDic[Point.PointType.First].Add(playerNum);
                     break;
                 case 1:
-                    playerScoreDic.Add(Point.PointType.Second, new List<GameObject>());
-                    playerScoreDic[Point.PointType.Second].Add(player);
+                    playerScoreDic.Add(Point.PointType.Second, new List<int>());
+                    playerScoreDic[Point.PointType.Second].Add(playerNum);
                     break;
                 case 2:
-                    playerScoreDic.Add(Point.PointType.Third, new List<GameObject>());
-                    playerScoreDic[Point.PointType.Third].Add(player);
+                    playerScoreDic.Add(Point.PointType.Third, new List<int>());
+                    playerScoreDic[Point.PointType.Third].Add(playerNum);
                     break;
                 case 3:
-                    playerScoreDic.Add(Point.PointType.Fourth, new List<GameObject>());
-                    playerScoreDic[Point.PointType.Fourth].Add(player);
+                    playerScoreDic.Add(Point.PointType.Fourth, new List<int>());
+                    playerScoreDic[Point.PointType.Fourth].Add(playerNum);
                     break;
             }
             goalNum++;
         }
     }
 
+    public void Score()
+    {
+        photonView.RPC(nameof(ScoreRPC), RpcTarget.All);
+    }
+
+    [PunRPC]
+    void ScoreRPC()
+    {
+        ScoreCalc();
+    }
+
     //점수 정산
-    public void ScoreCalc()
+    void ScoreCalc()
     {
         if (playerScoreDic.Count > 0)
         {
             if (playerScoreDic[Point.PointType.Goal].Count == 1)
             {
-                playerScoreDic.Add(Point.PointType.Solo, new List<GameObject>());
+                playerScoreDic.Add(Point.PointType.Solo, new List<int>());
                 playerScoreDic[Point.PointType.Solo].Add(playerScoreDic[Point.PointType.Goal][0]);
                 playerScoreDic[Point.PointType.First].Remove(playerScoreDic[Point.PointType.Goal][0]);
                 playerScoreDic.Remove(Point.PointType.First);
@@ -166,10 +180,7 @@ public class ScoreManager : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
         //플레이어 비활성화
-        foreach (var player in playerScore.Keys)
-        {
-            player.SetActive(false);
-        }
+        MainGameManager.instance.PlayerInactive();
 
         //ui등장
         scorePaper.DOLocalMoveY(0, 0.5f).From(-1200);
@@ -223,32 +234,33 @@ public class ScoreManager : MonoBehaviour
         playerScoreDic.Clear();
         goalNum = 0;
 
+        int winner = CheckWinner();
         //게임이 종료된 경우
-        if (CheckGameEnd())
-        {
-            yield return new WaitForSeconds(0.3f);
-            winnerObj.SetActive(true);
-            winnerCharacterText.text = playerInfos[0].Character.characterName;
-            MainGameManager.instance.ChangeState(MainGameManager.GameState.End);
-        }
-        else
+        if (winner == -1)
         {
             yield return new WaitForSeconds(0.5f);
             MainGameManager.instance.ChangeState(MainGameManager.GameState.Select);
         }
+        else
+        {
+            yield return new WaitForSeconds(0.3f);
+            winnerObj.SetActive(true);
+            winnerCharacterText.text = playerInfos[winner].Character.characterName;
+            MainGameManager.instance.ChangeState(MainGameManager.GameState.End);
+        }
     }
 
-    bool CheckGameEnd()
+    int CheckWinner()
     {
         //점수가 25점 이상인 플레이어가 있는지 체크
         foreach (var item in playerScore)
         {
             if (item.Value >= maxScore)
             {
-                return true;
+                return item.Key;
             }
         }
 
-        return false;
+        return -1;
     }
 }

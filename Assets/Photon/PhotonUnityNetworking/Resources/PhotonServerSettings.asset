@@ -17,7 +17,7 @@ MonoBehaviour:
     AppIdFusion: 
     AppIdChat: 
     AppIdVoice: 
-    AppVersion: 0.3
+    AppVersion: 0.4
     UseNameServer: 1
     FixedRegion: asia
     Server: 
@@ -35,21 +35,28 @@ MonoBehaviour:
   StartInOfflineMode: 0
   RpcList:
   - ClickRpc
+  - CSRPC
+  - CurPlayEnd
   - DestroyRpc
   - DestroySpaceship
   - Fire
-  - RespawnSpaceship
-  - ChangeState
-  - CurPlayEnd
+  - FocusRPC
   - PlaceRPC
   - PlayRPC
+  - PMActRPC
+  - PMAMRPC
+  - PMDieRPC
+  - PMGoalRPC
+  - PMHitRPC
+  - PSRPC
+  - RespawnSpaceship
   - RotateRPC
+  - ScoreRPC
   - SelectRPC
-  - StopRPC
   - SetRPC
-  - SetObjRPC
-  - FocusRPC
-  - ActiveRPC
+  - SOActRPC
+  - StopRPC
+  - UCActRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

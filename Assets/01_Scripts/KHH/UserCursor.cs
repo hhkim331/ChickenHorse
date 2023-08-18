@@ -20,8 +20,8 @@ public class UserCursor : MonoBehaviourPun, IPunObservable
     [SerializeField] Sprite[] sprites;
     StageObject myObject;
 
-    //네트워크
-    Vector3 myPosition;
+    ////네트워크
+    //Vector3 myPosition;
 
     public void Init(Camera main, Camera partyBox, Camera cursor)
     {
@@ -109,10 +109,10 @@ public class UserCursor : MonoBehaviourPun, IPunObservable
                 }
             }
         }
-        else
-        {
-            transform.position = Vector3.Lerp(transform.position, myPosition, Time.deltaTime * 10);
-        }
+        //else
+        //{
+        //    transform.position = Vector3.Lerp(transform.position, myPosition, Time.deltaTime * 10);
+        //}
     }
 
     public void Set()
@@ -143,11 +143,11 @@ public class UserCursor : MonoBehaviourPun, IPunObservable
             spriteRenderer.gameObject.SetActive(false);
         }
 
-        photonView.RPC(nameof(ActiveRPC), RpcTarget.Others, active);
+        photonView.RPC(nameof(UCActRPC), RpcTarget.Others, active);
     }
 
     [PunRPC]
-    void ActiveRPC(bool active)
+    void UCActRPC(bool active) //UserCursorActiveRPC
     {
         if (active)
         {
@@ -169,16 +169,16 @@ public class UserCursor : MonoBehaviourPun, IPunObservable
     {
         if (stream.IsWriting)   //데이터를 보내는 중
         {
-            stream.SendNext(transform.position);
-            stream.SendNext(transform.localScale);
+            //stream.SendNext(transform.position);
+            //stream.SendNext(transform.localScale);
             stream.SendNext(isActive);
             stream.SendNext(isSelect);
             stream.SendNext(isPlace);
         }
         else    //데이터를 받는 중
         {
-            myPosition = (Vector3)stream.ReceiveNext();
-            transform.localScale = (Vector3)stream.ReceiveNext();
+            //myPosition = (Vector3)stream.ReceiveNext();
+            //transform.localScale = (Vector3)stream.ReceiveNext();
             isActive = (bool)stream.ReceiveNext();
             isSelect = (bool)stream.ReceiveNext();
             isPlace = (bool)stream.ReceiveNext();

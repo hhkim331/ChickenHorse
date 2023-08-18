@@ -37,7 +37,8 @@ public class MainGameManager : MonoBehaviourPunCallbacks
     [SerializeField] GameObject readyTextObject;
 
     //활성화 플레이어
-    List<KHHPlayerMain> players;
+    Dictionary<int, KHHPlayerMain> players;
+    List<int> actorNums;
     KHHPlayerMain myPlayer;
     List<StageObject> stageObjects = new List<StageObject>();
 
@@ -73,18 +74,23 @@ public class MainGameManager : MonoBehaviourPunCallbacks
         followCamera.Init(mapMgr.mapSize);
 
         scoreMgr = GetComponent<ScoreManager>();
-        scoreMgr.playerTest = myPlayer.gameObject;
         scoreMgr.Init();
 
         yield return new WaitForSeconds(1f);
 
         cursors = new List<UserCursor>(FindObjectsOfType<UserCursor>());
-        players = new List<KHHPlayerMain>(FindObjectsOfType<KHHPlayerMain>());
+        players = new Dictionary<int, KHHPlayerMain>();
+        actorNums = new List<int>();
+        KHHPlayerMain[] kHHPlayerMains = FindObjectsOfType<KHHPlayerMain>();
+        foreach (var player in kHHPlayerMains)
+        {
+            players.Add(player.photonView.Owner.ActorNumber, player);
+            actorNums.Add(player.photonView.Owner.ActorNumber);
+        }
 
-        followCamera.Set(players, cursors);
+        followCamera.Set(players, actorNums, cursors);
 
-        if (PhotonNetwork.LocalPlayer.IsMasterClient)
-            photonView.RPC(nameof(ChangeState), RpcTarget.All, GameState.Select);
+        ChangeState(GameState.Select);
     }
 
     void Init()
@@ -98,7 +104,7 @@ public class MainGameManager : MonoBehaviourPunCallbacks
 
         //나의 Player 생성
         myPlayer = PhotonNetwork.Instantiate(myCharacter.prefabDirectory, Vector3.zero, Quaternion.identity).GetComponent<KHHPlayerMain>();
-        myPlayer.gameObject.SetActive(false);
+        myPlayer.Active(false);
     }
 
     //void CreatePlayer()
@@ -122,7 +128,7 @@ public class MainGameManager : MonoBehaviourPunCallbacks
                         break;
                     }
                 if (allSelect)
-                    photonView.RPC(nameof(ChangeState), RpcTarget.All, GameState.Place);
+                    ChangeState(GameState.Place);
                 break;
             case GameState.Place:
                 bool allPlace = true;
@@ -133,7 +139,7 @@ public class MainGameManager : MonoBehaviourPunCallbacks
                         break;
                     }
                 if (allPlace)
-                    photonView.RPC(nameof(ChangeState), RpcTarget.All, GameState.Play);
+                    ChangeState(GameState.Play);
                 break;
             case GameState.Play:
                 UpdatePlay();
@@ -155,7 +161,7 @@ public class MainGameManager : MonoBehaviourPunCallbacks
         //플레이어 상태 확인
         bool isActivePlayer = false;
         foreach (var player in players)
-            if (player.IsActive)
+            if (player.Value.IsActive)
             {
                 isActivePlayer = true;
                 break;
@@ -174,7 +180,7 @@ public class MainGameManager : MonoBehaviourPunCallbacks
         bool isGoal = false;
         foreach (var player in players)
         {
-            if (player.isGoal)
+            if (player.Value.IsGoal)
             {
                 isGoal = true;
                 break;
@@ -188,8 +194,15 @@ public class MainGameManager : MonoBehaviourPunCallbacks
     }
 
 
-    [PunRPC]
     public void ChangeState(GameState state)
+    {
+        if(this.state == state) return;
+        if (PhotonNetwork.LocalPlayer.IsMasterClient)
+            photonView.RPC(nameof(CSRPC), RpcTarget.All, state);
+    }
+
+    [PunRPC]
+    void CSRPC(GameState state) //ChangeStateRPC
     {
         this.state = state;
         switch (state)
@@ -215,10 +228,10 @@ public class MainGameManager : MonoBehaviourPunCallbacks
                     sprite.DOFade(0, 0.5f);
                 ResetPlayer();
                 PlayStageObject();
+                PlayStart();
                 break;
             case GameState.Score:
-                //myPlayer.SetActive(false);  //플레이어 비활성화
-                scoreMgr.ScoreCalc();
+                scoreMgr.Score();
                 StopStageObject();
                 break;
             case GameState.End:
@@ -230,18 +243,28 @@ public class MainGameManager : MonoBehaviourPunCallbacks
     //플레이어 초기화
     void ResetPlayer()
     {
-        myPlayer.gameObject.SetActive(true);
+        //myPlayer.gameObject.SetActive(true);
         myPlayer.transform.position = startPos;
-        myPlayer.GetComponent<Rigidbody>().velocity = Vector3.zero;
-        myPlayer.GetComponent<KHHPlayerMain>().ResetPlayer();
-        StartCoroutine(ResetPlayerCoroutine());
+        myPlayer.Active(true);
     }
 
-    IEnumerator ResetPlayerCoroutine()
+    void PlayStart()
     {
         readyTextObject.SetActive(true);
+        if (PhotonNetwork.LocalPlayer.IsMasterClient)
+            StartCoroutine(PlayStartrCoroutine());
+    }
+
+    IEnumerator PlayStartrCoroutine()
+    {
         yield return new WaitForSeconds(1f);
-        myPlayer.GetComponent<KHHPlayerMain>().ActiveMove();
+        photonView.RPC(nameof(PSRPC), RpcTarget.All);
+    }
+
+    [PunRPC]
+    void PSRPC() //PlayStartRPC
+    {
+        myPlayer.ActiveMove();
         readyTextObject.SetActive(false);
     }
 
@@ -271,6 +294,12 @@ public class MainGameManager : MonoBehaviourPunCallbacks
     {
         foreach (var stageObject in stageObjects)
             stageObject.Stop();
+    }
+
+    public void PlayerInactive()
+    {
+        foreach (var player in players)
+            player.Value.Active(false);
     }
 
     //새로운 인원이 방에 들어왔을때 호출되는 함수

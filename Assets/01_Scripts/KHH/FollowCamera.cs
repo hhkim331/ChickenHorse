@@ -27,7 +27,8 @@ public class FollowCamera : MonoBehaviour
     float cameraMaxSize;
 
     Vector2 mapSize;
-    List<KHHPlayerMain> playerMains = new List<KHHPlayerMain>();
+    Dictionary<int, KHHPlayerMain> players = new Dictionary<int, KHHPlayerMain>();
+    List<int> actorNums = new List<int>();
     List<UserCursor> playerCursors = new List<UserCursor>();
 
     public void Init(Vector2 mapSize)
@@ -43,9 +44,10 @@ public class FollowCamera : MonoBehaviour
         //    cameraMaxSize = cameraMinSize;
     }
 
-    public void Set(List<KHHPlayerMain> players, List<UserCursor> cursors)
+    public void Set(Dictionary<int, KHHPlayerMain> players,List<int> actorNumList, List<UserCursor> cursors)
     {
-        playerMains = players;
+        this.players = players;
+        this.actorNums = actorNumList;
         playerCursors = cursors;
     }
 
@@ -121,28 +123,57 @@ public class FollowCamera : MonoBehaviour
         float maxDistance = 0;
         float playerDistance = 0;
         Vector3 playersCenterPos = Vector3.zero;
-        for (int i = 0; i < playerMains.Count; i++)
+        for(int i=0;i<actorNums.Count;i++)
         {
-            if (playerMains[i] == null)
+            if (players[actorNums[i]] == null)
                 continue;
-            if (!playerMains[i].IsActive)
+            if (!players[actorNums[i]].IsActive)
                 continue;
 
             activePlayerCount++;
-            playersCenterPos += playerMains[i].transform.position;
+            playersCenterPos += players[actorNums[i]].transform.position;
 
-            distance = Vector3.Distance(playerMains[i].transform.position, cameraCenterPos);
+            distance = Vector3.Distance(players[actorNums[i]].transform.position, cameraCenterPos);
             if (distance > maxDistance)
                 maxDistance = distance;
-            for (int j = i + 1; j < playerMains.Count; j++)
+            for (int j = i+1; j < actorNums.Count; j++)
             {
-                distance = Vector3.Distance(playerMains[i].transform.position, playerMains[j].transform.position);
+                if (players[actorNums[j]] == null)
+                    continue;
+                if (!players[actorNums[j]].IsActive)
+                    continue;
+
+                distance = Vector3.Distance(players[actorNums[i]].transform.position, players[actorNums[j]].transform.position);
                 if (distance > maxDistance)
                     maxDistance = distance;
                 if (distance > playerDistance)
                     playerDistance = distance;
             }
         }
+
+
+        //for (int i = 0; i < players.Count; i++)
+        //{
+        //    if (players[i] == null)
+        //        continue;
+        //    if (!players[i].IsActive)
+        //        continue;
+
+        //    activePlayerCount++;
+        //    playersCenterPos += players[i].transform.position;
+
+        //    distance = Vector3.Distance(players[i].transform.position, cameraCenterPos);
+        //    if (distance > maxDistance)
+        //        maxDistance = distance;
+        //    for (int j = i + 1; j < players.Count; j++)
+        //    {
+        //        distance = Vector3.Distance(players[i].transform.position, players[j].transform.position);
+        //        if (distance > maxDistance)
+        //            maxDistance = distance;
+        //        if (distance > playerDistance)
+        //            playerDistance = distance;
+        //    }
+        //}
 
         if (activePlayerCount > 0)
         {

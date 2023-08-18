@@ -29,17 +29,17 @@ public class StageObject : MonoBehaviourPun, IPunObservable
 
     public void Active(bool active)
     {
-        if(photonView.IsMine)
+        if (photonView.IsMine)
         {
             foreach (GameObject obj in objs)
                 obj.SetActive(active);
 
-            photonView.RPC(nameof(ActiveRPC), RpcTarget.Others, active);
+            photonView.RPC(nameof(SOActRPC), RpcTarget.Others, active);
         }
     }
 
     [PunRPC]
-    void ActiveRPC(bool active)
+    void SOActRPC(bool active)  //StageObjectActiveRPC
     {
         foreach (GameObject obj in objs)
             obj.SetActive(active);
@@ -134,27 +134,14 @@ public class StageObject : MonoBehaviourPun, IPunObservable
         if (objectData.objectType == StageObjectData.ObjectType.Fixed) return;
         cursor = cursorTr;
         //photonView 소유자 변경
-        photonView.TransferOwnership(player);
+        if (photonView.Owner != player)
+            photonView.TransferOwnership(player);
         photonView.RPC(nameof(SelectRPC), RpcTarget.All);
     }
 
     [PunRPC]
     void SelectRPC()
     {
-        transform.localScale = Vector3.one;
-        rendererTransform.DOKill();
-        rendererTransform.localScale = rendererDefaultScale;
-        Active(false);
-
-        //isFocus = false;
-        //크기 애니메이션 상태 초기화
-
-        //해당 오브젝트의 모든 레이어를 Default로 변경
-        foreach (Transform item in GetComponentsInChildren<Transform>())
-            item.gameObject.layer = LayerMask.NameToLayer("Default");
-
-        MainGameManager.instance.partyBox.RemoveItem(this);
-
         if (animators.Length > 0)
         {
             foreach (var anim in animators)
@@ -163,6 +150,18 @@ public class StageObject : MonoBehaviourPun, IPunObservable
                 anim.enabled = false;
             }
         }
+
+        transform.localScale = Vector3.one;
+        rendererTransform.DOKill();
+        rendererTransform.localScale = rendererDefaultScale;
+
+        //해당 오브젝트의 모든 레이어를 Default로 변경
+        foreach (Transform item in GetComponentsInChildren<Transform>())
+            item.gameObject.layer = LayerMask.NameToLayer("Default");
+
+        MainGameManager.instance.partyBox.RemoveItem(this);
+
+        Active(false);
     }
 
     /// <summary>

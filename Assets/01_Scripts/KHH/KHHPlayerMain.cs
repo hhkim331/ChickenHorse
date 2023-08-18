@@ -1,36 +1,74 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class KHHPlayerMain : MonoBehaviour
+public class KHHPlayerMain : MonoBehaviourPun
 {
-    bool isActive = true;
+    public bool isActive = true;
     public bool IsActive { get { return isActive; } }
-    bool isDie = false;
-    public bool isGoal = false;
+    bool isGoal = false;
+    public bool IsGoal { get { return isGoal; } }
     [SerializeField] RPlayer rPlayer;
     [SerializeField] Animator animator;
     [SerializeField] SpriteRenderer[] spriteRenderers;
 
-    public void ResetPlayer()
+    bool rp = false;
+    bool ani = false;
+
+    private void Start()
     {
-        isActive = true;
-        isDie = false;
-        isGoal = false;
-        animator.enabled = true;
-        foreach (var spriteRenderer in spriteRenderers)
+        if (photonView.IsMine == false)
         {
-            spriteRenderer.color = Color.white;
+            GetComponent<Rigidbody>().isKinematic = true;
+        }
+    }
+
+    public void Active(bool active)
+    {
+        if (photonView.IsMine)
+            photonView.RPC(nameof(PMActRPC), RpcTarget.All, active);
+    }
+
+    [PunRPC]
+    void PMActRPC(bool active)
+    {
+        if (active)
+        {
+            isActive = true;
+            isGoal = false;
+            animator.enabled = true;
+            foreach (var spriteRenderer in spriteRenderers)
+            {
+                spriteRenderer.color = Color.white;
+            }
+            GetComponent<Rigidbody>().velocity = Vector3.zero;
+        }
+        else
+        {
+            animator.enabled = false;
         }
     }
 
     public void ActiveMove()
     {
+        photonView.RPC(nameof(PMAMRPC), RpcTarget.All);
+    }
+
+    [PunRPC]
+    void PMAMRPC()
+    {
         rPlayer.enabled = true;
     }
 
     public void Hit()
+    {
+        if (photonView.IsMine)
+        photonView.RPC(nameof(PMHitRPC), RpcTarget.All);
+    }
+
+    [PunRPC]
+    void PMHitRPC()
     {
         isActive = false;
         rPlayer.enabled = false;
@@ -44,24 +82,42 @@ public class KHHPlayerMain : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (SceneManager.GetActiveScene().name != "MainScene") return;
-        if (transform.position.y < -10)
+        if (photonView.IsMine)
         {
-            isActive = false;
-            isDie = true;
-            rPlayer.enabled = false;
+            if (transform.position.y < -10)
+            {
+                photonView.RPC(nameof(PMDieRPC), RpcTarget.All);
+            }
         }
+        //else
+        //{
+        //    rPlayer.enabled = rp;
+        //    animator.enabled = ani;
+        //}
+    }
+
+    [PunRPC]
+    void PMDieRPC()
+    {
+        isActive = false;
+        rPlayer.enabled = false;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (SceneManager.GetActiveScene().name != "MainScene") return;
+        if (photonView.IsMine == false) return;
         if (other.tag == "Goal")
         {
-            isActive = false;
-            isGoal = true;
-            rPlayer.enabled = false;
-            MainGameManager.instance.ScoreMgr.GetScore(Point.PointType.Goal, gameObject);
+            photonView.RPC(nameof(PMGoalRPC), RpcTarget.All);
         }
+    }
+
+    [PunRPC]
+    void PMGoalRPC()
+    {
+        isActive = false;
+        isGoal = true;
+        rPlayer.enabled = false;
+        MainGameManager.instance.ScoreMgr.GetScore(Point.PointType.Goal, photonView.Owner.ActorNumber);
     }
 }
