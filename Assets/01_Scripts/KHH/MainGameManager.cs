@@ -73,9 +73,6 @@ public class MainGameManager : MonoBehaviourPunCallbacks
         followCamera.State = FollowCamera.CameraState.FullScreen;
         followCamera.Init(mapMgr.mapSize);
 
-        scoreMgr = GetComponent<ScoreManager>();
-        scoreMgr.Init();
-
         yield return new WaitForSeconds(1f);
 
         cursors = new List<UserCursor>(FindObjectsOfType<UserCursor>());
@@ -88,6 +85,9 @@ public class MainGameManager : MonoBehaviourPunCallbacks
             actorNums.Add(player.photonView.Owner.ActorNumber);
         }
 
+        actorNums.Sort();
+        scoreMgr = GetComponent<ScoreManager>();
+        scoreMgr.Init(actorNums);
         followCamera.Set(players, actorNums, cursors);
 
         ChangeState(GameState.Select);
@@ -178,17 +178,18 @@ public class MainGameManager : MonoBehaviourPunCallbacks
     void CurPlayEnd()
     {
         bool isGoal = false;
+        List<GameObject> goalPlayers = new List<GameObject>();
         foreach (var player in players)
         {
             if (player.Value.IsGoal)
             {
+                goalPlayers.Add(player.Value.gameObject);
                 isGoal = true;
-                break;
             }
         }
 
         if (isGoal)
-            followCamera.SetGoal(new List<GameObject>() { myPlayer.gameObject });
+            followCamera.SetGoal(goalPlayers);
 
         ChangeState(GameState.Score);
     }
@@ -196,7 +197,7 @@ public class MainGameManager : MonoBehaviourPunCallbacks
 
     public void ChangeState(GameState state)
     {
-        if(this.state == state) return;
+        if (this.state == state) return;
         if (PhotonNetwork.LocalPlayer.IsMasterClient)
             photonView.RPC(nameof(CSRPC), RpcTarget.All, state);
     }
@@ -231,7 +232,7 @@ public class MainGameManager : MonoBehaviourPunCallbacks
                 PlayStart();
                 break;
             case GameState.Score:
-                scoreMgr.Score();
+                scoreMgr.ScoreCalc();
                 StopStageObject();
                 break;
             case GameState.End:
@@ -270,8 +271,8 @@ public class MainGameManager : MonoBehaviourPunCallbacks
 
     void End()
     {
-        myPlayer.gameObject.SetActive(true);  //우승 플레이어만 활성화
-        followCamera.SetEnd(myPlayer.transform.position);
+        players[scoreMgr.winner].Active(true);
+        followCamera.SetEnd(players[scoreMgr.winner].transform.position);
     }
 
     public void AddStageObject(StageObject stageObject)

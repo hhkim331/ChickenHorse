@@ -140,9 +140,9 @@ MonoBehaviour:
     - {x: 1, y: 0}
     - {x: 2, y: 0}
     - {x: 3, y: 0}
-    objectLeftBottomPos: {x: 0, y: 0}
+    objectLeftBottomPos: {x: -1, y: 0}
     objectPickUpPos: {x: 0, y: 0}
-    objectRotAxis: {x: 0, y: 0}
+    objectRotAxis: {x: 1, y: 0}
   cursor: {fileID: 0}
   objs:
   - {fileID: 2554277821045301644}

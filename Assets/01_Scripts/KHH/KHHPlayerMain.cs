@@ -115,6 +115,7 @@ public class KHHPlayerMain : MonoBehaviourPun
     [PunRPC]
     void PMGoalRPC()
     {
+        if(isGoal) return;
         isActive = false;
         isGoal = true;
         rPlayer.enabled = false;

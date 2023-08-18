@@ -16,9 +16,9 @@ public class Point
         Coin,
         Comeback,
         First,
-        Second,
-        Third,
-        Fourth,
+        //Second,
+        //Third,
+        //Fourth,
         Length
     }
 
@@ -76,12 +76,14 @@ public class ScoreManager : MonoBehaviourPun
     [SerializeField] GameObject winnerObj;
     [SerializeField] TextMeshProUGUI winnerCharacterText;
 
-    List<PlayerInfo> playerInfos = new List<PlayerInfo>();
+    Dictionary<int, PlayerInfo> playerInfos = new Dictionary<int, PlayerInfo>();
+    List<int> actorNums;
 
     ////테스트용 플레이어
     //public GameObject playerTest;
 
     int goalNum = 0;
+    public int winner = -1;
 
     private void Awake()
     {
@@ -99,16 +101,16 @@ public class ScoreManager : MonoBehaviourPun
         points.Add(Point.PointType.First, new Point(first, firstColor, "첫 도착자"));
     }
 
-    public void Init()
+    public void Init(List<int> actorNums)
     {
         //플레이어의 수만큼 유저인포 생성
 
-        foreach (var player in PhotonNetwork.CurrentRoom.Players.Values)
+        for(int i=0;i<actorNums.Count;i++)
         {
             PlayerInfo info = Instantiate(playerInfoFactory, playerInfoParent).GetComponent<PlayerInfo>();
             info.Set(characterData.GetCharaterData(Character.CharacterType.Horse));
-            playerInfos.Add(info);
-            playerScore.Add(player.ActorNumber, 0);
+            playerInfos.Add(actorNums[i], info);
+            playerScore.Add(actorNums[i], 0);
         }
     }
 
@@ -126,36 +128,36 @@ public class ScoreManager : MonoBehaviourPun
                     playerScoreDic.Add(Point.PointType.First, new List<int>());
                     playerScoreDic[Point.PointType.First].Add(playerNum);
                     break;
-                case 1:
-                    playerScoreDic.Add(Point.PointType.Second, new List<int>());
-                    playerScoreDic[Point.PointType.Second].Add(playerNum);
-                    break;
-                case 2:
-                    playerScoreDic.Add(Point.PointType.Third, new List<int>());
-                    playerScoreDic[Point.PointType.Third].Add(playerNum);
-                    break;
-                case 3:
-                    playerScoreDic.Add(Point.PointType.Fourth, new List<int>());
-                    playerScoreDic[Point.PointType.Fourth].Add(playerNum);
-                    break;
+                    //case 1:
+                    //    playerScoreDic.Add(Point.PointType.Second, new List<int>());
+                    //    playerScoreDic[Point.PointType.Second].Add(playerNum);
+                    //    break;
+                    //case 2:
+                    //    playerScoreDic.Add(Point.PointType.Third, new List<int>());
+                    //    playerScoreDic[Point.PointType.Third].Add(playerNum);
+                    //    break;
+                    //case 3:
+                    //    playerScoreDic.Add(Point.PointType.Fourth, new List<int>());
+                    //    playerScoreDic[Point.PointType.Fourth].Add(playerNum);
+                    //    break;
             }
             goalNum++;
         }
     }
 
-    public void Score()
-    {
-        photonView.RPC(nameof(ScoreRPC), RpcTarget.All);
-    }
+    //public void Score()
+    //{
+    //    photonView.RPC(nameof(ScoreRPC), RpcTarget.All);
+    //}
 
-    [PunRPC]
-    void ScoreRPC()
-    {
-        ScoreCalc();
-    }
+    //[PunRPC]
+    //void ScoreRPC()
+    //{
+    //    ScoreCalc();
+    //}
 
     //점수 정산
-    void ScoreCalc()
+    public void ScoreCalc()
     {
         if (playerScoreDic.Count > 0)
         {
@@ -199,25 +201,41 @@ public class ScoreManager : MonoBehaviourPun
             if (!playerScoreDic.ContainsKey(typeTemp)) continue;
             if (typeTemp == Point.PointType.Goal)    //골의 경우 단체로 계산
             {
-                for (int j = 0; j < playerScoreDic[typeTemp].Count; j++)
+                foreach (var playerNum in playerScoreDic[typeTemp])
                 {
                     //점수 계산
-                    PointArea area = Instantiate(pointAreaFactory, playerInfos[0].pointParent).GetComponent<PointArea>();
-                    area.Set(playerScore[playerScoreDic[typeTemp][j]], typeTemp, points[typeTemp]);
-                    playerScore[playerScoreDic[typeTemp][j]] += points[typeTemp].point;
+                    PointArea area = Instantiate(pointAreaFactory, playerInfos[playerNum].pointParent).GetComponent<PointArea>();
+                    area.Set(playerScore[playerNum], typeTemp, points[typeTemp]);
+                    playerScore[playerNum] += points[typeTemp].point;
                 }
+                //for (int j = 0; j < playerScoreDic[typeTemp].Count; j++)
+                //{
+                //    //점수 계산
+                //    PointArea area = Instantiate(pointAreaFactory, playerInfos[0].pointParent).GetComponent<PointArea>();
+                //    area.Set(playerScore[playerScoreDic[typeTemp][j]], typeTemp, points[typeTemp]);
+                //    playerScore[playerScoreDic[typeTemp][j]] += points[typeTemp].point;
+                //}
                 yield return new WaitForSeconds(0.5f);
             }
             else
             {
-                for (int j = 0; j < playerScoreDic[typeTemp].Count; j++)
+                foreach (var playerNum in playerScoreDic[typeTemp])
                 {
                     //점수 계산
-                    PointArea area = Instantiate(pointAreaFactory, playerInfos[0].pointParent).GetComponent<PointArea>();
-                    area.Set(playerScore[playerScoreDic[typeTemp][j]], typeTemp, points[typeTemp]);
-                    playerScore[playerScoreDic[typeTemp][j]] += points[typeTemp].point;
+                    PointArea area = Instantiate(pointAreaFactory, playerInfos[playerNum].pointParent).GetComponent<PointArea>();
+                    area.Set(playerScore[playerNum], typeTemp, points[typeTemp]);
+                    playerScore[playerNum] += points[typeTemp].point;
                     yield return new WaitForSeconds(0.5f);
                 }
+
+                //for (int j = 0; j < playerScoreDic[typeTemp].Count; j++)
+                //{
+                //    //점수 계산
+                //    PointArea area = Instantiate(pointAreaFactory, playerInfos[0].pointParent).GetComponent<PointArea>();
+                //    area.Set(playerScore[playerScoreDic[typeTemp][j]], typeTemp, points[typeTemp]);
+                //    playerScore[playerScoreDic[typeTemp][j]] += points[typeTemp].point;
+                //    yield return new WaitForSeconds(0.5f);
+                //}
             }
         }
 
@@ -234,7 +252,7 @@ public class ScoreManager : MonoBehaviourPun
         playerScoreDic.Clear();
         goalNum = 0;
 
-        int winner = CheckWinner();
+        winner = CheckWinner();
         //게임이 종료된 경우
         if (winner == -1)
         {

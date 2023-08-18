@@ -1725,7 +1725,6 @@ Transform:
   - {fileID: 1463217230}
   - {fileID: 700059433}
   - {fileID: 216204808}
-  - {fileID: 1393329067}
   m_Father: {fileID: 1866775128}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4051,7 +4050,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1233282629
 GameObject:
@@ -4268,16 +4267,16 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1393329066}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 507764186}
   - {fileID: 500387591}
   - {fileID: 576621848}
-  m_Father: {fileID: 544061859}
-  m_RootOrder: 5
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1395987534
 GameObject:
@@ -4818,7 +4817,7 @@ RectTransform:
   - {fileID: 834624524}
   - {fileID: 839583910}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -6780,6 +6779,7 @@ MonoBehaviour:
   pointAreaFactory: {fileID: 8790194292498170064, guid: 6e37007b65f9dda4a84ab6f87ad4cceb, type: 3}
   winnerObj: {fileID: 1620982244}
   winnerCharacterText: {fileID: 1168272671}
+  winner: -1
 --- !u!114 &2081024332
 MonoBehaviour:
   m_ObjectHideFlags: 0
