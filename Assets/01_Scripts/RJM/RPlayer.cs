@@ -58,20 +58,6 @@ public class RPlayer : MonoBehaviourPun
 
 
 
-        if (IsGround())
-        {
-            if(transform.position.y <= 1.1f)
-            {
-             //   jumpTime = true;
-            }
-        }
-
-        //if (jumpTime)
-        {
-            
-
-        }
-
         //스페이스바를 누르면
         if (Input.GetKeyDown(KeyCode.Space) && IsGround())
         {                                     
@@ -79,7 +65,7 @@ public class RPlayer : MonoBehaviourPun
             jumpTime = true;
 
             anim.SetTrigger("Jump");
-
+            
 
             // 점프 중일 때 Idle 애니메이션 전환 방지
             anim.SetBool("IsWalkingRight", false);
@@ -98,12 +84,21 @@ public class RPlayer : MonoBehaviourPun
             //}
         }
 
-            if (h == 0 && IsGround())
+        if(IsGround())
+        {
+            if (rB.velocity.y <= 0)
+            {
+                anim.SetBool("IsJump", false);
+            }
+        }
+
+
+            if (h == 0)
         {
             // 움직임 입력이 없을 때 Idle 애니메이션 실행
             anim.SetBool("IsWalkingRight", false);
-            
             anim.SetTrigger("Idle");
+
         }
 
         if (h > 0)
@@ -124,6 +119,7 @@ public class RPlayer : MonoBehaviourPun
             anim.SetBool("IsWalkingRight", false);
             
             anim.SetTrigger("Idle");
+           
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -227,17 +223,18 @@ public class RPlayer : MonoBehaviourPun
         {
             if (fCount>0)
             {
+            
                 //위로 힘을 준다.
                 rB.AddForce(Vector3.up * jumpPower);
                 fCount--;
+                anim.SetBool("IsJump", true);
             }
             else
             {
                 // 점프 종료 시 jumpTime을 false로 설정
                 jumpTime = false;
+            
 
-                // 점프 종료 후 Idle 애니메이션 실행
-                anim.SetTrigger("Idle");
             }
         }
 
@@ -250,6 +247,7 @@ public class RPlayer : MonoBehaviourPun
         Ray ray = new Ray(transform.position, Vector3.down);
 
         return Physics.Raycast(ray, 1.02f, (-1) - (1 << LayerMask.NameToLayer("Player")));
+
     }
 
     bool IsWall()
