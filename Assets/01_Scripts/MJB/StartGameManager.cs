@@ -1,4 +1,6 @@
 ﻿using Photon.Pun;
+using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -15,7 +17,7 @@ public class StartGameManager : MonoBehaviourPun
     private readonly float MAX_TIME = 3.4f, LIMIT_TIME = 0.5f;
 
     private readonly int NEXT_SCENE_NUMBER = 2;
-    private readonly string START_GAME_TEXT = "게임 시작까지\n", PLAYER_TAG_NAME = "Player", DEMICAL_POINT_TRUNCATION = "0";
+    private readonly string START_GAME_TEXT = "게임 시작까지\n", HORSE_TAG_NAME = "Horse", CHICKEN_TAG_NAME = "Chicken", DEMICAL_POINT_TRUNCATION = "0";
 
     //3초 시간이 되었다는 체크, 플레이어가 들어갔나요?
     private bool hasLimit, hasPlayer;
@@ -23,7 +25,10 @@ public class StartGameManager : MonoBehaviourPun
     //시간에 대한 접근
     private float currentTime;
 
-    bool load = false;
+    // 딕셔너리를 사용하여 플레이어를 추가한다.
+    private Dictionary<string, GameObject> playerTag = new Dictionary<string, GameObject>();
+
+    private bool load = false;
 
     private void Start()
     {
@@ -40,6 +45,28 @@ public class StartGameManager : MonoBehaviourPun
         SetCountDown();
         //일정 시간이 지난다면 씬을 바꾼다.
         if (hasLimit && !load) ChangeScene();
+        StartingGame();
+    }
+
+    private void StartingGame()
+    {
+        //딕셔너리에 내가 원하는 플레이어의 키가 있다면 UI를 실행시킨다.
+        if (playerTag.ContainsKey(HORSE_TAG_NAME) && playerTag.ContainsKey(CHICKEN_TAG_NAME)) ReadyToPlay(true);
+
+        //딕셔너리에 플레이어 키가 없다면 UI를 끈다.
+        if (!playerTag.ContainsKey(HORSE_TAG_NAME) || !playerTag.ContainsKey(CHICKEN_TAG_NAME))
+        {
+            ReadyToPlay(false);
+            //시간을 3초로 초기화 한다.
+            currentTime = MAX_TIME;
+        }
+    }
+
+    private void ReadyToPlay(bool isStarting)
+    {
+        hasPlayer = isStarting;
+        //시간UI 비활성화 한다.
+        timerUI.enabled = isStarting;
     }
 
     private void SetCountDown()
@@ -80,30 +107,23 @@ public class StartGameManager : MonoBehaviourPun
         timerUI.enabled = false;
     }
 
+    // 말 플레이어가 태그 되었다면 그 플레이어를 넣는다.
+    // 치킨 플레이어가 태그 되었다면 그 플레이어를 넣는다.
+
     private void OnTriggerEnter(Collider other)
     {
-        //플레이어 태그가 닿았다면
-        if (other.CompareTag(PLAYER_TAG_NAME))
-        {
-            //플레이어가 들어가있다.
-            hasPlayer = true;
-            //시간 UI를 활성화 한다.
-            timerUI.enabled = true;
-        }
+        //말이 들어갔다면 말을 넣는다.
+        if (other.CompareTag(HORSE_TAG_NAME)) playerTag[HORSE_TAG_NAME] = other.gameObject;
+        //닭이 들어갔다면 닭을 넣는다.
+        if (other.CompareTag(CHICKEN_TAG_NAME)) playerTag[CHICKEN_TAG_NAME] = other.gameObject;
     }
 
     //플레이어가 나갔을 때
     private void OnTriggerExit(Collider other)
     {
-        //나 자신을 끈다.
-        if (other.CompareTag(PLAYER_TAG_NAME))
-        {
-            //플레이어가 없다.
-            hasPlayer = false;
-            //시간UI 비활성화 한다.
-            timerUI.enabled = false;
-            //시간을 3초로 초기화 한다.
-            currentTime = MAX_TIME;
-        }
+        //말이 나갔다면 말을 뺀다.
+        if (other.CompareTag(HORSE_TAG_NAME)) playerTag.Remove(HORSE_TAG_NAME);
+        //닭이 나갔다면 닭을 뺀다.
+        if (other.CompareTag(CHICKEN_TAG_NAME)) playerTag.Remove(CHICKEN_TAG_NAME);
     }
 }
