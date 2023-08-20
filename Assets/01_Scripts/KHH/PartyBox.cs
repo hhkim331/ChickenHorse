@@ -73,6 +73,10 @@ public class PartyBox : MonoBehaviour
 
         //애니메이션
         animator.SetTrigger("Open");
+    }
+
+    public void BoxShake()
+    {
         SoundManager.Instance.PlaySFX("Shake");
     }
 

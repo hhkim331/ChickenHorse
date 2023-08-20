@@ -30,6 +30,9 @@ public class UserCursor : MonoBehaviourPun, IPunObservable
         cursorCamera = cursor;
 
         transform.position = new Vector3(mainCamera.transform.position.x, mainCamera.transform.position.y, -15);
+
+        isActive = false;
+        spriteRenderer.gameObject.SetActive(false);
     }
 
     // Update is called once per frame

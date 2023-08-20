@@ -27,7 +27,12 @@ public class RPlayer : MonoBehaviourPun
 
     //애니메이션
     public Animator anim;
-   
+
+    //사운드
+    bool isJump = false;
+    float stepTime = 0;
+    float stepDelay = 0.2f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,7 +50,7 @@ public class RPlayer : MonoBehaviourPun
         dir = Vector3.right * h;
         dir.Normalize();
 
-        if(h < 0)
+        if (h < 0)
         {
             transform.localScale = new Vector3(-1, 1, 1);
         }
@@ -60,16 +65,17 @@ public class RPlayer : MonoBehaviourPun
 
         //스페이스바를 누르면
         if (Input.GetKeyDown(KeyCode.Space) && IsGround())
-        {                                     
+        {
             //jumpStart = Time.time;
             jumpTime = true;
 
             anim.SetTrigger("Jump");
-            
+
 
             // 점프 중일 때 Idle 애니메이션 전환 방지
             anim.SetBool("IsWalkingRight", false);
 
+            SoundManager.Instance.PlaySFX("Jump");
             //if (h > 0)
             //{
             // 오른쪽으로 점프를 나타내는 애니메이션 파라미터 설정
@@ -84,16 +90,17 @@ public class RPlayer : MonoBehaviourPun
             //}
         }
 
-        if(IsGround())
+        if (IsGround())
         {
             if (rB.velocity.y <= 0)
             {
+                isJump = false;
                 anim.SetBool("IsJump", false);
             }
         }
 
 
-            if (h == 0)
+        if (h == 0)
         {
             // 움직임 입력이 없을 때 Idle 애니메이션 실행
             anim.SetBool("IsWalkingRight", false);
@@ -101,25 +108,32 @@ public class RPlayer : MonoBehaviourPun
 
         }
 
-        if (h > 0)
+        if (h != 0)
         {
             // 오른쪽으로 움직임을 나타내는 애니메이션 파라미터 설정
             anim.SetBool("IsWalkingRight", true);
-            
-        }
-        else if (h < 0)
-        {
-            // 왼쪽으로 움직임을 나타내는 애니메이션 파라미터 설정
-            
-            anim.SetBool("IsWalkingRight", true);
+            if (isJump == false)
+            {
+                stepTime += Time.deltaTime;
+                if (stepTime >= stepDelay)
+                {
+                    stepTime = 0;
+                    SoundManager.Instance.PlaySFX("Step");
+                }
+            }
+            else
+            {
+                stepTime = 1f;
+            }
         }
         else
         {
             // 가만히 있을 때 모든 파라미터 비활성화
             anim.SetBool("IsWalkingRight", false);
-            
+
             anim.SetTrigger("Idle");
-           
+
+            stepTime = 1f;
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -179,7 +193,7 @@ public class RPlayer : MonoBehaviourPun
             rB.velocity = hVelocity;
         }
 
-        if(IsWall() && !IsGround())
+        if (IsWall() && !IsGround())
         {
 
             if (Input.GetKeyDown(KeyCode.Space))
@@ -192,14 +206,14 @@ public class RPlayer : MonoBehaviourPun
                 //rB.AddForce(Vector3.left * jumpPower);
                 //if (h > 0)
                 //{
-                    // 오른쪽으로 점프를 나타내는 애니메이션 파라미터 설정
-                  //  anim.SetTrigger("RightJump");
+                // 오른쪽으로 점프를 나타내는 애니메이션 파라미터 설정
+                //  anim.SetTrigger("RightJump");
 
                 //}
                 //else if (h < 0)
                 //{
-                    // 왼쪽으로 점프를 나타내는 애니메이션 파라미터 설정
-                  //  anim.SetTrigger("LeftJump");
+                // 왼쪽으로 점프를 나타내는 애니메이션 파라미터 설정
+                //  anim.SetTrigger("LeftJump");
 
                 //}
             }
@@ -219,21 +233,22 @@ public class RPlayer : MonoBehaviourPun
 
 
         //만약에 jumpTime 이 true 라면
-        if(jumpTime == true)
+        if (jumpTime == true)
         {
-            if (fCount>0)
+            if (fCount > 0)
             {
-            
+
                 //위로 힘을 준다.
                 rB.AddForce(Vector3.up * jumpPower);
                 fCount--;
+                isJump = true;
                 anim.SetBool("IsJump", true);
             }
             else
             {
                 // 점프 종료 시 jumpTime을 false로 설정
                 jumpTime = false;
-            
+
 
             }
         }
@@ -258,7 +273,7 @@ public class RPlayer : MonoBehaviourPun
         return Physics.Raycast(rayRight, 1.02f) || Physics.Raycast(rayLeft, 1.02f);
     }
 
-    
+
 }
 
 

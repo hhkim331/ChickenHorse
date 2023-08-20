@@ -107,7 +107,6 @@ public class MainGameManager : MonoBehaviourPunCallbacks
         //자신의 커서 생성
         myCursor = PhotonNetwork.Instantiate("UserCursor" + myCharacter.characterType, Vector3.zero, Quaternion.identity).GetComponent<UserCursor>();
         myCursor.Init(mainCamera, partyBoxCamera, cursorCamera);
-        myCursor.Active(false);
 
         //나의 Player 생성
         myPlayer = PhotonNetwork.Instantiate(myCharacter.prefabDirectory, Vector3.zero, Quaternion.identity).GetComponent<KHHPlayerMain>();
