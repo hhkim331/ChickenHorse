@@ -78,21 +78,27 @@ public class RPlayer : MonoBehaviourPun
             //jumpStart = Time.time;
             jumpTime = true;
 
-            //anim.SetTrigger("Jump");
-            if (h > 0)
-            {
-                // 오른쪽으로 점프를 나타내는 애니메이션 파라미터 설정
-                anim.SetTrigger("RightJump");
-               
-            }
-            else if (h < 0)
-            {
-                // 왼쪽으로 점프를 나타내는 애니메이션 파라미터 설정
-                anim.SetTrigger("LeftJump");
+            anim.SetTrigger("Jump");
 
-            }
+
+            // 점프 중일 때 Idle 애니메이션 전환 방지
+            anim.SetBool("IsWalkingRight", false);
+
+            //if (h > 0)
+            //{
+            // 오른쪽으로 점프를 나타내는 애니메이션 파라미터 설정
+            //  anim.SetTrigger("RightJump");
+
+            //}
+            //else if (h < 0)
+            //{
+            // 왼쪽으로 점프를 나타내는 애니메이션 파라미터 설정
+            //  anim.SetTrigger("LeftJump");
+
+            //}
         }
-        if (h == 0 && IsGround())
+
+            if (h == 0 && IsGround())
         {
             // 움직임 입력이 없을 때 Idle 애니메이션 실행
             anim.SetBool("IsWalkingRight", false);
@@ -116,11 +122,15 @@ public class RPlayer : MonoBehaviourPun
         {
             // 가만히 있을 때 모든 파라미터 비활성화
             anim.SetBool("IsWalkingRight", false);
-            anim.SetBool("IsWalkingLeft", false);
+            
             anim.SetTrigger("Idle");
         }
 
-
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            // 속도를 빨리 내며 걷도록 설정
+            speed = 50;
+        }
 
         //스페이스바를 누르면
         if (Input.GetKeyUp(KeyCode.Space))
@@ -184,18 +194,18 @@ public class RPlayer : MonoBehaviourPun
                 rB.velocity = new Vector3(-dir.x * walljumpPower, walljumpPower, 0);
                 // walljumpPower++;
                 //rB.AddForce(Vector3.left * jumpPower);
-                if (h > 0)
-                {
+                //if (h > 0)
+                //{
                     // 오른쪽으로 점프를 나타내는 애니메이션 파라미터 설정
-                    anim.SetTrigger("RightJump");
+                  //  anim.SetTrigger("RightJump");
 
-                }
-                else if (h < 0)
-                {
+                //}
+                //else if (h < 0)
+                //{
                     // 왼쪽으로 점프를 나타내는 애니메이션 파라미터 설정
-                    anim.SetTrigger("LeftJump");
+                  //  anim.SetTrigger("LeftJump");
 
-                }
+                //}
             }
         }
     }
@@ -220,6 +230,14 @@ public class RPlayer : MonoBehaviourPun
                 //위로 힘을 준다.
                 rB.AddForce(Vector3.up * jumpPower);
                 fCount--;
+            }
+            else
+            {
+                // 점프 종료 시 jumpTime을 false로 설정
+                jumpTime = false;
+
+                // 점프 종료 후 Idle 애니메이션 실행
+                anim.SetTrigger("Idle");
             }
         }
 
