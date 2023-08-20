@@ -24,14 +24,14 @@ public class KHHPlayerMain : MonoBehaviourPun
         }
     }
 
-    public void Active(bool active)
+    public void Active(bool active, Vector3 pos)
     {
         if (photonView.IsMine)
-            photonView.RPC(nameof(PMActRPC), RpcTarget.All, active);
+            photonView.RPC(nameof(PMActRPC), RpcTarget.All, active, pos);
     }
 
     [PunRPC]
-    void PMActRPC(bool active)
+    void PMActRPC(bool active, Vector3 pos)
     {
         if (active)
         {
