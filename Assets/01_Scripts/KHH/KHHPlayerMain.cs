@@ -38,6 +38,7 @@ public class KHHPlayerMain : MonoBehaviourPun
                     spriteRenderer.color = Color.white;
                 }
                 GetComponent<Rigidbody>().velocity = Vector3.zero;
+                transform.position = pos;
             }
             else
             {
@@ -61,6 +62,7 @@ public class KHHPlayerMain : MonoBehaviourPun
                 spriteRenderer.color = Color.white;
             }
             GetComponent<Rigidbody>().velocity = Vector3.zero;
+            transform.position = pos;
         }
         else
         {

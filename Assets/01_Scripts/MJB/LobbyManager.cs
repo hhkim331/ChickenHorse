@@ -18,6 +18,7 @@ public class LobbyManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        SoundManager.Instance.PlayBGM("Room");
     }
 
     //해당 플레이어 선택

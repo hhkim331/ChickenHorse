@@ -43,6 +43,9 @@ public class MainGameManager : MonoBehaviourPunCallbacks
     KHHPlayerMain myPlayer;
     List<StageObject> stageObjects = new List<StageObject>();
 
+    //게임플레이
+    bool isPlay = false;
+
     public enum GameState
     {
         None,
@@ -119,7 +122,7 @@ public class MainGameManager : MonoBehaviourPunCallbacks
 
     private void Update()
     {
-        if (!photonView.Owner.IsMasterClient) return;
+        if (!PhotonNetwork.LocalPlayer.IsMasterClient) return;
 
         switch (state)
         {
@@ -146,7 +149,8 @@ public class MainGameManager : MonoBehaviourPunCallbacks
                     ChangeState(GameState.Play);
                 break;
             case GameState.Play:
-                UpdatePlay();
+                if (isPlay)
+                    UpdatePlay();
                 break;
             case GameState.Score:
                 break;
@@ -181,6 +185,7 @@ public class MainGameManager : MonoBehaviourPunCallbacks
     [PunRPC]
     void CurPlayEnd()
     {
+        isPlay = false;
         bool isGoal = false;
         List<GameObject> goalPlayers = new List<GameObject>();
         foreach (var player in players)
@@ -269,6 +274,7 @@ public class MainGameManager : MonoBehaviourPunCallbacks
     [PunRPC]
     void PSRPC() //PlayStartRPC
     {
+        isPlay = true;
         myPlayer.ActiveMove();
         readyTextObject.SetActive(false);
     }
