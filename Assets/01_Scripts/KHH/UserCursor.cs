@@ -136,11 +136,13 @@ public class UserCursor : MonoBehaviourPun, IPunObservable
                 transform.localScale = Vector3.one * 5f;
                 myObject.Active(true);
             }
+            SoundManager.Instance.PlaySFX("Spawn");
         }
         else
         {
             isActive = false;
             spriteRenderer.gameObject.SetActive(false);
+            SoundManager.Instance.PlaySFX("Spawn");
         }
 
         photonView.RPC(nameof(UCActRPC), RpcTarget.Others, active);
@@ -157,11 +159,13 @@ public class UserCursor : MonoBehaviourPun, IPunObservable
                 transform.localScale = Vector3.one * 7.5f;
             else if (MainGameManager.instance.state == MainGameManager.GameState.Place)
                 transform.localScale = Vector3.one * 5f;
+            SoundManager.Instance.PlaySFX("Spawn");
         }
         else
         {
             isActive = false;
             spriteRenderer.gameObject.SetActive(false);
+            SoundManager.Instance.PlaySFX("Spawn");
         }
     }
 

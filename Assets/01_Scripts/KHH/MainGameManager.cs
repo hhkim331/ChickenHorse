@@ -29,6 +29,7 @@ public class MainGameManager : MonoBehaviourPunCallbacks
     public UserCursor MyCursor { get { return myCursor; } }
 
     Vector3 startPos;
+    Vector3 endPos;
 
     public int myCharacterIndex;
     //public GameObject[] playerPrefab;
@@ -66,9 +67,12 @@ public class MainGameManager : MonoBehaviourPunCallbacks
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = false;
 
+        SoundManager.Instance.PlayBGM("Stage");
+
         Init();
         partyBox.Init();
         startPos = new Vector3(MapManager.instance.startBlock.transform.position.x, MapManager.instance.startBlock.transform.position.y, 0);
+        endPos = new Vector3(MapManager.instance.endBlock.transform.position.x, MapManager.instance.endBlock.transform.position.y, 0);
 
         followCamera.State = FollowCamera.CameraState.FullScreen;
         followCamera.Init(mapMgr.mapSize);
@@ -104,7 +108,7 @@ public class MainGameManager : MonoBehaviourPunCallbacks
 
         //나의 Player 생성
         myPlayer = PhotonNetwork.Instantiate(myCharacter.prefabDirectory, Vector3.zero, Quaternion.identity).GetComponent<KHHPlayerMain>();
-        myPlayer.Active(false);
+        myPlayer.Active(false, Vector3.zero);
     }
 
     //void CreatePlayer()
@@ -245,8 +249,8 @@ public class MainGameManager : MonoBehaviourPunCallbacks
     void ResetPlayer()
     {
         //myPlayer.gameObject.SetActive(true);
-        myPlayer.transform.position = startPos;
-        myPlayer.Active(true);
+        //myPlayer.transform.position = startPos;
+        myPlayer.Active(true, startPos);
     }
 
     void PlayStart()
@@ -271,7 +275,7 @@ public class MainGameManager : MonoBehaviourPunCallbacks
 
     void End()
     {
-        players[scoreMgr.winner].Active(true);
+        players[scoreMgr.winner].Active(true, endPos);
         followCamera.SetEnd(players[scoreMgr.winner].transform.position);
     }
 
@@ -300,7 +304,7 @@ public class MainGameManager : MonoBehaviourPunCallbacks
     public void PlayerInactive()
     {
         foreach (var player in players)
-            player.Value.Active(false);
+            player.Value.Active(false, Vector3.zero);
     }
 
     //새로운 인원이 방에 들어왔을때 호출되는 함수

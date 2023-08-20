@@ -3,20 +3,34 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using DG.Tweening;
 
 public class NetworkTest : MonoBehaviourPunCallbacks
 {
+    bool isStart = false;
+
+    public GameObject startTextObj;
+
     // Start is called before the first frame update
     void Start()
     {
-        //Photon 환경설정을 기반으로 접속을 시도
-        PhotonNetwork.ConnectUsingSettings();
+        ////Photon 환경설정을 기반으로 접속을 시도
+        //PhotonNetwork.ConnectUsingSettings();
+
+        startTextObj.transform.DOScale(1.2f, 0.5f).SetLoops(-1, LoopType.Yoyo);
+        SoundManager.Instance.PlayBGM("Title");
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        if (Input.GetMouseButtonDown(0) && !isStart)
+        {
+            isStart = true;
+            //로비진입
+            //Photon 환경설정을 기반으로 접속을 시도
+            PhotonNetwork.ConnectUsingSettings();
+        }
     }
 
     //마스터 서버 접속 완료

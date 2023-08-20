@@ -191,6 +191,7 @@ public class ScoreManager : MonoBehaviourPun
             noPointPaper.DOLocalMove(new Vector3(-80, 0, 0), 0.5f);
             noPointPaper.DOLocalRotate(new Vector3(0, 0, 10), 0.5f);
         }
+        SoundManager.Instance.PlaySFX("Paper");
 
         yield return new WaitForSeconds(0.5f);
 
@@ -208,6 +209,8 @@ public class ScoreManager : MonoBehaviourPun
                     area.Set(playerScore[playerNum], typeTemp, points[typeTemp]);
                     playerScore[playerNum] += points[typeTemp].point;
                 }
+
+                SoundManager.Instance.PlaySFX("PaperWrite");
                 //for (int j = 0; j < playerScoreDic[typeTemp].Count; j++)
                 //{
                 //    //점수 계산
@@ -225,6 +228,8 @@ public class ScoreManager : MonoBehaviourPun
                     PointArea area = Instantiate(pointAreaFactory, playerInfos[playerNum].pointParent).GetComponent<PointArea>();
                     area.Set(playerScore[playerNum], typeTemp, points[typeTemp]);
                     playerScore[playerNum] += points[typeTemp].point;
+
+                    SoundManager.Instance.PlaySFX("PaperWrite");
                     yield return new WaitForSeconds(0.5f);
                 }
 
