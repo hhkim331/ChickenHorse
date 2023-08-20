@@ -27,7 +27,25 @@ public class KHHPlayerMain : MonoBehaviourPun
     public void Active(bool active, Vector3 pos)
     {
         if (photonView.IsMine)
-            photonView.RPC(nameof(PMActRPC), RpcTarget.All, active, pos);
+        {
+            if (active)
+            {
+                isActive = true;
+                isGoal = false;
+                animator.enabled = true;
+                foreach (var spriteRenderer in spriteRenderers)
+                {
+                    spriteRenderer.color = Color.white;
+                }
+                GetComponent<Rigidbody>().velocity = Vector3.zero;
+            }
+            else
+            {
+                animator.enabled = false;
+            }
+
+            photonView.RPC(nameof(PMActRPC), RpcTarget.Others, active, pos);
+        }
     }
 
     [PunRPC]

@@ -2712,6 +2712,10 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1717416451, guid: a92cffbe9d3b7594a814c2959a84d4bd, type: 3}
+      propertyPath: sceneViewId
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4055202769452008529, guid: a92cffbe9d3b7594a814c2959a84d4bd, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -8325,7 +8329,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2785689735a4ce348ba0da0f57b8f9bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1717416443}
 --- !u!1 &2098114553
 GameObject:
   m_ObjectHideFlags: 0
