@@ -110,7 +110,7 @@ public class KHHPlayerMain : MonoBehaviourPun
         //    spriteRenderer.color = Color.red;
         //}
 
-        animator.SetBool("Dead", true);
+        animator.SetTrigger("Dead");
     }
 
     // Update is called once per frame
@@ -139,7 +139,7 @@ public class KHHPlayerMain : MonoBehaviourPun
     {
         isActive = false;
         rPlayer.enabled = false;
-        animator.SetBool("Dead", true);
+        animator.SetTrigger("Dead");
     }
 
     private void OnTriggerEnter(Collider other)
