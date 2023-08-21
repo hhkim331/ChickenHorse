@@ -28,7 +28,7 @@ public class FollowCamera : MonoBehaviour
 
     Vector2 mapSize;
     Dictionary<int, KHHPlayerMain> players = new Dictionary<int, KHHPlayerMain>();
-    List<int> actorNums = new List<int>();
+    List<(int, string)> actors = new List<(int, string)>();
     List<UserCursor> playerCursors = new List<UserCursor>();
 
     public void Init(Vector2 mapSize)
@@ -44,10 +44,10 @@ public class FollowCamera : MonoBehaviour
         //    cameraMaxSize = cameraMinSize;
     }
 
-    public void Set(Dictionary<int, KHHPlayerMain> players,List<int> actorNumList, List<UserCursor> cursors)
+    public void Set(Dictionary<int, KHHPlayerMain> players, List<(int, string)> actors, List<UserCursor> cursors)
     {
         this.players = players;
-        this.actorNums = actorNumList;
+        this.actors = actors;
         playerCursors = cursors;
     }
 
@@ -123,27 +123,27 @@ public class FollowCamera : MonoBehaviour
         float maxDistance = 0;
         float playerDistance = 0;
         Vector3 playersCenterPos = Vector3.zero;
-        for(int i=0;i<actorNums.Count;i++)
+        for (int i = 0; i < actors.Count; i++)
         {
-            if (players[actorNums[i]] == null)
+            if (players[actors[i].Item1] == null)
                 continue;
-            if (!players[actorNums[i]].IsActive)
+            if (!players[actors[i].Item1].IsActive)
                 continue;
 
             activePlayerCount++;
-            playersCenterPos += players[actorNums[i]].transform.position;
+            playersCenterPos += players[actors[i].Item1].transform.position;
 
-            distance = Vector3.Distance(players[actorNums[i]].transform.position, cameraCenterPos);
+            distance = Vector3.Distance(players[actors[i].Item1].transform.position, cameraCenterPos);
             if (distance > maxDistance)
                 maxDistance = distance;
-            for (int j = i+1; j < actorNums.Count; j++)
+            for (int j = i + 1; j < actors.Count; j++)
             {
-                if (players[actorNums[j]] == null)
+                if (players[actors[j].Item1] == null)
                     continue;
-                if (!players[actorNums[j]].IsActive)
+                if (!players[actors[j].Item1].IsActive)
                     continue;
 
-                distance = Vector3.Distance(players[actorNums[i]].transform.position, players[actorNums[j]].transform.position);
+                distance = Vector3.Distance(players[actors[i].Item1].transform.position, players[actors[j].Item1].transform.position);
                 if (distance > maxDistance)
                     maxDistance = distance;
                 if (distance > playerDistance)

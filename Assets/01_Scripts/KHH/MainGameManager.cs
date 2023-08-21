@@ -3,6 +3,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -39,7 +40,7 @@ public class MainGameManager : MonoBehaviourPunCallbacks
 
     //활성화 플레이어
     Dictionary<int, KHHPlayerMain> players;
-    List<int> actorNums;
+    List<(int,string)> actors;
     KHHPlayerMain myPlayer;
     List<StageObject> stageObjects = new List<StageObject>();
 
@@ -84,18 +85,18 @@ public class MainGameManager : MonoBehaviourPunCallbacks
 
         cursors = new List<UserCursor>(FindObjectsOfType<UserCursor>());
         players = new Dictionary<int, KHHPlayerMain>();
-        actorNums = new List<int>();
+        actors = new List<(int, string)>();
         KHHPlayerMain[] kHHPlayerMains = FindObjectsOfType<KHHPlayerMain>();
         foreach (var player in kHHPlayerMains)
         {
             players.Add(player.photonView.Owner.ActorNumber, player);
-            actorNums.Add(player.photonView.Owner.ActorNumber);
+            actors.Add((player.photonView.Owner.ActorNumber,"플레이어"+ player.photonView.Owner.ActorNumber.ToString()));
         }
 
-        actorNums.Sort();
+        actors.OrderBy(a => a.Item1);
         scoreMgr = GetComponent<ScoreManager>();
-        scoreMgr.Init(actorNums);
-        followCamera.Set(players, actorNums, cursors);
+        scoreMgr.Init(actors);
+        followCamera.Set(players, actors, cursors);
 
         ChangeState(GameState.Select);
     }

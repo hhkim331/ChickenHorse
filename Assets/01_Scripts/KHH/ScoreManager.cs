@@ -77,7 +77,6 @@ public class ScoreManager : MonoBehaviourPun
     [SerializeField] TextMeshProUGUI winnerCharacterText;
 
     Dictionary<int, PlayerInfo> playerInfos = new Dictionary<int, PlayerInfo>();
-    List<int> actorNums;
 
     ////테스트용 플레이어
     //public GameObject playerTest;
@@ -101,16 +100,16 @@ public class ScoreManager : MonoBehaviourPun
         points.Add(Point.PointType.First, new Point(first, firstColor, "첫 도착자"));
     }
 
-    public void Init(List<int> actorNums)
+    public void Init(List<(int, string)> actors)
     {
         //플레이어의 수만큼 유저인포 생성
 
-        for(int i=0;i<actorNums.Count;i++)
+        for (int i = 0; i < actors.Count; i++)
         {
             PlayerInfo info = Instantiate(playerInfoFactory, playerInfoParent).GetComponent<PlayerInfo>();
-            info.Set(characterData.GetCharaterData(Character.CharacterType.Horse));
-            playerInfos.Add(actorNums[i], info);
-            playerScore.Add(actorNums[i], 0);
+            info.Set(actors[i].Item2, characterData.GetCharaterData(Character.CharacterType.Horse));
+            playerInfos.Add(actors[i].Item1, info);
+            playerScore.Add(actors[i].Item1, 0);
         }
     }
 
