@@ -14,7 +14,7 @@ public class StartGameManager : MonoBehaviourPun
     public TextMeshProUGUI timerUI;
 
     //3초 시간이 제한
-    private readonly float MAX_TIME = 3.4f, LIMIT_TIME = 0.5f;
+    private readonly float MAX_TIME = 3.4f, LIMIT_TIME = 0.7f;
 
     private readonly int NEXT_SCENE_NUMBER = 2;
     private readonly string START_GAME_TEXT = "게임 시작까지\n", HORSE_TAG_NAME = "Horse", CHICKEN_TAG_NAME = "Chicken", DEMICAL_POINT_TRUNCATION = "0";
@@ -81,8 +81,7 @@ public class StartGameManager : MonoBehaviourPun
             {
                 //시간이 지났다는 체크를 한다.
                 hasLimit = true;
-                //시간을 3초로 초기화하고
-                currentTime = MAX_TIME;
+                timerUI.enabled = false;
             }
 
             SetTimerText();
