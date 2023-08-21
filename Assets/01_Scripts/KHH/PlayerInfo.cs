@@ -14,11 +14,11 @@ public class PlayerInfo : MonoBehaviour
     public Character Character { get { return character; } }
     public RectTransform pointParent;
 
-    public void Set(Character character)
+    public void Set(string nickName, Character character)
     {
         this.character = character;
         characterImage.sprite = character.characterImage;
-        nickNameText.text = "내 닉네임";
+        nickNameText.text = nickName;
         characterNameText.text = character.characterName;
     }
 }
