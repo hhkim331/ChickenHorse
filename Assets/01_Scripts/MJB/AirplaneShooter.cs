@@ -28,6 +28,8 @@ public class AirplaneShooter : MonoBehaviour
         airplane.transform.right = airPlaneFireTransform.right;
         //SoundManager.Instance.PlaySFX("AirplaneFire");
 
+        Destroy(airplane, 10);
+
         if (!stageObject.IsPlay)
         {
             foreach (var transform in airplane.GetComponentsInChildren<Transform>())

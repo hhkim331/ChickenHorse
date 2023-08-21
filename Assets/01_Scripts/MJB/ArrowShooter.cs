@@ -29,6 +29,7 @@ public class ArrowShooter : MonoBehaviour
         // 발사 물체의 위 방향을 발사 위치의 위 방향이다.
         arrow.transform.up = arrowFireTransform.up;
         //SoundManager.Instance.PlaySFX("ArrowFire");
+        Destroy(arrow, 10);
         if (!stageObject.IsPlay)
         {
             foreach (var transform in arrow.GetComponentsInChildren<Transform>())
