@@ -749,6 +749,15 @@ MonoBehaviour:
   - key: PaperWrite
     audioClip: {fileID: 8300000, guid: 66d77aa2c350c4545bbf4e2e5cfd942c, type: 3}
     audioMixerGroup: {fileID: -6169654625647679631, guid: 6b9d7015bf3786142b805546c697bc72, type: 2}
+  - key: ArrowFire
+    audioClip: {fileID: 8300000, guid: b277cfcfc80b71b4ea8cac1603ef02c0, type: 3}
+    audioMixerGroup: {fileID: -4534951702330242111, guid: 6b9d7015bf3786142b805546c697bc72, type: 2}
+  - key: AirplaneFire
+    audioClip: {fileID: 8300000, guid: 776015702bc2bd54f95af7a849024e48, type: 3}
+    audioMixerGroup: {fileID: -7781398064360558422, guid: 6b9d7015bf3786142b805546c697bc72, type: 2}
+  - key: AirplaneReady
+    audioClip: {fileID: 8300000, guid: 84d0b861124a6e34b9e2ec462e2d6e3d, type: 3}
+    audioMixerGroup: {fileID: -8280820863773788566, guid: 6b9d7015bf3786142b805546c697bc72, type: 2}
 --- !u!1 &1643476011
 GameObject:
   m_ObjectHideFlags: 0
