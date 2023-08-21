@@ -8,6 +8,8 @@ TagManager:
   - Goal
   - Horse
   - Chicken
+  - Sheep
+  - Racoon
   layers:
   - Default
   - TransparentFX

@@ -26,7 +26,8 @@ public class StartGameManager : MonoBehaviourPun
     private float currentTime;
 
     // 딕셔너리를 사용하여 플레이어를 추가한다.
-    private Dictionary<string, GameObject> playerTag = new Dictionary<string, GameObject>();
+    //private Dictionary<string, GameObject> playerTag = new Dictionary<string, GameObject>();
+    int playerCount = 0;
 
     private bool load = false;
 
@@ -51,10 +52,13 @@ public class StartGameManager : MonoBehaviourPun
     private void StartingGame()
     {
         //딕셔너리에 내가 원하는 플레이어의 키가 있다면 UI를 실행시킨다.
-        if (playerTag.ContainsKey(HORSE_TAG_NAME) && playerTag.ContainsKey(CHICKEN_TAG_NAME)) ReadyToPlay(true);
+        //if (playerTag.ContainsKey(HORSE_TAG_NAME) && playerTag.ContainsKey(CHICKEN_TAG_NAME))
+        if (playerCount == PhotonNetwork.CurrentRoom.PlayerCount)
+            ReadyToPlay(true);
 
         //딕셔너리에 플레이어 키가 없다면 UI를 끈다.
-        if (!playerTag.ContainsKey(HORSE_TAG_NAME) || !playerTag.ContainsKey(CHICKEN_TAG_NAME))
+        //if (!playerTag.ContainsKey(HORSE_TAG_NAME) || !playerTag.ContainsKey(CHICKEN_TAG_NAME))
+        if (playerCount < PhotonNetwork.CurrentRoom.PlayerCount)
         {
             ReadyToPlay(false);
             //시간을 3초로 초기화 한다.
@@ -111,18 +115,20 @@ public class StartGameManager : MonoBehaviourPun
 
     private void OnTriggerEnter(Collider other)
     {
+
         //말이 들어갔다면 말을 넣는다.
-        if (other.CompareTag(HORSE_TAG_NAME)) playerTag[HORSE_TAG_NAME] = other.gameObject;
-        //닭이 들어갔다면 닭을 넣는다.
-        if (other.CompareTag(CHICKEN_TAG_NAME)) playerTag[CHICKEN_TAG_NAME] = other.gameObject;
+        if (other.CompareTag("Player")) playerCount++;
+        ////닭이 들어갔다면 닭을 넣는다.
+        //if (other.CompareTag("Player")) playerTag[CHICKEN_TAG_NAME] = other.gameObject;
     }
 
     //플레이어가 나갔을 때
     private void OnTriggerExit(Collider other)
     {
-        //말이 나갔다면 말을 뺀다.
-        if (other.CompareTag(HORSE_TAG_NAME)) playerTag.Remove(HORSE_TAG_NAME);
-        //닭이 나갔다면 닭을 뺀다.
-        if (other.CompareTag(CHICKEN_TAG_NAME)) playerTag.Remove(CHICKEN_TAG_NAME);
+        if (other.CompareTag("Player")) playerCount--;
+        ////말이 나갔다면 말을 뺀다.
+        //if (other.CompareTag(HORSE_TAG_NAME)) playerTag.Remove(HORSE_TAG_NAME);
+        ////닭이 나갔다면 닭을 뺀다.
+        //if (other.CompareTag(CHICKEN_TAG_NAME)) playerTag.Remove(CHICKEN_TAG_NAME);
     }
 }
