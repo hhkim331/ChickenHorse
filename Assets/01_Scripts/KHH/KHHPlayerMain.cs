@@ -1,11 +1,12 @@
 ﻿using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class KHHPlayerMain : MonoBehaviourPun
 {
-    public bool isActive = true;
+    public bool isActive = false;
     public bool IsActive { get { return isActive; } }
     bool isGoal = false;
     public bool IsGoal { get { return isGoal; } }
@@ -16,12 +17,19 @@ public class KHHPlayerMain : MonoBehaviourPun
     bool rp = false;
     bool ani = false;
 
+    [SerializeField] Transform canvasTransform;
+    [SerializeField] RectTransform nameBackBoardRT;
+    [SerializeField] TextMeshProUGUI nameText;
+
     private void Start()
     {
         if (photonView.IsMine == false)
         {
             GetComponent<Rigidbody>().isKinematic = true;
         }
+
+        nameText.text = "플레이어" + photonView.Owner.ActorNumber;
+        nameBackBoardRT.sizeDelta = new Vector2(nameText.preferredWidth, nameText.preferredHeight);
     }
 
     public void Active(bool active, Vector3 pos)
@@ -32,6 +40,7 @@ public class KHHPlayerMain : MonoBehaviourPun
             {
                 isActive = true;
                 isGoal = false;
+                animator.Rebind();
                 animator.enabled = true;
                 foreach (var spriteRenderer in spriteRenderers)
                 {
@@ -56,13 +65,14 @@ public class KHHPlayerMain : MonoBehaviourPun
         {
             isActive = true;
             isGoal = false;
+            transform.position = pos;
+            animator.Rebind();
             animator.enabled = true;
             foreach (var spriteRenderer in spriteRenderers)
             {
                 spriteRenderer.color = Color.white;
             }
             GetComponent<Rigidbody>().velocity = Vector3.zero;
-            transform.position = pos;
         }
         else
         {
@@ -83,8 +93,10 @@ public class KHHPlayerMain : MonoBehaviourPun
 
     public void Hit()
     {
+        if (isActive == false) return;
+
         if (photonView.IsMine)
-        photonView.RPC(nameof(PMHitRPC), RpcTarget.All);
+            photonView.RPC(nameof(PMHitRPC), RpcTarget.All);
     }
 
     [PunRPC]
@@ -92,11 +104,13 @@ public class KHHPlayerMain : MonoBehaviourPun
     {
         isActive = false;
         rPlayer.enabled = false;
-        animator.enabled = false;
-        foreach (var spriteRenderer in spriteRenderers)
-        {
-            spriteRenderer.color = Color.red;
-        }
+        //animator.enabled = false;
+        //foreach (var spriteRenderer in spriteRenderers)
+        //{
+        //    spriteRenderer.color = Color.red;
+        //}
+
+        animator.SetBool("Dead", true);
     }
 
     // Update is called once per frame
@@ -104,11 +118,15 @@ public class KHHPlayerMain : MonoBehaviourPun
     {
         if (photonView.IsMine)
         {
+            if (!isActive) return;
+
             if (transform.position.y < -10)
             {
-                photonView.RPC(nameof(PMDieRPC), RpcTarget.All);
+                if (isActive) photonView.RPC(nameof(PMDieRPC), RpcTarget.All);
             }
         }
+
+        canvasTransform.localScale = transform.localScale;
         //else
         //{
         //    rPlayer.enabled = rp;
@@ -121,6 +139,7 @@ public class KHHPlayerMain : MonoBehaviourPun
     {
         isActive = false;
         rPlayer.enabled = false;
+        animator.SetBool("Dead", true);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -135,7 +154,7 @@ public class KHHPlayerMain : MonoBehaviourPun
     [PunRPC]
     void PMGoalRPC()
     {
-        if(isGoal) return;
+        if (isGoal) return;
         isActive = false;
         isGoal = true;
         rPlayer.enabled = false;
