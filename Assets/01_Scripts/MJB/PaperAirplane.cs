@@ -22,16 +22,23 @@ public class PaperAirplane : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (player != null)
+        {
+            player.parent = null;
+        }
+
         //플레이어 이외의 물체에 충돌하면
         if (!collision.gameObject.CompareTag("Player"))
         {
             crash = true;
             //부모까지 오브젝트를 삭제시키는 애니메이션 이벤트를 실행시킨다.
             anim.SetTrigger("Crash");
-            if (player != null)
-            {
-                player.parent = null;
-            }
+        }
+
+        //만약 나의 3번째 child가 존재하고, collision한 게임오브젝트 태그가 player 라면 crash trigger를 활성화 시킨다.
+        if (transform.childCount == 3 && collision.gameObject.CompareTag("Player"))
+        {
+            anim.SetTrigger("Crash");
         }
     }
 

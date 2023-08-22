@@ -22,14 +22,11 @@ public class Arrow : MonoBehaviour
         if (other.transform.root.CompareTag("Player"))
         {
             other.transform.root.GetComponent<KHHPlayerMain>().Hit();
+            //나의 캡슐 콜라이더를 비활성화 시킨다.
+            GetComponent<CapsuleCollider>().enabled = false;
         }
 
         // 부셔지는 애니메이션을 실행시킨다.
         anim.SetTrigger("ArrowCrashing");
-        ////플레이어에게 충돌했을 때만 삭제시킨다.
-        //if (other.CompareTag("Player"))
-        //{
-        //    Destroy(other.gameObject);
-        //}
     }
 }
