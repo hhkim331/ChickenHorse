@@ -28,7 +28,7 @@ public class KHHPlayerMain : MonoBehaviourPun
             GetComponent<Rigidbody>().isKinematic = true;
         }
 
-        nameText.text = "플레이어" + photonView.Owner.ActorNumber;
+        nameText.text = photonView.Owner.NickName;
         nameBackBoardRT.sizeDelta = new Vector2(nameText.preferredWidth, nameText.preferredHeight);
     }
 

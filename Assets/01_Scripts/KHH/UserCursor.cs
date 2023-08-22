@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class UserCursor : MonoBehaviourPun, IPunObservable
 {
-    bool isActive;
+    bool isActive = false;
     public bool IsActive { get { return isActive; } }
     bool isSelect = false;
     public bool IsSelect { get { return isSelect; } }
@@ -16,8 +16,11 @@ public class UserCursor : MonoBehaviourPun, IPunObservable
     Camera partyBoxCamera;
     Camera cursorCamera;
 
-    [SerializeField] SpriteRenderer spriteRenderer;
-    [SerializeField] Sprite[] sprites;
+    [SerializeField] GameObject spriteObject1;
+    [SerializeField] GameObject spriteObject2;
+    [SerializeField] Animator explosionAni;
+    //[SerializeField] SpriteRenderer spriteRenderer;
+    //[SerializeField] Sprite[] sprites;
     StageObject myObject;
 
     ////네트워크
@@ -30,9 +33,6 @@ public class UserCursor : MonoBehaviourPun, IPunObservable
         cursorCamera = cursor;
 
         transform.position = new Vector3(mainCamera.transform.position.x, mainCamera.transform.position.y, -15);
-
-        isActive = false;
-        spriteRenderer.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -92,10 +92,17 @@ public class UserCursor : MonoBehaviourPun, IPunObservable
             {
                 myObject.Move(new Vector2(transform.position.x, transform.position.y));
                 if (myObject.CanPlace)
-                    spriteRenderer.sprite = sprites[0];
+                {
+                    spriteObject1.SetActive(true);
+                    spriteObject2.SetActive(false);
+                    //spriteRenderer.sprite = sprites[0];
+                }
                 else
-                    spriteRenderer.sprite = sprites[1];
-
+                {
+                    spriteObject1.SetActive(false);
+                    spriteObject2.SetActive(true);
+                    //spriteRenderer.sprite = sprites[1];
+                }
 
                 if (Input.GetMouseButtonDown(0) && myObject.CanPlace)   //배치
                 {
@@ -131,7 +138,9 @@ public class UserCursor : MonoBehaviourPun, IPunObservable
         if (active)
         {
             isActive = true;
-            spriteRenderer.gameObject.SetActive(true);
+            spriteObject1.SetActive(true);
+            spriteObject2.SetActive(false);
+            //spriteRenderer.gameObject.SetActive(true);
             if (MainGameManager.instance.state == MainGameManager.GameState.Select)
                 transform.localScale = Vector3.one * 7.5f;
             else if (MainGameManager.instance.state == MainGameManager.GameState.Place)
@@ -140,12 +149,16 @@ public class UserCursor : MonoBehaviourPun, IPunObservable
                 myObject.Active(true);
             }
             SoundManager.Instance.PlaySFX("Spawn");
+            explosionAni.SetTrigger("explosion");
         }
         else
         {
             isActive = false;
-            spriteRenderer.gameObject.SetActive(false);
+            spriteObject1.SetActive(false);
+            spriteObject2.SetActive(false);
+            //spriteRenderer.gameObject.SetActive(false);
             SoundManager.Instance.PlaySFX("Spawn");
+            explosionAni.SetTrigger("explosion");
         }
 
         photonView.RPC(nameof(UCActRPC), RpcTarget.Others, active);
@@ -157,18 +170,24 @@ public class UserCursor : MonoBehaviourPun, IPunObservable
         if (active)
         {
             isActive = true;
-            spriteRenderer.gameObject.SetActive(true);
+            spriteObject1.SetActive(true);
+            spriteObject2.SetActive(false);
+            //spriteRenderer.gameObject.SetActive(true);
             if (MainGameManager.instance.state == MainGameManager.GameState.Select)
                 transform.localScale = Vector3.one * 7.5f;
             else if (MainGameManager.instance.state == MainGameManager.GameState.Place)
                 transform.localScale = Vector3.one * 5f;
             SoundManager.Instance.PlaySFX("Spawn");
+            explosionAni.SetTrigger("explosion");
         }
         else
         {
             isActive = false;
-            spriteRenderer.gameObject.SetActive(false);
+            spriteObject1.SetActive(false);
+            spriteObject2.SetActive(false);
+            //spriteRenderer.gameObject.SetActive(false);
             SoundManager.Instance.PlaySFX("Spawn");
+            explosionAni.SetTrigger("explosion");
         }
     }
 

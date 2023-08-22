@@ -40,7 +40,7 @@ public class MainGameManager : MonoBehaviourPunCallbacks
 
     //활성화 플레이어
     Dictionary<int, KHHPlayerMain> players;
-    List<(int,string)> actors;
+    List<(int, string)> actors;
     KHHPlayerMain myPlayer;
     List<StageObject> stageObjects = new List<StageObject>();
 
@@ -90,7 +90,7 @@ public class MainGameManager : MonoBehaviourPunCallbacks
         foreach (var player in kHHPlayerMains)
         {
             players.Add(player.photonView.Owner.ActorNumber, player);
-            actors.Add((player.photonView.Owner.ActorNumber,"플레이어"+ player.photonView.Owner.ActorNumber.ToString()));
+            actors.Add((player.photonView.Owner.ActorNumber, "플레이어" + player.photonView.Owner.ActorNumber.ToString()));
         }
 
         actors.OrderBy(a => a.Item1);
@@ -309,8 +309,7 @@ public class MainGameManager : MonoBehaviourPunCallbacks
 
     public void PlayerInactive()
     {
-        foreach (var player in players)
-            player.Value.Active(false, Vector3.zero);
+        myPlayer.Active(false, Vector3.zero);
     }
 
     //새로운 인원이 방에 들어왔을때 호출되는 함수
