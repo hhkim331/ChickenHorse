@@ -63,6 +63,20 @@ public class RPlayer : MonoBehaviourPun
 
 
 
+        if (Input.GetKey(KeyCode.C))
+        {
+            anim.SetBool("Dance", true);
+        }
+        else if (Input.GetKeyUp((KeyCode.Z)))
+        {
+            anim.SetBool("Dance", false);
+        }
+        else
+        {
+            anim.SetBool("Dance", false);
+        }
+
+
         //스페이스바를 누르면
         if (Input.GetKeyDown(KeyCode.Space) && IsGround())
         {
@@ -225,6 +239,20 @@ public class RPlayer : MonoBehaviourPun
         if (IsGround())
         {
             rB.AddForce(dir * speed);
+
+            if (Input.GetKey(KeyCode.Z))
+            {
+                rB.AddForce(dir * speed * 3);
+                anim.SetBool("IsRun", true);
+            }
+            else if(Input.GetKeyUp((KeyCode.Z)))
+            {
+                anim.SetBool("IsRun", false);
+            }
+            else
+            {
+                anim.SetBool("IsRun", false);
+            }
         }
         else
         {
