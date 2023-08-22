@@ -7,12 +7,12 @@ public class PaperAirplane : MonoBehaviour
     //속력값
     public float speed = 5f;
 
-    Transform player;
+    private Transform player;
 
     //애니메이터
     public Animator anim;
 
-    bool crash = false;
+    private bool crash = false;
 
     private void Update()
     {
@@ -28,7 +28,7 @@ public class PaperAirplane : MonoBehaviour
             crash = true;
             //부모까지 오브젝트를 삭제시키는 애니메이션 이벤트를 실행시킨다.
             anim.SetTrigger("Crash");
-            if(player!=null)
+            if (player != null)
             {
                 player.parent = null;
             }
