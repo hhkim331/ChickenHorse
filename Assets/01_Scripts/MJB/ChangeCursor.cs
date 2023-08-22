@@ -1,5 +1,4 @@
 ﻿using Photon.Pun;
-using UnityEditor.U2D.Animation;
 using UnityEngine;
 
 public class ChangeCursor : MonoBehaviourPun

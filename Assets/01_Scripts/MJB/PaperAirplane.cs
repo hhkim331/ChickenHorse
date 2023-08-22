@@ -7,8 +7,12 @@ public class PaperAirplane : MonoBehaviour
     //속력값
     public float speed = 5f;
 
+    Transform player;
+
     //애니메이터
     public Animator anim;
+
+    bool crash = false;
 
     private void Update()
     {
@@ -21,30 +25,39 @@ public class PaperAirplane : MonoBehaviour
         //플레이어 이외의 물체에 충돌하면
         if (!collision.gameObject.CompareTag("Player"))
         {
+            crash = true;
             //부모까지 오브젝트를 삭제시키는 애니메이션 이벤트를 실행시킨다.
             anim.SetTrigger("Crash");
+            if(player!=null)
+            {
+                player.parent = null;
+            }
         }
     }
 
     //플레이어가 나한테 다으면 플레이어의 위치 값을 나의 부모 위치 값으로 한다.
     private void OnTriggerEnter(Collider other)
     {
+        if (crash) return;
         //플레이어 태그를 만나면
         if (other.CompareTag("Player"))
         {
             //플레이어 transform은 종이 비행기의 tranform으로 한다.
             other.gameObject.transform.parent.SetParent(transform);
+            player = other.gameObject.transform.parent;
         }
     }
 
     //플레이어가 나한테 떨어지면 플레이어의 위치 값을 자신의 위치 값으로 변경한다.
     private void OnTriggerExit(Collider other)
     {
+        if (crash) return;
         //플레이어 태그가 나간다면
         if (other.CompareTag("Player"))
         {
             //플레이어의 transform을 null로 만든다.
             other.gameObject.transform.parent.SetParent(null);
+            player = null;
         }
     }
 }
