@@ -88,17 +88,7 @@ public class KHHPlayerMain : MonoBehaviourPun
         if (isActive == false) return;
 
         if (photonView.IsMine)
-            photonView.RPC(nameof(PMHitRPC), RpcTarget.All);
-    }
-
-    [PunRPC]
-    void PMHitRPC()
-    {
-        isActive = false;
-        rPlayer.enabled = false;
-        //animator.enabled = false;
-
-        animator.SetTrigger("Dead");
+            photonView.RPC(nameof(PMDieRPC), RpcTarget.All);
     }
 
     // Update is called once per frame
@@ -128,6 +118,7 @@ public class KHHPlayerMain : MonoBehaviourPun
         isActive = false;
         rPlayer.enabled = false;
         animator.SetTrigger("Dead");
+        MainGameManager.instance.AnyPlayerDie();
     }
 
     private void OnTriggerEnter(Collider other)

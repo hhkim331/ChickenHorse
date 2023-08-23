@@ -46,6 +46,10 @@ public class MainGameManager : MonoBehaviourPunCallbacks
 
     //게임플레이
     bool isPlay = false;
+    bool anyPlayerDie = false;
+    float dieCameraTime = 0;
+    float dieCameraWait = 1;
+    Coroutine dieCamCoroutine = null;
 
     public enum GameState
     {
@@ -182,10 +186,36 @@ public class MainGameManager : MonoBehaviourPunCallbacks
         }
     }
 
+    public void AnyPlayerDie()
+    {
+        anyPlayerDie = true;
+        followCamera.State = FollowCamera.CameraState.FullScreen;
+        dieCameraTime = 0;
+        if (dieCamCoroutine != null)
+            StopCoroutine(dieCamCoroutine);
+        dieCamCoroutine = StartCoroutine(DieCamera());
+    }
+
+    IEnumerator DieCamera()
+    {
+        while (dieCameraTime < dieCameraWait)
+        {
+            dieCameraTime += Time.deltaTime;
+            yield return null;
+        }
+
+        if (state == GameState.Play)
+        {
+            followCamera.State = FollowCamera.CameraState.Play;
+            anyPlayerDie = false;
+        }
+    }
+
     [PunRPC]
     void CurPlayEnd()
     {
         isPlay = false;
+        anyPlayerDie = false;
         bool isGoal = false;
         List<GameObject> goalPlayers = new List<GameObject>();
         foreach (var player in players)
@@ -199,6 +229,8 @@ public class MainGameManager : MonoBehaviourPunCallbacks
 
         if (isGoal)
             followCamera.SetGoal(goalPlayers);
+        else
+            followCamera.SetNoGoal();
 
         ChangeState(GameState.Score);
     }

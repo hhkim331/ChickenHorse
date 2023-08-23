@@ -151,30 +151,6 @@ public class FollowCamera : MonoBehaviour
             }
         }
 
-
-        //for (int i = 0; i < players.Count; i++)
-        //{
-        //    if (players[i] == null)
-        //        continue;
-        //    if (!players[i].IsActive)
-        //        continue;
-
-        //    activePlayerCount++;
-        //    playersCenterPos += players[i].transform.position;
-
-        //    distance = Vector3.Distance(players[i].transform.position, cameraCenterPos);
-        //    if (distance > maxDistance)
-        //        maxDistance = distance;
-        //    for (int j = i + 1; j < players.Count; j++)
-        //    {
-        //        distance = Vector3.Distance(players[i].transform.position, players[j].transform.position);
-        //        if (distance > maxDistance)
-        //            maxDistance = distance;
-        //        if (distance > playerDistance)
-        //            playerDistance = distance;
-        //    }
-        //}
-
         if (activePlayerCount > 0)
         {
             playersCenterPos /= activePlayerCount;
@@ -204,6 +180,12 @@ public class FollowCamera : MonoBehaviour
         playersCenterPos /= activePlayerCount;
         newCameraPos = new Vector3(playersCenterPos.x, playersCenterPos.y, -20);
         newCameraSize = cameraPlayMinSize;
+    }
+
+    public void SetNoGoal()
+    {
+        newCameraPos = cameraCenterPos;
+        newCameraSize = cameraMaxSize;
     }
 
     public void SetEnd(Vector3 winnerPos)
