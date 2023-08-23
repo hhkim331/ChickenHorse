@@ -3974,7 +3974,7 @@ GameObject:
   - component: {fileID: 1643476013}
   - component: {fileID: 1643476014}
   m_Layer: 0
-  m_Name: NetworkTest
+  m_Name: TitleManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -40,7 +40,7 @@ public class PlayerData : MonoBehaviour
 
     public void AddPlayer(int actorNum)
     {
-        Debug.Log("AddPlayer");
+        Debug.Log("AddPlayer:" + actorNum);
         playerCharacterDic[actorNum] = null;
     }
 

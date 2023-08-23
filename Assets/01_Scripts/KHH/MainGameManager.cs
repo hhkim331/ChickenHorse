@@ -90,7 +90,7 @@ public class MainGameManager : MonoBehaviourPunCallbacks
         foreach (var player in kHHPlayerMains)
         {
             players.Add(player.photonView.Owner.ActorNumber, player);
-            actors.Add((player.photonView.Owner.ActorNumber, "플레이어" + player.photonView.Owner.ActorNumber.ToString()));
+            actors.Add((player.photonView.Owner.ActorNumber, player.photonView.Owner.NickName));
         }
 
         actors.OrderBy(a => a.Item1);
@@ -103,14 +103,14 @@ public class MainGameManager : MonoBehaviourPunCallbacks
 
     void Init()
     {
-        Character myCharacter = PlayerData.instance.PlayerCharacterDic[photonView.Owner.ActorNumber];
+        Character myCharacter = PlayerData.instance.PlayerCharacterDic[PhotonNetwork.LocalPlayer.ActorNumber];
 
         //자신의 커서 생성
         myCursor = PhotonNetwork.Instantiate("UserCursor" + myCharacter.characterType, Vector3.zero, Quaternion.identity).GetComponent<UserCursor>();
         myCursor.Init(mainCamera, partyBoxCamera, cursorCamera);
 
         //나의 Player 생성
-        myPlayer = PhotonNetwork.Instantiate(myCharacter.prefabDirectory, Vector3.zero, Quaternion.identity).GetComponent<KHHPlayerMain>();
+        myPlayer = PhotonNetwork.Instantiate("Player" + myCharacter.characterType, Vector3.zero, Quaternion.identity).GetComponent<KHHPlayerMain>();
         myPlayer.Active(false, Vector3.zero);
     }
 

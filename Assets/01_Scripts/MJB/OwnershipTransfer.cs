@@ -1,12 +1,32 @@
 ﻿using Photon.Pun;
 using Photon.Realtime;
+using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 //해당 플레이어를 클릭했을 때 권한 요청을 수행하여 움직이게 하고 싶다.
-public class OwnershipTransfer : MonoBehaviourPun, IPunObservable
+public class OwnershipTransfer : MonoBehaviourPun
 {
     public Character characterData;
     public bool hasPlayer;
+
+    bool changePlayer = false;
+    bool newHasPlayer = false;
+    int curOwnerNum = 0;
+
+    private void Start()
+    {
+        curOwnerNum = photonView.Owner.ActorNumber;
+    }
+
+    private void Update()
+    {
+        if (changePlayer && photonView.Owner.ActorNumber == curOwnerNum)
+        {
+            changePlayer = false;
+            photonView.RPC("CheckHasPlayer", RpcTarget.AllBuffered, newHasPlayer);
+        }
+    }
 
     public void OnClick()
     {
@@ -17,6 +37,12 @@ public class OwnershipTransfer : MonoBehaviourPun, IPunObservable
         LobbyManager.instance.SelectPlayer(photonView);
 
         GetComponent<Rigidbody>().isKinematic = false;
+    }
+    public void HasPlayer(bool has, int ownerNum)
+    {
+        changePlayer = true;
+        newHasPlayer = has;
+        curOwnerNum = ownerNum;
     }
 
     //플레이어를 선택했는지 모든 컴퓨터에 동기화
@@ -35,19 +61,6 @@ public class OwnershipTransfer : MonoBehaviourPun, IPunObservable
             PlayerData.instance.UnSelectCharacter(photonView.Owner.ActorNumber);
 
             GetComponent<Rigidbody>().isKinematic = true;
-        }
-    }
-
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        //내가 선택한 플레이어의 움직임을 동기화 한다.
-        if (stream.IsWriting) ///ismine
-        {
-            stream.SendNext(hasPlayer);
-        }
-        else
-        {
-            hasPlayer = (bool)stream.ReceiveNext();
         }
     }
 }

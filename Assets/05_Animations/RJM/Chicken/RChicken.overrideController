@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: RChicken
+  m_Controller: {fileID: 9100000, guid: 3aacdec747bd57546a68dd7302632f45, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: cd57a936b2b24654dba70e78f3eb00ae, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: edd10e021354c1349af4452fc5694b2c, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 6362029e85015d6408d5fe9d6b09e6da, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: bcaf9809a74fa2f45ad32f297db94d8e, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 25a0203bd170aa64c9a7195824fc7e9b, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: c8b89fd819a123d4395ec2484b1ff6ab, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 39dc22742bed68f47a0121521f968682, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: d4396aad03d17cc469e9d06230006fe9, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: b6eab9bb99b0d744cb6232861ad0648c, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 6e7f925955b382c418f07613d29afba4, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: f59bd4420a30d194c9fdcaf389efa02f, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 1697c49d0ccdf874dad412b726040ce6, type: 2}

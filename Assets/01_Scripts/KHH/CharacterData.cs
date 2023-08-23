@@ -15,7 +15,7 @@ public class Character
     public CharacterType characterType;
     public Sprite characterImage;
     public string characterName;
-    public string prefabDirectory;   //프리팹 위치
+    //public string prefabDirectory;   //프리팹 위치
 }
 
 [CreateAssetMenu(fileName = "CharacterData", menuName = "Scriptable Object/CharacterData")]

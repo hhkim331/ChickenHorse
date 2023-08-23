@@ -7,9 +7,9 @@ using DG.Tweening;
 using UnityEngine.UI;
 using TMPro;
 
-public class NetworkTest : MonoBehaviourPunCallbacks
+public class TitleManager : MonoBehaviourPunCallbacks
 {
-    public static NetworkTest instance;
+    public static TitleManager instance;
 
     bool isStart = false;
 
@@ -71,9 +71,12 @@ public class NetworkTest : MonoBehaviourPunCallbacks
         rtBoard.DOLocalMoveY(0, 0.5f).From(-1200).SetEase(Ease.Linear);
     }
 
+    bool isSearch = false;
     //로비진입
     void searchButtonEvent()
     {
+        if (isSearch) return;
+        isSearch = true;
         string nickName = nickNameInputField.text;
         if (string.IsNullOrEmpty(nickName))
         {
@@ -103,9 +106,12 @@ public class NetworkTest : MonoBehaviourPunCallbacks
         isStart = false;
     }
 
+    bool isCreate = false;
     //방 생성
     void CreateButtonEvent()
     {
+        if (isCreate) return;
+        isCreate = true;
         //방 생성 or 참여
         RoomOptions roomOptioin = new RoomOptions();
         roomOptioin.MaxPlayers = 4;
@@ -131,11 +137,16 @@ public class NetworkTest : MonoBehaviourPunCallbacks
         PhotonNetwork.LeaveLobby();
         roomObj.SetActive(false);
         nickNameObj.SetActive(true);
+        isSearch = false;
     }
 
+
+    bool isJoin = false;
     //방 참여
     public void JoinedRoom(string name)
     {
+        if (isJoin) return;
+        isJoin = true;
         PhotonNetwork.JoinRoom(name);
     }
 
@@ -145,7 +156,7 @@ public class NetworkTest : MonoBehaviourPunCallbacks
         base.OnJoinedRoom();
         print(nameof(OnJoinedRoom));
         //Game Scene 으로 이동
-        PhotonNetwork.LoadLevel("BMJ_Alpha_Test");
+        PhotonNetwork.LoadLevel("KHH_LobbyTest");
     }
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)

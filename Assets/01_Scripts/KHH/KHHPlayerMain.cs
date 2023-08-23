@@ -12,7 +12,7 @@ public class KHHPlayerMain : MonoBehaviourPun
     public bool IsGoal { get { return isGoal; } }
     [SerializeField] RPlayer rPlayer;
     [SerializeField] Animator animator;
-    [SerializeField] SpriteRenderer[] spriteRenderers;
+    //[SerializeField] SpriteRenderer spriteRenderer;
 
     bool rp = false;
     bool ani = false;
@@ -42,10 +42,6 @@ public class KHHPlayerMain : MonoBehaviourPun
                 isGoal = false;
                 animator.Rebind();
                 animator.enabled = true;
-                foreach (var spriteRenderer in spriteRenderers)
-                {
-                    spriteRenderer.color = Color.white;
-                }
                 GetComponent<Rigidbody>().velocity = Vector3.zero;
                 transform.position = pos;
             }
@@ -68,10 +64,6 @@ public class KHHPlayerMain : MonoBehaviourPun
             transform.position = pos;
             animator.Rebind();
             animator.enabled = true;
-            foreach (var spriteRenderer in spriteRenderers)
-            {
-                spriteRenderer.color = Color.white;
-            }
             GetComponent<Rigidbody>().velocity = Vector3.zero;
         }
         else
@@ -105,10 +97,6 @@ public class KHHPlayerMain : MonoBehaviourPun
         isActive = false;
         rPlayer.enabled = false;
         //animator.enabled = false;
-        //foreach (var spriteRenderer in spriteRenderers)
-        //{
-        //    spriteRenderer.color = Color.red;
-        //}
 
         animator.SetTrigger("Dead");
     }
@@ -159,5 +147,7 @@ public class KHHPlayerMain : MonoBehaviourPun
         isGoal = true;
         rPlayer.enabled = false;
         MainGameManager.instance.ScoreMgr.GetScore(Point.PointType.Goal, photonView.Owner.ActorNumber);
+
+        animator.SetTrigger("Goal");
     }
 }

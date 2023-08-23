@@ -41,6 +41,6 @@ public class LobbyManager : MonoBehaviour
         //내가 취소한 플레이어의 움직임을 끈다.
         rplayer.enabled = isEnable;
         //플레이어가 가지고 있는 포톤에서 플레이어가 체크 되어있으면 모든 컴퓨터에 끄는 것을 동기화 한다.
-        rplayer.photonView.RPC("CheckHasPlayer", RpcTarget.All, isEnable);
+        rplayer.GetComponent<OwnershipTransfer>().HasPlayer(isEnable, cursorPhotonView.Owner.ActorNumber);
     }
 }

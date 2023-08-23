@@ -107,7 +107,7 @@ public class ScoreManager : MonoBehaviourPun
         for (int i = 0; i < actors.Count; i++)
         {
             PlayerInfo info = Instantiate(playerInfoFactory, playerInfoParent).GetComponent<PlayerInfo>();
-            info.Set(actors[i].Item2, characterData.GetCharaterData(Character.CharacterType.Horse));
+            info.Set(actors[i].Item2, PlayerData.instance.PlayerCharacterDic[actors[i].Item1]);
             playerInfos.Add(actors[i].Item1, info);
             playerScore.Add(actors[i].Item1, 0);
         }
