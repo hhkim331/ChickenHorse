@@ -9,9 +9,9 @@ public class Blackhole : MonoBehaviour
     // 1초 뒤에 삭제시킨다.
     private void OnTriggerEnter(Collider other)
     {
-        if (other.transform.root.CompareTag("Player"))
+        if (other.transform.CompareTag("Player"))
         {
-            other.transform.root.GetComponent<KHHPlayerMain>().Hit();
+            other.transform.GetComponentInParent<KHHPlayerMain>().Hit();
             //other.attachedRigidbody.isKinematic = true;W
             //Destroy(other.gameObject, 1f);
         }

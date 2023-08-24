@@ -49,7 +49,6 @@ MonoBehaviour:
   - PMAMRPC
   - PMDieRPC
   - PMGoalRPC
-  - PMHitRPC
   - PSRPC
   - RespawnSpaceship
   - RotateRPC

@@ -78,6 +78,9 @@ public class PartyBox : MonoBehaviour
     public void BoxShake()
     {
         SoundManager.Instance.PlaySFX("Shake");
+        if (PhotonNetwork.LocalPlayer.IsMasterClient)
+            foreach (var stageObject in stageObjects)
+                stageObject.Active(true, true);
     }
 
     public void ActiveCursor()
@@ -88,6 +91,13 @@ public class PartyBox : MonoBehaviour
     public void Close()
     {
         animator.SetTrigger("Close");
+    }
+
+    public void BoxClosed()
+    {
+        if (PhotonNetwork.LocalPlayer.IsMasterClient)
+            foreach (var stageObject in stageObjects)
+                stageObject.Active(false, true);
     }
 
     /// <summary>

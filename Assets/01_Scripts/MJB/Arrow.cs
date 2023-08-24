@@ -19,9 +19,9 @@ public class Arrow : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.transform.root.CompareTag("Player"))
+        if (other.transform.CompareTag("Player"))
         {
-            other.transform.root.GetComponent<KHHPlayerMain>().Hit();
+            other.transform.GetComponentInParent<KHHPlayerMain>().Hit();
             //나의 캡슐 콜라이더를 비활성화 시킨다.
             GetComponent<CapsuleCollider>().enabled = false;
         }

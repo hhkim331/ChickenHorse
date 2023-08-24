@@ -48,7 +48,7 @@ public class MainGameManager : MonoBehaviourPunCallbacks
     bool isPlay = false;
     bool anyPlayerDie = false;
     float dieCameraTime = 0;
-    float dieCameraWait = 1;
+    float dieCameraWait = 2;
     Coroutine dieCamCoroutine = null;
 
     public enum GameState
@@ -115,7 +115,7 @@ public class MainGameManager : MonoBehaviourPunCallbacks
 
         //나의 Player 생성
         myPlayer = PhotonNetwork.Instantiate("Player" + myCharacter.characterType, Vector3.zero, Quaternion.identity).GetComponent<KHHPlayerMain>();
-        myPlayer.Active(false, Vector3.zero);
+        myPlayer.Active(false, startPos);
     }
 
     //void CreatePlayer()
@@ -341,7 +341,7 @@ public class MainGameManager : MonoBehaviourPunCallbacks
 
     public void PlayerInactive()
     {
-        myPlayer.Active(false, Vector3.zero);
+        myPlayer.Active(false, startPos);
     }
 
     //새로운 인원이 방에 들어왔을때 호출되는 함수

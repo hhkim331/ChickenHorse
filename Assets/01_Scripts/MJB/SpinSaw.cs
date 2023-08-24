@@ -21,7 +21,7 @@ public class SpinSaw : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             //플레이어의 피격 함수를 호출한다.
-            other.transform.root.GetComponent<KHHPlayerMain>().Hit();
+            other.transform.GetComponentInParent<KHHPlayerMain>().Hit();
         }
     }
 }

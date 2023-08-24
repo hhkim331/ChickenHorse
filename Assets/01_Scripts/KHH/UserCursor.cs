@@ -23,8 +23,8 @@ public class UserCursor : MonoBehaviourPun, IPunObservable
     //[SerializeField] Sprite[] sprites;
     StageObject myObject;
 
-    ////네트워크
-    //Vector3 myPosition;
+    //네트워크
+    bool canPlace = false;
 
     public void Init(Camera main, Camera partyBox, Camera cursor)
     {
@@ -93,12 +93,14 @@ public class UserCursor : MonoBehaviourPun, IPunObservable
                 myObject.Move(new Vector2(transform.position.x, transform.position.y));
                 if (myObject.CanPlace)
                 {
+                    canPlace = true;
                     spriteObject1.SetActive(true);
                     spriteObject2.SetActive(false);
                     //spriteRenderer.sprite = sprites[0];
                 }
                 else
                 {
+                    canPlace = false;
                     spriteObject1.SetActive(false);
                     spriteObject2.SetActive(true);
                     //spriteRenderer.sprite = sprites[1];
@@ -119,10 +121,22 @@ public class UserCursor : MonoBehaviourPun, IPunObservable
                 }
             }
         }
-        //else
-        //{
-        //    transform.position = Vector3.Lerp(transform.position, myPosition, Time.deltaTime * 10);
-        //}
+        else
+        {
+            if (MainGameManager.instance.state == MainGameManager.GameState.Place)
+            {
+                if (canPlace)
+                {
+                    spriteObject1.SetActive(true);
+                    spriteObject2.SetActive(false);
+                }
+                else
+                {
+                    spriteObject1.SetActive(false);
+                    spriteObject2.SetActive(true);
+                }
+            }
+        }
     }
 
     public void Set()
@@ -146,7 +160,7 @@ public class UserCursor : MonoBehaviourPun, IPunObservable
             else if (MainGameManager.instance.state == MainGameManager.GameState.Place)
             {
                 transform.localScale = Vector3.one * 5f;
-                myObject.Active(true);
+                myObject.Active(true, true);
             }
             SoundManager.Instance.PlaySFX("Spawn");
             explosionAni.SetTrigger("explosion");
@@ -197,17 +211,19 @@ public class UserCursor : MonoBehaviourPun, IPunObservable
         {
             //stream.SendNext(transform.position);
             //stream.SendNext(transform.localScale);
-            stream.SendNext(isActive);
+            //stream.SendNext(isActive);
             stream.SendNext(isSelect);
             stream.SendNext(isPlace);
+            stream.SendNext(canPlace);
         }
         else    //데이터를 받는 중
         {
             //myPosition = (Vector3)stream.ReceiveNext();
             //transform.localScale = (Vector3)stream.ReceiveNext();
-            isActive = (bool)stream.ReceiveNext();
+            //isActive = (bool)stream.ReceiveNext();
             isSelect = (bool)stream.ReceiveNext();
             isPlace = (bool)stream.ReceiveNext();
+            canPlace = (bool)stream.ReceiveNext();
         }
     }
 }

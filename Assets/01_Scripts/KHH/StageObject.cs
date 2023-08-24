@@ -27,15 +27,24 @@ public class StageObject : MonoBehaviourPun, IPunObservable
     public Transform rendererTransform; //스케일 조정을 위한 현재 오브젝트의 메쉬
     Vector3 rendererDefaultScale;   //메쉬의 기본 스케일
 
-    public void Active(bool active)
+    private void Awake()
     {
-        if (photonView.IsMine)
+        if (objectData.objectType != StageObjectData.ObjectType.Fixed)
         {
+            canPlace = true;
+            foreach (Transform item in GetComponentsInChildren<Transform>())
+                item.gameObject.layer = LayerMask.NameToLayer("PartyBox");
             foreach (GameObject obj in objs)
-                obj.SetActive(active);
-
-            photonView.RPC(nameof(SOActRPC), RpcTarget.Others, active);
+                obj.SetActive(false);
         }
+    }
+
+    public void Active(bool active, bool rpc = false)
+    {
+        foreach (GameObject obj in objs)
+            obj.SetActive(active);
+        if (rpc)
+            photonView.RPC(nameof(SOActRPC), RpcTarget.Others, active);
     }
 
     [PunRPC]
@@ -75,9 +84,9 @@ public class StageObject : MonoBehaviourPun, IPunObservable
         if (rendererTransform != null)
             rendererDefaultScale = rendererTransform.localScale;
 
-        //해당 오브젝트의 모든 레이어를 PartyBox로 변경
-        foreach (Transform item in GetComponentsInChildren<Transform>())
-            item.gameObject.layer = LayerMask.NameToLayer("PartyBox");
+        ////해당 오브젝트의 모든 레이어를 PartyBox로 변경
+        //foreach (Transform item in GetComponentsInChildren<Transform>())
+        //    item.gameObject.layer = LayerMask.NameToLayer("PartyBox");
     }
 
     /// <summary>
@@ -366,15 +375,45 @@ public class StageObject : MonoBehaviourPun, IPunObservable
         }
     }
 
+    void PhotonCanPlace(bool can)
+    {
+        if (can)
+        {
+            if (rendererTransform != null)
+            {
+                MeshRenderer[] meshRenderers = rendererTransform.GetComponentsInChildren<MeshRenderer>();
+                if (meshRenderers != null)
+                    foreach (MeshRenderer meshRenderer in meshRenderers)
+                        meshRenderer.material.color = Color.white;
+                SpriteRenderer[] spriteRenderers = rendererTransform.GetComponentsInChildren<SpriteRenderer>();
+                if (spriteRenderers != null)
+                    foreach (SpriteRenderer spriteRenderer in spriteRenderers)
+                        spriteRenderer.material.color = Color.white;
+            }
+        }
+        else
+        {
+            if (rendererTransform != null)
+            {
+                MeshRenderer meshRenderer = rendererTransform.GetComponent<MeshRenderer>();
+                if (meshRenderer != null) meshRenderer.material.color = Color.red;
+                SpriteRenderer spriteRenderer = rendererTransform.GetComponent<SpriteRenderer>();
+                if (spriteRenderer != null) spriteRenderer.material.color = Color.red;
+            }
+        }
+    }
+
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         if (stream.IsWriting) //데이터를 보내는 중
         {
             stream.SendNext(transform.position);
+            stream.SendNext(canPlace);
         }
         else //데이터를 받는 중
         {
             transform.position = (Vector3)stream.ReceiveNext();
+            PhotonCanPlace((bool)stream.ReceiveNext());
         }
     }
 }
