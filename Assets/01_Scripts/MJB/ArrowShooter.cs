@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,6 +16,9 @@ public class ArrowShooter : MonoBehaviour
     //오브젝트 생성 가능확인을 위한 StageObject
     public StageObject stageObject;
 
+    //오브젝트 소유자
+    public PhotonView photonView;
+
     public void FireArrowReady()
     {
         SoundManager.Instance.PlaySFX("ArrowFire");
@@ -29,6 +33,9 @@ public class ArrowShooter : MonoBehaviour
         // 발사 물체의 위 방향을 발사 위치의 위 방향이다.
         arrow.transform.up = arrowFireTransform.up;
         //SoundManager.Instance.PlaySFX("ArrowFire");
+        if (MainGameManager.instance.state == MainGameManager.GameState.Play)
+            arrow.GetComponentInChildren<Arrow>().Set(photonView.Owner.ActorNumber);
+
         Destroy(arrow, 10);
         if (!stageObject.IsPlay)
         {

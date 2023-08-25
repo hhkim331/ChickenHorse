@@ -200,6 +200,7 @@ MonoBehaviour:
   - {fileID: 6526302600179506126}
   - {fileID: 6526302601293104026}
   animators: []
+  objScripts: []
   rendererTransform: {fileID: 6526302600282311188}
 --- !u!114 &-6545836348312404253
 MonoBehaviour:

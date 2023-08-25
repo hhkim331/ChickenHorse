@@ -12,6 +12,9 @@ public class PlayerData : MonoBehaviour
     Dictionary<int, Character> playerCharacterDic = new Dictionary<int, Character>();
     public Dictionary<int, Character> PlayerCharacterDic { get { return playerCharacterDic; } }
 
+    //플레이어 색상 정보
+    //Dictionary<int, Color> playerColorDic = new Dictionary<int, Color>();
+
     //싱글톤
     public void Awake()
     {

@@ -10,6 +10,7 @@ TagManager:
   - Chicken
   - Sheep
   - Racoon
+  - PlayerFoot
   layers:
   - Default
   - TransparentFX

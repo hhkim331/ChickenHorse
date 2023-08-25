@@ -263,7 +263,7 @@ public class MainGameManager : MonoBehaviourPunCallbacks
                 partyBox.Close();
                 break;
             case GameState.Play:
-                followCamera.State = FollowCamera.CameraState.Play;
+                followCamera.State = FollowCamera.CameraState.FullScreen;
                 foreach (var sprite in graphSprites)
                     sprite.DOFade(0, 0.5f);
                 foreach (var sprite in graphFadeSprites)
@@ -306,6 +306,7 @@ public class MainGameManager : MonoBehaviourPunCallbacks
     [PunRPC]
     void PSRPC() //PlayStartRPC
     {
+        followCamera.State = FollowCamera.CameraState.Play;
         isPlay = true;
         myPlayer.ActiveMove();
         readyTextObject.SetActive(false);
@@ -350,5 +351,10 @@ public class MainGameManager : MonoBehaviourPunCallbacks
         base.OnPlayerEnteredRoom(newPlayer);
 
         print(newPlayer.NickName + "님이 들어왔습니다!");
+    }
+
+    private void OnApplicationFocus(bool focus)
+    {
+        Cursor.visible = !focus;
     }
 }

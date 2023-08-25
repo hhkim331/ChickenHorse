@@ -76,7 +76,6 @@ public class TitleManager : MonoBehaviourPunCallbacks
     void searchButtonEvent()
     {
         if (isSearch) return;
-        isSearch = true;
         string nickName = nickNameInputField.text;
         if (string.IsNullOrEmpty(nickName))
         {
@@ -85,6 +84,7 @@ public class TitleManager : MonoBehaviourPunCallbacks
             return;
         }
 
+        isSearch = true;
         nickNameObj.SetActive(false);
         //닉네임 설정
         PhotonNetwork.NickName = nickName;

@@ -28,9 +28,14 @@ public class KHHPlayerMain : MonoBehaviourPun
         nameBackBoardRT.sizeDelta = new Vector2(nameText.preferredWidth, nameText.preferredHeight);
 
         if (photonView.IsMine)
+        {
             animator.transform.localPosition = new Vector3(0, -0.95f, -0.1f);
+        }
         else
+        {
             animator.transform.localPosition = new Vector3(0, -0.95f, -photonView.Owner.ActorNumber * 0.001f);
+            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+        }
     }
 
     public void Active(bool active, Vector3 pos)
@@ -46,7 +51,6 @@ public class KHHPlayerMain : MonoBehaviourPun
                 animator.enabled = true;
                 canvasTransform.gameObject.SetActive(true);
                 GetComponent<Rigidbody>().isKinematic = false;
-                transform.position = pos;
                 explosionAni.SetTrigger("explosion");
             }
             else
@@ -55,8 +59,8 @@ public class KHHPlayerMain : MonoBehaviourPun
                 animator.gameObject.SetActive(false);
                 canvasTransform.gameObject.SetActive(false);
                 GetComponent<Rigidbody>().isKinematic = true;
-                transform.position = pos;
             }
+            transform.position = pos;
 
             photonView.RPC(nameof(PMActRPC), RpcTarget.Others, active, pos);
         }
@@ -69,12 +73,11 @@ public class KHHPlayerMain : MonoBehaviourPun
         {
             isActive = true;
             isGoal = false;
-            transform.position = pos;
             animator.gameObject.SetActive(true);
             animator.Rebind();
             animator.enabled = true;
             canvasTransform.gameObject.SetActive(true);
-            GetComponent<Rigidbody>().velocity = Vector3.zero;
+            GetComponent<Rigidbody>().isKinematic = false;
             explosionAni.SetTrigger("explosion");
         }
         else
@@ -82,7 +85,9 @@ public class KHHPlayerMain : MonoBehaviourPun
             animator.enabled = false;
             animator.gameObject.SetActive(false);
             canvasTransform.gameObject.SetActive(false);
+            GetComponent<Rigidbody>().isKinematic = true;
         }
+        transform.position = pos;
     }
 
     public void ActiveMove()
@@ -96,12 +101,12 @@ public class KHHPlayerMain : MonoBehaviourPun
         rPlayer.enabled = true;
     }
 
-    public void Hit()
+    public void Hit(int killerNum)
     {
         if (isActive == false) return;
         isActive = false;
         if (photonView.IsMine)
-            photonView.RPC(nameof(PMDieRPC), RpcTarget.All);
+            photonView.RPC(nameof(PMDieRPC), RpcTarget.All, killerNum);
     }
 
     // Update is called once per frame
@@ -113,8 +118,8 @@ public class KHHPlayerMain : MonoBehaviourPun
 
             if (transform.position.y < -10)
             {
+                if (isActive) photonView.RPC(nameof(PMDieRPC), RpcTarget.All, -1);
                 isActive = false;
-                if (isActive) photonView.RPC(nameof(PMDieRPC), RpcTarget.All);
             }
         }
 
@@ -127,12 +132,14 @@ public class KHHPlayerMain : MonoBehaviourPun
     }
 
     [PunRPC]
-    void PMDieRPC()
+    void PMDieRPC(int killerNum)
     {
         isActive = false;
         rPlayer.enabled = false;
         animator.SetTrigger("Dead");
         MainGameManager.instance.AnyPlayerDie();
+        if (killerNum != -1 && photonView.Owner.ActorNumber != killerNum)
+            MainGameManager.instance.ScoreMgr.AddScore(Point.PointType.Trap, killerNum);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -151,7 +158,7 @@ public class KHHPlayerMain : MonoBehaviourPun
         isActive = false;
         isGoal = true;
         rPlayer.enabled = false;
-        MainGameManager.instance.ScoreMgr.GetScore(Point.PointType.Goal, photonView.Owner.ActorNumber);
+        MainGameManager.instance.ScoreMgr.AddScore(Point.PointType.Goal, photonView.Owner.ActorNumber);
 
         animator.SetTrigger("Goal");
     }

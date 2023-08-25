@@ -49,9 +49,9 @@ public class ScoreManager : MonoBehaviourPun
     Color goalColor = new Color(0f, 0f, 0.5f);
     Color soloColor = Color.blue;
     Color deathColor = Color.black;
-    Color trapColor = new Color();
+    Color trapColor = new Color(1f, 0.5f, 0f);
     Color coinColor = Color.yellow;
-    Color comebackColor = new Color(1, 0, 1);
+    Color comebackColor = new Color(1f, 0f, 1f);
     Color firstColor = Color.green;
 
     //종류별 점수
@@ -113,7 +113,7 @@ public class ScoreManager : MonoBehaviourPun
         }
     }
 
-    public void GetScore(Point.PointType scoreType, int playerNum)
+    public void AddScore(Point.PointType scoreType, int playerNum)
     {
         if (playerScoreDic.ContainsKey(scoreType) == false)
             playerScoreDic.Add(scoreType, new List<int>());
@@ -160,12 +160,15 @@ public class ScoreManager : MonoBehaviourPun
     {
         if (playerScoreDic.Count > 0)
         {
-            if (playerScoreDic[Point.PointType.Goal].Count == 1)
+            if (playerScoreDic.ContainsKey(Point.PointType.Goal))
             {
-                playerScoreDic.Add(Point.PointType.Solo, new List<int>());
-                playerScoreDic[Point.PointType.Solo].Add(playerScoreDic[Point.PointType.Goal][0]);
-                playerScoreDic[Point.PointType.First].Remove(playerScoreDic[Point.PointType.Goal][0]);
-                playerScoreDic.Remove(Point.PointType.First);
+                if (playerScoreDic[Point.PointType.Goal].Count == 1)
+                {
+                    playerScoreDic.Add(Point.PointType.Solo, new List<int>());
+                    playerScoreDic[Point.PointType.Solo].Add(playerScoreDic[Point.PointType.Goal][0]);
+                    playerScoreDic[Point.PointType.First].Remove(playerScoreDic[Point.PointType.Goal][0]);
+                    playerScoreDic.Remove(Point.PointType.First);
+                }
             }
         }
 

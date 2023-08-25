@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class SunCoin : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class SunCoin : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         //플레이어와 부딪혔다면 나를 삭제시킨다.
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
             anim.SetTrigger("Crash");
         }

@@ -122,6 +122,7 @@ MonoBehaviour:
   arrowFactory: {fileID: 4574652027436220107, guid: 3796f25ce2d1a484ab3d9555861a046d, type: 3}
   arrowFireTransform: {fileID: 6407535486656441819}
   stageObject: {fileID: 557810282464079491}
+  photonView: {fileID: 8448373441936448580}
 --- !u!1 &6407535486656441820
 GameObject:
   m_ObjectHideFlags: 0
@@ -219,6 +220,7 @@ MonoBehaviour:
   - {fileID: 6407535486656441820}
   animators:
   - {fileID: 6407535486591093573}
+  objScripts: []
   rendererTransform: {fileID: 6407535486591093571}
 --- !u!114 &8448373441936448580
 MonoBehaviour:

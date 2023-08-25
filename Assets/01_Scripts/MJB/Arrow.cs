@@ -11,6 +11,13 @@ public class Arrow : MonoBehaviour
     // 화살 애니메이터를 가져온다.
     public Animator anim;
 
+    int actorNumber = -1;
+
+    public void Set(int actorNum)
+    {
+        actorNumber = actorNum;
+    }
+
     private void Update()
     {
         // 위의 방향으로
@@ -19,9 +26,9 @@ public class Arrow : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.transform.CompareTag("Player"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            other.transform.GetComponentInParent<KHHPlayerMain>().Hit();
+            other.transform.GetComponentInParent<KHHPlayerMain>().Hit(actorNumber);
             //나의 캡슐 콜라이더를 비활성화 시킨다.
             GetComponent<CapsuleCollider>().enabled = false;
         }

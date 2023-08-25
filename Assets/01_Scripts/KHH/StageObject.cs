@@ -24,6 +24,7 @@ public class StageObject : MonoBehaviourPun, IPunObservable
 
     [SerializeField] GameObject[] objs;
     [SerializeField] Animator[] animators;
+    [SerializeField] ObjectScript[] objScripts;
     public Transform rendererTransform; //스케일 조정을 위한 현재 오브젝트의 메쉬
     Vector3 rendererDefaultScale;   //메쉬의 기본 스케일
 
@@ -117,6 +118,14 @@ public class StageObject : MonoBehaviourPun, IPunObservable
                     anim.enabled = true;
                 }
             }
+
+            if(objScripts.Length > 0)
+            {
+                foreach (var script in objScripts)
+                {
+                    script.active = true;
+                }
+            }
         }
         else
         {
@@ -130,6 +139,15 @@ public class StageObject : MonoBehaviourPun, IPunObservable
                 {
                     anim.Rebind();
                     anim.enabled = false;
+                }
+            }
+
+            if (objScripts.Length > 0)
+            {
+                foreach (var script in objScripts)
+                {
+                    script.ResetObject();
+                    script.active = false;
                 }
             }
         }
@@ -157,6 +175,15 @@ public class StageObject : MonoBehaviourPun, IPunObservable
             {
                 anim.Rebind();
                 anim.enabled = false;
+            }
+        }
+
+        if (objScripts.Length > 0)
+        {
+            foreach (var script in objScripts)
+            {
+                script.ResetObject();
+                script.active = false;
             }
         }
 
@@ -351,6 +378,14 @@ public class StageObject : MonoBehaviourPun, IPunObservable
                 anim.enabled = true;
             }
         }
+
+        if (objScripts.Length > 0)
+        {
+            foreach (var script in objScripts)
+            {
+                script.active = true;
+            }
+        }
     }
 
     /// <summary>
@@ -371,6 +406,15 @@ public class StageObject : MonoBehaviourPun, IPunObservable
             {
                 anim.Rebind();
                 anim.enabled = false;
+            }
+        }
+
+        if (objScripts.Length > 0)
+        {
+            foreach (var script in objScripts)
+            {
+                script.ResetObject();
+                script.active = false;
             }
         }
     }

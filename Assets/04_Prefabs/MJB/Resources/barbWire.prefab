@@ -63,6 +63,7 @@ MonoBehaviour:
   - {fileID: 2821429718619226294}
   - {fileID: 2821429718642478466}
   animators: []
+  objScripts: []
   rendererTransform: {fileID: 2821429718619226297}
 --- !u!114 &-6098719029036463872
 MonoBehaviour:
@@ -233,6 +234,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29a22835ebe1811439ce74f86ada938c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  photonView: {fileID: -6098719029036463872}
 --- !u!64 &621764833753452521
 MeshCollider:
   m_ObjectHideFlags: 0

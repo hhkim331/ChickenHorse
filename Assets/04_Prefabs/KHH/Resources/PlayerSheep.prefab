@@ -240,7 +240,7 @@ GameObject:
   - component: {fileID: 2395705367474990707}
   - component: {fileID: 2395705367474990706}
   - component: {fileID: -8445959281475214733}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: PlayerSheep
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -281,7 +281,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 120
   m_CollisionDetection: 0
 --- !u!114 &2395705367474990708
 MonoBehaviour:
@@ -342,7 +342,7 @@ MonoBehaviour:
   m_SynchronizePosition: 1
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 1
-  m_UseLocal: 1
+  m_UseLocal: 0
 --- !u!114 &-8445959281475214733
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -387,7 +387,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2395705367811764037}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.01, z: 0.5}
+  m_LocalPosition: {x: 0, y: 0.01, z: 0}
   m_LocalScale: {x: 1, y: 1.98, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -419,7 +419,7 @@ GameObject:
   - component: {fileID: 2395705368100184785}
   - component: {fileID: 2395705368100184787}
   - component: {fileID: 2395705368100184784}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: RSheepAnimator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -526,7 +526,7 @@ GameObject:
   - component: {fileID: 2395705368162503889}
   m_Layer: 12
   m_Name: FootCollider
-  m_TagString: Player
+  m_TagString: PlayerFoot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -539,8 +539,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2395705368162503891}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.95, z: 0}
-  m_LocalScale: {x: 0.96, y: 0.1, z: 1}
+  m_LocalPosition: {x: 0, y: -0.5, z: 0}
+  m_LocalScale: {x: 0.96, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2395705367474990710}
@@ -673,7 +673,7 @@ GameObject:
   - component: {fileID: 7003040288867797536}
   - component: {fileID: 2913717196025162448}
   - component: {fileID: 3663156020143333197}
-  m_Layer: 11
+  m_Layer: 12
   m_Name: Explosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}

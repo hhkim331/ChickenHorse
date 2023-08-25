@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 //플레이어가 캐논에 들어가면 오른쪽 45도 각도로 플레이어를 날리고 싶다.
 public class CannonBarrel : MonoBehaviour
@@ -39,7 +40,7 @@ public class CannonBarrel : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         //플레이어가 캐논에 닿으면 플레이어를 오브젝트를 담는다.
-        if (other.CompareTag("Player") && !isFiring)
+        if (other.gameObject.layer == LayerMask.NameToLayer("Player") && !isFiring)
         {
             //발사가 가능함
             isFiring = true;

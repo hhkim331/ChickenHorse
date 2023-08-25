@@ -104,7 +104,10 @@ public class StartGameManager : MonoBehaviourPun
         load = true;
         //만약에 일정시간이 된다면 다음씬으로 이동한다.
         if (PhotonNetwork.LocalPlayer.IsMasterClient)
+        {
+            PhotonNetwork.CurrentRoom.IsOpen = false;
             PhotonNetwork.LoadLevel(NEXT_SCENE_NUMBER);
+        }
         //SceneManager.LoadScene(NEXT_SCENE_NUMBER);
         //시간 UI 비활성화 한다.
         timerUI.enabled = false;
