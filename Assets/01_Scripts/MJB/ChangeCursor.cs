@@ -1,5 +1,6 @@
 ﻿using Photon.Pun;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ChangeCursor : MonoBehaviourPun
@@ -9,6 +10,7 @@ public class ChangeCursor : MonoBehaviourPun
 
     private void Awake()
     {
+        Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Confined;
         transform.GetChild(0).gameObject.SetActive(true);
 
@@ -45,10 +47,14 @@ public class ChangeCursor : MonoBehaviourPun
     public void CursorEnable()
     {
         //내것의 플레이어 일 때
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
+            //플레이어가 처음에 들어왔을 때 Q를 누르는 것을 방지한다.
+            if (LobbyManager.instance.rPlayer == null) return;
             //커서 비활성화를 모든 컴퓨터에 동기화 한다..
             photonView.RPC("CursorDisable", RpcTarget.All, true);
+
+            //플레이어를 비활성화 시킨다.
             LobbyManager.instance.SetActivePlayer(false);
         }
     }
@@ -57,6 +63,8 @@ public class ChangeCursor : MonoBehaviourPun
     public void CursorDisable(bool cursorDisable)
     {
         transform.GetChild(0).gameObject.SetActive(cursorDisable);
+        //커서 포톤 뷰 자식의 자식의 2번째 애니메이터 컴포넌트를 가져온다.
+        Animator animator = transform.GetChild(1).GetComponent<Animator>();
         //내가 아니라면
         if (photonView.IsMine)
         {
@@ -66,11 +74,9 @@ public class ChangeCursor : MonoBehaviourPun
                 //커서 잠금을 끈다.
                 Cursor.lockState = CursorLockMode.Confined;
             }
-            //커서가 비활성화 되어있지 않다면
             else
             {
-                //커서 잠금을 한다.
-                Cursor.lockState = CursorLockMode.Locked;
+                animator.SetTrigger("explosion");
             }
         }
     }
@@ -81,5 +87,10 @@ public class ChangeCursor : MonoBehaviourPun
     {
         //플레이어 닉네임을 넣는다.
         playerNameText.text = playerName;
+    }
+
+    private void OnApplicationFocus(bool focus)
+    {
+        Cursor.visible = !focus;
     }
 }
