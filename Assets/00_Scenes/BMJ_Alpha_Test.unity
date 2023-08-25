@@ -10251,7 +10251,7 @@ GameObject:
   - component: {fileID: 4666647563693164968}
   m_Layer: 12
   m_Name: FootCollider
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10599,7 +10599,7 @@ GameObject:
   - component: {fileID: 6377630450998928140}
   m_Layer: 12
   m_Name: FootCollider
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10963,7 +10963,7 @@ GameObject:
   - component: {fileID: 8367809638848052879}
   m_Layer: 12
   m_Name: FootCollider
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11265,7 +11265,7 @@ GameObject:
   - component: {fileID: 8874275872281082551}
   m_Layer: 12
   m_Name: FootCollider
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

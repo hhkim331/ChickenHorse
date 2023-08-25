@@ -11,6 +11,8 @@ public class PlayerData : MonoBehaviour
     //Character : 캐릭터 정보
     Dictionary<int, Character> playerCharacterDic = new Dictionary<int, Character>();
     public Dictionary<int, Character> PlayerCharacterDic { get { return playerCharacterDic; } }
+    Dictionary<int, Color> playerColorDic = new Dictionary<int, Color>();
+    public Dictionary<int, Color> PlayerColorDic { get { return playerColorDic; } }
 
     //플레이어 색상 정보
     //Dictionary<int, Color> playerColorDic = new Dictionary<int, Color>();
@@ -45,6 +47,12 @@ public class PlayerData : MonoBehaviour
     {
         Debug.Log("AddPlayer:" + actorNum);
         playerCharacterDic[actorNum] = null;
+    }
+
+    public void AddPlayerColor(int actorNum, Color color)
+    {
+        Debug.Log("AddPlayerColor:" + actorNum);
+        playerColorDic[actorNum] = color;
     }
 
     //public void RemovePlayer(int actorNum)

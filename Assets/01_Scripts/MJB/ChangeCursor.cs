@@ -101,10 +101,12 @@ public class ChangeCursor : MonoBehaviourPun
         {
             LobbyManager.instance.myColorIndex = index;
         }
-        
+
         colorIndex = index;
         color = LobbyManager.instance.nickNameColors[index];
         playerNameText.color = color;
+
+        PlayerData.instance.AddPlayerColor(photonView.Owner.ActorNumber, color);
     }
 
     private void OnApplicationFocus(bool focus)

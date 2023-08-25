@@ -156,7 +156,7 @@ public class TitleManager : MonoBehaviourPunCallbacks
         base.OnJoinedRoom();
         print(nameof(OnJoinedRoom));
         //Game Scene 으로 이동
-        PhotonNetwork.LoadLevel("KHH_LobbyTest");
+        PhotonNetwork.LoadLevel("BMJ_Alpha_Test");
     }
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)

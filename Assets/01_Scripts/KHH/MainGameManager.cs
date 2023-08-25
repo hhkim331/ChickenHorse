@@ -345,13 +345,13 @@ public class MainGameManager : MonoBehaviourPunCallbacks
         myPlayer.Active(false, startPos);
     }
 
-    //새로운 인원이 방에 들어왔을때 호출되는 함수
-    public override void OnPlayerEnteredRoom(Player newPlayer)
-    {
-        base.OnPlayerEnteredRoom(newPlayer);
+    ////새로운 인원이 방에 들어왔을때 호출되는 함수
+    //public override void OnPlayerEnteredRoom(Player newPlayer)
+    //{
+    //    base.OnPlayerEnteredRoom(newPlayer);
 
-        print(newPlayer.NickName + "님이 들어왔습니다!");
-    }
+    //    print(newPlayer.NickName + "님이 들어왔습니다!");
+    //}
 
     private void OnApplicationFocus(bool focus)
     {
