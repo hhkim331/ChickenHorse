@@ -1,12 +1,14 @@
 ﻿using Photon.Pun;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class ChangeCursor : MonoBehaviourPun
 {
     //텍스트 매쉬 프로를 사용하여 플레이어 닉네임을 넣는다.
     public TextMeshProUGUI playerNameText;
+
+    private Color color;
+    private int colorIndex;
 
     private void Awake()
     {
@@ -19,9 +21,16 @@ public class ChangeCursor : MonoBehaviourPun
         {
             //커서 포톤을 가진다.
             LobbyManager.instance.cursorPhotonView = photonView;
+
+            photonView.RPC(nameof(SetPlayerName), RpcTarget.AllBuffered, photonView.Owner.NickName);
         }
-        //플레이어 닉네임을 모두 동기화 한다.
-        photonView.RPC(nameof(SetPlayerName), RpcTarget.All, photonView.Owner.NickName);
+
+        //내가 마스터 클라이언트라면 색깔을 정해준다.
+        if (PhotonNetwork.LocalPlayer.IsMasterClient)
+        {
+            colorIndex = LobbyManager.instance.colorsIndex.Dequeue();
+            photonView.RPC(nameof(SetPlayerColor), RpcTarget.AllBuffered, colorIndex);
+        }
     }
 
     private void Update()
@@ -65,6 +74,7 @@ public class ChangeCursor : MonoBehaviourPun
         transform.GetChild(0).gameObject.SetActive(cursorDisable);
         //커서 포톤 뷰 자식의 자식의 2번째 애니메이터 컴포넌트를 가져온다.
         Animator animator = transform.GetChild(1).GetComponent<Animator>();
+        animator.SetTrigger("explosion");
         //내가 아니라면
         if (photonView.IsMine)
         {
@@ -74,10 +84,6 @@ public class ChangeCursor : MonoBehaviourPun
                 //커서 잠금을 끈다.
                 Cursor.lockState = CursorLockMode.Confined;
             }
-            else
-            {
-                animator.SetTrigger("explosion");
-            }
         }
     }
 
@@ -85,8 +91,20 @@ public class ChangeCursor : MonoBehaviourPun
     [PunRPC]
     public void SetPlayerName(string playerName)
     {
-        //플레이어 닉네임을 넣는다.
         playerNameText.text = playerName;
+    }
+
+    [PunRPC]
+    public void SetPlayerColor(int index)
+    {
+        if (photonView.IsMine)
+        {
+            LobbyManager.instance.myColorIndex = index;
+        }
+        
+        colorIndex = index;
+        color = LobbyManager.instance.nickNameColors[index];
+        playerNameText.color = color;
     }
 
     private void OnApplicationFocus(bool focus)

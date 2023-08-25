@@ -54,10 +54,14 @@ MonoBehaviour:
   - RespawnSpaceship
   - RotateRPC
   - SelectRPC
+  - SetActivePlayer
+  - SetPlayerName
   - SetRPC
   - SOActRPC
   - StopRPC
   - UCActRPC
+  - ChangeColor
+  - SetPlayerColor
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

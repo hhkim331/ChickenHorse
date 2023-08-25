@@ -5597,6 +5597,12 @@ MonoBehaviour:
   cursorPhotonView: {fileID: 0}
   cinemachineVirtualCamera: {fileID: 663341170}
   rPlayer: {fileID: 0}
+  nickNameColors:
+  - {r: 0.972549, g: 0.21960784, b: 0.2784314, a: 1}
+  - {r: 0.92941177, g: 0.84313726, b: 0.2627451, a: 1}
+  - {r: 0.29803923, g: 0.3254902, b: 0.92156863, a: 1}
+  - {r: 0.29803923, g: 0.85882354, b: 0.3137255, a: 1}
+  myColorIndex: 0
 --- !u!114 &1251098369
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10157,6 +10163,7 @@ MonoBehaviour:
     characterName: "\uB9D0"
   hasPlayer: 0
   rectTransform: {fileID: 6750343}
+  textMeshProUGUI: {fileID: 128651794}
 --- !u!4 &4666647562471021776
 Transform:
   m_ObjectHideFlags: 0
@@ -10565,6 +10572,7 @@ MonoBehaviour:
     characterName: "\uB2ED"
   hasPlayer: 0
   rectTransform: {fileID: 1485061551}
+  textMeshProUGUI: {fileID: 1652629212}
 --- !u!64 &6377630450998928140
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -10881,6 +10889,7 @@ MonoBehaviour:
     characterName: "\uB77C\uCFE4"
   hasPlayer: 0
   rectTransform: {fileID: 278057749}
+  textMeshProUGUI: {fileID: 1658677308}
 --- !u!4 &8367809638462655476
 Transform:
   m_ObjectHideFlags: 0
@@ -11137,6 +11146,7 @@ MonoBehaviour:
     characterName: "\uC591"
   hasPlayer: 0
   rectTransform: {fileID: 2117810476}
+  textMeshProUGUI: {fileID: 1577607132}
 --- !u!1 &8874275872277468340
 GameObject:
   m_ObjectHideFlags: 0
