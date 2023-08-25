@@ -1,8 +1,12 @@
 ﻿using Photon.Pun;
+using TMPro;
 using UnityEngine;
 
 public class ChangeCursor : MonoBehaviourPun
 {
+    //텍스트 매쉬 프로를 사용하여 플레이어 닉네임을 넣는다.
+    public TextMeshProUGUI playerNameText;
+
     private void Awake()
     {
         Cursor.lockState = CursorLockMode.Confined;
@@ -14,6 +18,8 @@ public class ChangeCursor : MonoBehaviourPun
             //커서 포톤을 가진다.
             LobbyManager.instance.cursorPhotonView = photonView;
         }
+        //플레이어 닉네임을 모두 동기화 한다.
+        photonView.RPC(nameof(SetPlayerName), RpcTarget.All, photonView.Owner.NickName);
     }
 
     private void Update()
@@ -67,5 +73,13 @@ public class ChangeCursor : MonoBehaviourPun
                 Cursor.lockState = CursorLockMode.Locked;
             }
         }
+    }
+
+    //캐릭터 닉네임을 동기화 하자
+    [PunRPC]
+    public void SetPlayerName(string playerName)
+    {
+        //플레이어 닉네임을 넣는다.
+        playerNameText.text = playerName;
     }
 }
