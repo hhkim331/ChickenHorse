@@ -1,8 +1,7 @@
 ﻿using Photon.Pun;
-using Photon.Realtime;
-using Unity.VisualScripting;
+using System.Drawing;
+using TMPro;
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 //해당 플레이어를 클릭했을 때 권한 요청을 수행하여 움직이게 하고 싶다.
 public class OwnershipTransfer : MonoBehaviourPun
@@ -10,9 +9,15 @@ public class OwnershipTransfer : MonoBehaviourPun
     public Character characterData;
     public bool hasPlayer;
 
-    bool changePlayer = false;
-    bool newHasPlayer = false;
-    int curOwnerNum = 0;
+    private Transform characterText;
+
+    public RectTransform rectTransform;
+
+    public TextMeshProUGUI textMeshProUGUI;
+
+    private bool changePlayer = false;
+    private bool newHasPlayer = false;
+    private int curOwnerNum = 0;
 
     private void Start()
     {
@@ -24,8 +29,11 @@ public class OwnershipTransfer : MonoBehaviourPun
         if (changePlayer && photonView.Owner.ActorNumber == curOwnerNum)
         {
             changePlayer = false;
-            photonView.RPC("CheckHasPlayer", RpcTarget.AllBuffered, newHasPlayer);
+            photonView.RPC("CheckHasPlayer", RpcTarget.AllBuffered, newHasPlayer, LobbyManager.instance.myColorIndex);
         }
+
+        //rect localSacle을 나의 localsacle로 변경한다.
+        rectTransform.localScale = transform.localScale;
     }
 
     public void OnClick()
@@ -35,21 +43,36 @@ public class OwnershipTransfer : MonoBehaviourPun
 
         //내가 클릭한 플레이어의 움직임을 활성화 한다.
         LobbyManager.instance.SelectPlayer(photonView);
-
         GetComponent<Rigidbody>().isKinematic = false;
     }
+
     public void HasPlayer(bool has, int ownerNum)
     {
-        changePlayer = true;
-        newHasPlayer = has;
-        curOwnerNum = ownerNum;
+        if (has)
+        {
+            changePlayer = true;
+            newHasPlayer = has;
+            curOwnerNum = ownerNum;
+        }
+        else
+        {
+            photonView.RPC(nameof(CheckHasPlayer), RpcTarget.All, false, LobbyManager.instance.myColorIndex);
+        }
     }
 
     //플레이어를 선택했는지 모든 컴퓨터에 동기화
     [PunRPC]
-    public void CheckHasPlayer(bool has)
+    public void CheckHasPlayer(bool has, int colorIndex)
     {
         hasPlayer = has;
+        //들어온 플레이어의 player를 가져갔는지 동기화한다.
+        GetComponent<RPlayer>().enabled = has;
+        //플레이어의 4번째 child의 canvas를 킨다.
+
+        photonView.transform.GetChild(3).gameObject.SetActive(has);
+        textMeshProUGUI.text = photonView.Owner.NickName;
+        textMeshProUGUI.color = LobbyManager.instance.nickNameColors[colorIndex];
+
         if (has)
         {
             PlayerData.instance.AddPlayer(photonView.Owner.ActorNumber);
@@ -57,9 +80,7 @@ public class OwnershipTransfer : MonoBehaviourPun
         }
         else
         {
-            //PlayerData.instance.RemovePlayer(photonView.Owner.ActorNumber);
             PlayerData.instance.UnSelectCharacter(photonView.Owner.ActorNumber);
-
             GetComponent<Rigidbody>().isKinematic = true;
         }
     }

@@ -10,14 +10,28 @@ public class LobbyManager : MonoBehaviour
 
     //나의 커서 photonView 담을 변수
     public PhotonView cursorPhotonView;
+
     public CinemachineVirtualCamera cinemachineVirtualCamera;
 
-    //나 자시자신을 끄는 것을 확인하고 싶다.
-    public RPlayer rplayer;
+    public RPlayer rPlayer;
+
+    //컬러 색상을 바꾸고 싶다.
+    public Color[] nickNameColors;
+
+    public Queue<int> colorsIndex = new Queue<int>();
+
+    public int myColorIndex;
 
     private void Awake()
     {
         instance = this;
+
+        //colorIndex에  nickNameColors의 길이만큼의 숫자를 넣는다.
+        for (int i = 0; i < nickNameColors.Length; i++)
+        {
+            colorsIndex.Enqueue(i);
+        }
+        //컬러 범위를 byte로 random 값을 준다.
         SoundManager.Instance.PlayBGM("Room");
     }
 
@@ -30,17 +44,14 @@ public class LobbyManager : MonoBehaviour
         cursorPhotonView.RPC("CursorDisable", RpcTarget.All, false);
         //카메라 타깃 변경
         cinemachineVirtualCamera.Follow = playerPhoton.transform;
-        //플레이어의 이동 컴포넌트를 가져온다.
-        rplayer = playerPhoton.GetComponent<RPlayer>();
+        rPlayer = playerPhoton.GetComponent<RPlayer>();
 
         SetActivePlayer(true);
     }
 
-    public void SetActivePlayer(bool isEnable)
+    public void SetActivePlayer(bool isEnabled)
     {
-        //내가 취소한 플레이어의 움직임을 끈다.
-        rplayer.enabled = isEnable;
-        //플레이어가 가지고 있는 포톤에서 플레이어가 체크 되어있으면 모든 컴퓨터에 끄는 것을 동기화 한다.
-        rplayer.GetComponent<OwnershipTransfer>().HasPlayer(isEnable, cursorPhotonView.Owner.ActorNumber);
+        //플레이어를 가졌다라는 것을 알린다.
+        rPlayer.GetComponent<OwnershipTransfer>().HasPlayer(isEnabled, cursorPhotonView.Owner.ActorNumber);
     }
 }
