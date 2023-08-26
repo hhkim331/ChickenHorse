@@ -1,5 +1,4 @@
 ﻿using Photon.Pun;
-using System.Drawing;
 using TMPro;
 using UnityEngine;
 
@@ -42,7 +41,7 @@ public class OwnershipTransfer : MonoBehaviourPun
             changePlayer = false;
             GetComponent<Rigidbody>().isKinematic = false;
             LobbyManager.instance.cinemachineVirtualCamera.Follow = transform;
-            photonView.RPC("CheckHasPlayer", RpcTarget.AllBuffered, newHasPlayer, PlayerData.instance.GetCurPlayerColor(curOwnerNum));
+            photonView.RPC("CheckHasPlayer", RpcTarget.AllBuffered, newHasPlayer, PlayerData.instance.PlayerColorDic[curOwnerNum]);
         }
 
         //rect localSacle을 나의 localsacle로 변경한다.
