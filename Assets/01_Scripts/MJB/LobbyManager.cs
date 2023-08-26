@@ -41,7 +41,7 @@ public class LobbyManager : MonoBehaviour
         //선택한 플레이어의 포톤을 커서 포톤으로 넘긴다.
         playerPhoton.TransferOwnership(cursorPhotonView.Owner);
         //플레이어가 선택되면 커서 비활성화를 동기화한다.
-        cursorPhotonView.RPC("CursorDisable", RpcTarget.All, false);
+        cursorPhotonView.RPC("CursorDisable", RpcTarget.AllBuffered, false);
         //카메라 타깃 변경
         //cinemachineVirtualCamera.Follow = playerPhoton.transform;
         rPlayer = playerPhoton.GetComponent<RPlayer>();

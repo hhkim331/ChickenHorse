@@ -466,6 +466,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerNameText: {fileID: 2769494009944200537}
+  cursorImage: {fileID: 6945351198770917850}
+  explosionImage: {fileID: 2855287225002635712}
 --- !u!114 &4042130282467678159
 MonoBehaviour:
   m_ObjectHideFlags: 0
