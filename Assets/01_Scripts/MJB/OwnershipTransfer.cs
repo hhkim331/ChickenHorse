@@ -17,11 +17,22 @@ public class OwnershipTransfer : MonoBehaviourPun
 
     private bool changePlayer = false;
     private bool newHasPlayer = false;
-    private int curOwnerNum = 0;
+    private int curOwnerNum = -1;
 
     private void Start()
     {
-        curOwnerNum = photonView.Owner.ActorNumber;
+        curOwnerNum = PlayerData.instance.GetCurCharacterPlayer(characterData.characterType);
+        if (curOwnerNum != -1)
+        {
+            if (PhotonNetwork.LocalPlayer.ActorNumber == curOwnerNum)
+            {
+                photonView.TransferOwnership(PhotonNetwork.CurrentRoom.GetPlayer(curOwnerNum));
+                changePlayer = true;
+                newHasPlayer = true;
+            }
+        }
+
+        //curOwnerNum = photonView.Owner.ActorNumber;
     }
 
     private void Update()
@@ -29,7 +40,9 @@ public class OwnershipTransfer : MonoBehaviourPun
         if (changePlayer && photonView.Owner.ActorNumber == curOwnerNum)
         {
             changePlayer = false;
-            photonView.RPC("CheckHasPlayer", RpcTarget.AllBuffered, newHasPlayer, LobbyManager.instance.myColorIndex);
+            GetComponent<Rigidbody>().isKinematic = false;
+            LobbyManager.instance.cinemachineVirtualCamera.Follow = transform;
+            photonView.RPC("CheckHasPlayer", RpcTarget.AllBuffered, newHasPlayer, PlayerData.instance.GetCurPlayerColor(curOwnerNum));
         }
 
         //rect localSacle을 나의 localsacle로 변경한다.
@@ -43,7 +56,6 @@ public class OwnershipTransfer : MonoBehaviourPun
 
         //내가 클릭한 플레이어의 움직임을 활성화 한다.
         LobbyManager.instance.SelectPlayer(photonView);
-        GetComponent<Rigidbody>().isKinematic = false;
     }
 
     public void HasPlayer(bool has, int ownerNum)
@@ -71,7 +83,7 @@ public class OwnershipTransfer : MonoBehaviourPun
 
         photonView.transform.GetChild(3).gameObject.SetActive(has);
         textMeshProUGUI.text = photonView.Owner.NickName;
-        textMeshProUGUI.color = LobbyManager.instance.nickNameColors[colorIndex];
+        textMeshProUGUI.color = PlayerData.instance.nickNameColors[colorIndex];
 
         if (has)
         {

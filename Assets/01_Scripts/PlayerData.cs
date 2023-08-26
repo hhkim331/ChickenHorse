@@ -6,13 +6,16 @@ public class PlayerData : MonoBehaviour
 {
     public static PlayerData instance;
 
+    public Color[] nickNameColors;
+    public Queue<int> colorsIndex = new Queue<int>();
+
     //플레이어가 선택한 캐릭터 정보
     //string : 플레이어 활동 번호
     //Character : 캐릭터 정보
     Dictionary<int, Character> playerCharacterDic = new Dictionary<int, Character>();
     public Dictionary<int, Character> PlayerCharacterDic { get { return playerCharacterDic; } }
-    Dictionary<int, Color> playerColorDic = new Dictionary<int, Color>();
-    public Dictionary<int, Color> PlayerColorDic { get { return playerColorDic; } }
+    Dictionary<int, int> playerColorDic = new Dictionary<int, int>();
+    public Dictionary<int, int> PlayerColorDic { get { return playerColorDic; } }
 
     //플레이어 색상 정보
     //Dictionary<int, Color> playerColorDic = new Dictionary<int, Color>();
@@ -28,6 +31,15 @@ public class PlayerData : MonoBehaviour
         else
         {
             Destroy(gameObject);
+        }
+    }
+
+    private void Start()
+    {
+        //colorIndex에  nickNameColors의 길이만큼의 숫자를 넣는다.
+        for (int i = 0; i < nickNameColors.Length; i++)
+        {
+            colorsIndex.Enqueue(i);
         }
     }
 
@@ -49,10 +61,10 @@ public class PlayerData : MonoBehaviour
         playerCharacterDic[actorNum] = null;
     }
 
-    public void AddPlayerColor(int actorNum, Color color)
+    public void AddPlayerColor(int actorNum, int colorIdx)
     {
         Debug.Log("AddPlayerColor:" + actorNum);
-        playerColorDic[actorNum] = color;
+        playerColorDic[actorNum] = colorIdx;
     }
 
     //public void RemovePlayer(int actorNum)
@@ -69,5 +81,22 @@ public class PlayerData : MonoBehaviour
     public void UnSelectCharacter(int actorNum)
     {
         playerCharacterDic[actorNum] = null;
+    }
+
+    public int GetCurCharacterPlayer(Character.CharacterType type)
+    {
+        foreach (var item in playerCharacterDic)
+        {
+            if (item.Value != null && item.Value.characterType == type)
+            {
+                return item.Key;
+            }
+        }
+        return -1;
+    }
+
+    public Color GetCurPlayerColor(int actorNum)
+    {
+        return nickNameColors[playerColorDic[actorNum]];
     }
 }

@@ -315,7 +315,15 @@ public class MainGameManager : MonoBehaviourPunCallbacks
     void End()
     {
         players[scoreMgr.winner].Active(true, endPos);
-        followCamera.SetEnd(players[scoreMgr.winner].transform.position);
+        followCamera.SetEnd(endPos);
+        StartCoroutine(EndWait());
+    }
+
+    IEnumerator EndWait()
+    {
+        yield return new WaitForSeconds(5f);
+        if (PhotonNetwork.LocalPlayer.IsMasterClient)
+            PhotonNetwork.LoadLevel("BMJ_Alpha_Test");
     }
 
     public void AddStageObject(StageObject stageObject)

@@ -8,7 +8,7 @@ public class ChangeCursor : MonoBehaviourPun
     public TextMeshProUGUI playerNameText;
 
     private Color color;
-    private int colorIndex;
+    private int colorIndex = -1;
 
     private void Awake()
     {
@@ -28,8 +28,19 @@ public class ChangeCursor : MonoBehaviourPun
         //내가 마스터 클라이언트라면 색깔을 정해준다.
         if (PhotonNetwork.LocalPlayer.IsMasterClient)
         {
-            colorIndex = LobbyManager.instance.colorsIndex.Dequeue();
-            photonView.RPC(nameof(SetPlayerColor), RpcTarget.AllBuffered, colorIndex);
+            if(PlayerData.instance.PlayerColorDic.ContainsKey(photonView.Owner.ActorNumber))
+            {
+                colorIndex = PlayerData.instance.PlayerColorDic[photonView.Owner.ActorNumber];
+                if (colorIndex == -1)
+                    colorIndex = PlayerData.instance.colorsIndex.Dequeue();
+                photonView.RPC(nameof(SetPlayerColor), RpcTarget.AllBuffered, colorIndex);
+                photonView.RPC("CursorDisable", RpcTarget.AllBuffered, false);
+            }
+            else
+            {
+                colorIndex = PlayerData.instance.colorsIndex.Dequeue();
+                photonView.RPC(nameof(SetPlayerColor), RpcTarget.AllBuffered, colorIndex);
+            }
         }
     }
 
@@ -103,10 +114,10 @@ public class ChangeCursor : MonoBehaviourPun
         }
 
         colorIndex = index;
-        color = LobbyManager.instance.nickNameColors[index];
+        color = PlayerData.instance.nickNameColors[index];
         playerNameText.color = color;
 
-        PlayerData.instance.AddPlayerColor(photonView.Owner.ActorNumber, color);
+        PlayerData.instance.AddPlayerColor(photonView.Owner.ActorNumber, index);
     }
 
     private void OnApplicationFocus(bool focus)

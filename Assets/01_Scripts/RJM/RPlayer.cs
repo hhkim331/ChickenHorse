@@ -8,8 +8,11 @@ public class RPlayer : MonoBehaviourPun, IPunObservable
     public Rigidbody rB;
     Vector3 dir;
     public float speed = 5;
-    public float jumpPower = 500;
+    float jumpPower = 225;
     public float maxVelocity = 5;
+
+    float walkSpeed = 30;
+    float runSpeed = 45;
 
     //힘을 가하는 횟수 제한
     float fCount = 3;
@@ -83,7 +86,7 @@ public class RPlayer : MonoBehaviourPun, IPunObservable
                 //jumpStart = Time.time;
                 jumpTime = true;
 
-                anim.SetTrigger("Jump");
+                //anim.SetTrigger("Jump");
 
 
                 // 점프 중일 때 Idle 애니메이션 전환 방지
@@ -200,10 +203,10 @@ public class RPlayer : MonoBehaviourPun, IPunObservable
             hVelocity.y = 0;
 
             //만약에 hVelocity 의 크기가 일정값보다 커지면
-            if (hVelocity.magnitude > maxVelocity)
+            if (hVelocity.magnitude > speed*0.2f) //maxVelocity
             {
                 //maxVelocity 의 크기 만큼 수평방향 속도를 만든다.
-                hVelocity = hVelocity.normalized * maxVelocity;
+                hVelocity = hVelocity.normalized * speed * 0.2f;
 
                 //중력에 의한 위아래 속력을 다시 대입한다.
                 hVelocity.y = rB.velocity.y;
@@ -251,30 +254,44 @@ public class RPlayer : MonoBehaviourPun, IPunObservable
     {
         if (photonView.IsMine == false) return;
 
+        if (Input.GetKey(KeyCode.Z))
+        {
+            aniRun = true;
+            speed = runSpeed;
+            anim.SetBool("IsRun", true);
+        }
+        else
+        {
+            aniRun = false;
+            speed = walkSpeed;
+            anim.SetBool("IsRun", false);
+        }
+
+
         if (IsGround())
         {
             rB.AddForce(dir * speed);
 
-            if (Input.GetKey(KeyCode.Z))
-            {
-                rB.AddForce(dir * speed * 3);
-                anim.SetBool("IsRun", true);
-                aniRun = true;
-            }
-            else if (Input.GetKeyUp((KeyCode.Z)))
-            {
-                anim.SetBool("IsRun", false);
-                aniRun = false;
-            }
-            else
-            {
-                anim.SetBool("IsRun", false);
-                aniRun = false;
-            }
+            //if (Input.GetKey(KeyCode.Z))
+            //{
+            //    rB.AddForce(dir * speed * 3);
+            //    anim.SetBool("IsRun", true);
+            //    aniRun = true;
+            //}
+            //else if (Input.GetKeyUp((KeyCode.Z)))
+            //{
+            //    anim.SetBool("IsRun", false);
+            //    aniRun = false;
+            //}
+            //else
+            //{
+            //    anim.SetBool("IsRun", false);
+            //    aniRun = false;
+            //}
         }
         else
         {
-            rB.AddForce(dir * speed * 0.5f);
+            rB.AddForce(dir * speed * 0.7f);
         }
 
 

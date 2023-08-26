@@ -188,11 +188,11 @@ public class FollowCamera : MonoBehaviour
         newCameraSize = cameraMaxSize;
     }
 
-    public void SetEnd(Vector3 winnerPos)
+    public void SetEnd(Vector3 endpos)
     {
         state = CameraState.End;
 
-        newCameraPos = new Vector3(winnerPos.x, winnerPos.y, -20);
+        newCameraPos = new Vector3(endpos.x, endpos.y, -20);
         newCameraSize = cameraPlayMinSize;
     }
 

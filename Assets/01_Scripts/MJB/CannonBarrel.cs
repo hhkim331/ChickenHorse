@@ -21,15 +21,38 @@ public class CannonBarrel : MonoBehaviour
     public bool isFiring = false;
 
     //발사 힘
-    public float force = 10f;
+    float force = 25f;
+
+    bool onFire = false;
+    Rigidbody playerRB;
+    float time = 0;
+    float delay = 0.5f;
+
+    private void LateUpdate()
+    {
+        if (onFire)
+        {
+            time += Time.deltaTime;
+            float v = force - time * 40;
+            playerRB.velocity = fireTransform.right * v;
+            if (time > delay)
+            {
+                time = 0;
+                onFire = false;
+                playerRB = null;
+            }
+        }
+    }
 
     public void FirePlayer()
     {
         if (isFiring)
         {
+            onFire = true;
             player.SetActive(true);
             //플레이어의 리지드 바디에 폭발적인 힘을 준다.
-            player.GetComponent<Rigidbody>().AddForce(fireTransform.right * force, ForceMode.Impulse);
+            playerRB = player.GetComponent<Rigidbody>();
+            playerRB.velocity = fireTransform.right * force;
             //smokeAnimator를 활성화 하자
             SmokeAnimator.SetActive(true);
             //발사 끝
@@ -39,6 +62,8 @@ public class CannonBarrel : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (MainGameManager.instance.state != MainGameManager.GameState.Play) return;
+
         //플레이어가 캐논에 닿으면 플레이어를 오브젝트를 담는다.
         if (other.gameObject.layer == LayerMask.NameToLayer("Player") && !isFiring)
         {

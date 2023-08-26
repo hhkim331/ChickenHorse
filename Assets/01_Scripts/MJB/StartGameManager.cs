@@ -35,6 +35,8 @@ public class StartGameManager : MonoBehaviourPun
     {
         //씬이동 동기화
         PhotonNetwork.AutomaticallySyncScene = true;
+        PhotonNetwork.SendRate = 60;
+        PhotonNetwork.SerializationRate = 30;
         //나 자신을 끈다.
         timerUI.enabled = false;
         // 처음 시간을 초기화
@@ -106,6 +108,8 @@ public class StartGameManager : MonoBehaviourPun
         if (PhotonNetwork.LocalPlayer.IsMasterClient)
         {
             PhotonNetwork.CurrentRoom.IsOpen = false;
+            foreach (var player in PhotonNetwork.PlayerList)
+                PhotonNetwork.RemoveRPCs(player);
             PhotonNetwork.LoadLevel(NEXT_SCENE_NUMBER);
         }
         //SceneManager.LoadScene(NEXT_SCENE_NUMBER);
