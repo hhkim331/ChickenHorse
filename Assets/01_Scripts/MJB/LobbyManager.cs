@@ -42,5 +42,6 @@ public class LobbyManager : MonoBehaviour
     {
         //플레이어를 가졌다라는 것을 알린다.
         rPlayer.GetComponent<OwnershipTransfer>().HasPlayer(isEnabled, cursorPhotonView.Owner.ActorNumber);
+        if (!isEnabled) rPlayer = null;
     }
 }
