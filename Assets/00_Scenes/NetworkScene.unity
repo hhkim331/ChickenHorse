@@ -3552,6 +3552,9 @@ MonoBehaviour:
   - key: CountStart
     audioClip: {fileID: 8300000, guid: 3bafed4c9411ec14bb74c52623981657, type: 3}
     audioMixerGroup: {fileID: 6659846024713455985, guid: 6b9d7015bf3786142b805546c697bc72, type: 2}
+  - key: Explosion
+    audioClip: {fileID: 8300000, guid: fa48cf0e1dd0abb428e11fb8b69a4db5, type: 3}
+    audioMixerGroup: {fileID: 4722428860353307565, guid: 6b9d7015bf3786142b805546c697bc72, type: 2}
 --- !u!1 &1511724609
 GameObject:
   m_ObjectHideFlags: 0
