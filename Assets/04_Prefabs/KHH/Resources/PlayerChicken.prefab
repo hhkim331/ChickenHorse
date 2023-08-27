@@ -388,7 +388,6 @@ MonoBehaviour:
   rPlayer: {fileID: 4212865130873733349}
   animator: {fileID: 4212865132608717727}
   explosionAni: {fileID: 4456983005096223498}
-  rB: {fileID: 4212865130873733350}
   bodyCol: {fileID: 4212865131841330971}
   canvasTransform: {fileID: 1980724275784320005}
   nameBackBoardRT: {fileID: 6592386964655625043}

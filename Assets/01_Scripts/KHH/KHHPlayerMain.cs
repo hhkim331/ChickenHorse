@@ -28,10 +28,15 @@ public class KHHPlayerMain : MonoBehaviourPun
     private void Awake()
     {
         rB = GetComponent<Rigidbody>();
+        foreach (Transform transform in GetComponentsInChildren<Transform>())
+        {
+            transform.gameObject.layer = LayerMask.NameToLayer("Player");
+        }
+
     }
 
     private void Start()
-    {        
+    {
         nameText.color = PlayerData.instance.GetCurPlayerColor(photonView.Owner.ActorNumber);
         nameText.text = photonView.Owner.NickName;
         nameBackBoardRT.sizeDelta = new Vector2(nameText.preferredWidth, nameText.preferredHeight);
