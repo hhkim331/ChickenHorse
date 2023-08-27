@@ -28,10 +28,6 @@ public class KHHPlayerMain : MonoBehaviourPun
     private void Awake()
     {
         rB = GetComponent<Rigidbody>();
-        foreach (Transform transform in GetComponentsInChildren<Transform>())
-        {
-            transform.gameObject.layer = LayerMask.NameToLayer("Player");
-        }
     }
 
     private void Start()
@@ -66,6 +62,9 @@ public class KHHPlayerMain : MonoBehaviourPun
                 rB.isKinematic = false;
                 bodyCol.isTrigger = false;
                 explosionAni.SetTrigger("explosion");
+
+                foreach (Transform transform in GetComponentsInChildren<Transform>())
+                    transform.gameObject.layer = LayerMask.NameToLayer("Player");
             }
             else
             {
@@ -94,6 +93,9 @@ public class KHHPlayerMain : MonoBehaviourPun
             rB.isKinematic = false;
             bodyCol.isTrigger = false;
             explosionAni.SetTrigger("explosion");
+
+            foreach (Transform transform in GetComponentsInChildren<Transform>())
+                transform.gameObject.layer = LayerMask.NameToLayer("Player");
         }
         else
         {
