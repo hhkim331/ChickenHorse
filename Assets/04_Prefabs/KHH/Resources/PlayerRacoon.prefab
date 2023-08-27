@@ -449,7 +449,7 @@ GameObject:
   - component: {fileID: 8871374406951339280}
   - component: {fileID: 1895831291605234728}
   m_Layer: 12
-  m_Name: PlayerRaccoon
+  m_Name: PlayerRacoon
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

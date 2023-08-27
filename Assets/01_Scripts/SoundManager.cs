@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Photon.Pun.Demo.Procedural;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -340,6 +341,7 @@ public class SoundManager : MonoBehaviour
         //키 값이 없으면 빠져 나온다
         if (sfxContainer.ContainsKey(key) == false) return;
 
+        soundData = sfxContainer[key];
         //사운드를 하나씩 찾아서 데이터 사운 클립을 끈다.
         foreach (var sfxSrc in sfxSrcList)
         {
@@ -347,8 +349,8 @@ public class SoundManager : MonoBehaviour
             if (sfxSrc.clip == soundData.audioClip)
             {
                 //사운드를 멈춘다.
-                sfxSrc.Stop();
-                return;
+                if (!sfxSrc.isPlaying)
+                    sfxSrc.Stop();
             }
         }
     }
