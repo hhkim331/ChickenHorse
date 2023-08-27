@@ -7,6 +7,12 @@ public class ChangeCursor : MonoBehaviourPun
     //텍스트 매쉬 프로를 사용하여 플레이어 닉네임을 넣는다.
     public TextMeshProUGUI playerNameText;
 
+    //커서의 Text2D 이미지를 가져온다.
+    public SpriteRenderer cursorImage;
+
+    //explosion 색깔 변경을 위한 이미지를 가져온다.
+    public SpriteRenderer explosionImage;
+
     private Color color;
     private int colorIndex = -1;
 
@@ -28,13 +34,13 @@ public class ChangeCursor : MonoBehaviourPun
         //내가 마스터 클라이언트라면 색깔을 정해준다.
         if (PhotonNetwork.LocalPlayer.IsMasterClient)
         {
-            if(PlayerData.instance.PlayerColorDic.ContainsKey(photonView.Owner.ActorNumber))
+            if (PlayerData.instance.PlayerColorDic.ContainsKey(photonView.Owner.ActorNumber))
             {
                 colorIndex = PlayerData.instance.PlayerColorDic[photonView.Owner.ActorNumber];
                 if (colorIndex == -1)
                     colorIndex = PlayerData.instance.colorsIndex.Dequeue();
                 photonView.RPC(nameof(SetPlayerColor), RpcTarget.AllBuffered, colorIndex);
-                photonView.RPC("CursorDisable", RpcTarget.AllBuffered, false);
+                photonView.RPC("SyncActive", RpcTarget.AllBuffered, false);
             }
             else
             {
@@ -50,7 +56,7 @@ public class ChangeCursor : MonoBehaviourPun
         if (photonView.IsMine == false) return;
         //내꺼만 커서를 활성화 하고 실행한다.
         InitCursorPos();
-        CursorEnable();
+        ActiveCursor();
     }
 
     private void InitCursorPos()
@@ -64,7 +70,7 @@ public class ChangeCursor : MonoBehaviourPun
         }
     }
 
-    public void CursorEnable()
+    public void ActiveCursor()
     {
         //내것의 플레이어 일 때
         if (Input.GetKeyDown(KeyCode.Q))
@@ -72,7 +78,7 @@ public class ChangeCursor : MonoBehaviourPun
             //플레이어가 처음에 들어왔을 때 Q를 누르는 것을 방지한다.
             if (LobbyManager.instance.rPlayer == null) return;
             //커서 비활성화를 모든 컴퓨터에 동기화 한다..
-            photonView.RPC("CursorDisable", RpcTarget.All, true);
+            photonView.RPC(nameof(SyncActive), RpcTarget.AllBuffered, true);
 
             //플레이어를 비활성화 시킨다.
             LobbyManager.instance.SetActivePlayer(false);
@@ -80,20 +86,25 @@ public class ChangeCursor : MonoBehaviourPun
     }
 
     [PunRPC]
-    public void CursorDisable(bool cursorDisable)
+    public void SyncActive(bool isActive)
     {
-        transform.GetChild(0).gameObject.SetActive(cursorDisable);
+        transform.GetChild(0).gameObject.SetActive(isActive);
         //커서 포톤 뷰 자식의 자식의 2번째 애니메이터 컴포넌트를 가져온다.
         Animator animator = transform.GetChild(1).GetComponent<Animator>();
-        animator.SetTrigger("explosion");
+
         //내가 아니라면
         if (photonView.IsMine)
         {
-            //커서가 비활성화 되어있다면
-            if (cursorDisable)
+            //커서가 활성화 되어있다면
+            if (isActive)
             {
                 //커서 잠금을 끈다.
                 Cursor.lockState = CursorLockMode.Confined;
+            }
+            else
+            {
+                animator.SetTrigger("explosion");
+                SoundManager.Instance.PlaySFX("explosion");
             }
         }
     }
@@ -116,6 +127,10 @@ public class ChangeCursor : MonoBehaviourPun
         colorIndex = index;
         color = PlayerData.instance.nickNameColors[index];
         playerNameText.color = color;
+        //커서 텍스쳐 색깔을 변경한다.
+        cursorImage.color = color;
+        //폭발 이미지 색깔을 변경한다.
+        explosionImage.color = color;
 
         PlayerData.instance.AddPlayerColor(photonView.Owner.ActorNumber, index);
     }

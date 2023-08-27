@@ -79,7 +79,6 @@ public class OwnershipTransfer : MonoBehaviourPun
         //들어온 플레이어의 player를 가져갔는지 동기화한다.
         GetComponent<RPlayer>().enabled = has;
         //플레이어의 4번째 child의 canvas를 킨다.
-
         photonView.transform.GetChild(3).gameObject.SetActive(has);
         textMeshProUGUI.text = photonView.Owner.NickName;
         textMeshProUGUI.color = PlayerData.instance.nickNameColors[colorIndex];

@@ -61,6 +61,7 @@ MonoBehaviour:
   - UCActRPC
   - ChangeColor
   - SetPlayerColor
+  - SyncActive
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

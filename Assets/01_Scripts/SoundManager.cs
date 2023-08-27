@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Photon.Pun.Demo.Procedural;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,11 +17,12 @@ public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance;
 
-    bool bgmVolumeChange = false;
-    float bgmFadeTime = 0;
-    float bgmFadeDelay = 0.5f;
-    float lastBgmVolume = 0;
-    float bgmVolume = 0;
+    private bool bgmVolumeChange = false;
+    private float bgmFadeTime = 0;
+    private float bgmFadeDelay = 0.5f;
+    private float lastBgmVolume = 0;
+    private float bgmVolume = 0;
+
     public float BGMVolume
     {
         set
@@ -33,11 +35,12 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    bool sfxVolumeChange = false;
-    float sfxFadeTime = 0;
-    float sfxFadeDelay = 0.5f;
-    float lastSfxVolume = 0;
-    float sfxVolume = 1;
+    private bool sfxVolumeChange = false;
+    private float sfxFadeTime = 0;
+    private float sfxFadeDelay = 0.5f;
+    private float lastSfxVolume = 0;
+    private float sfxVolume = 1;
+
     public float SFXVolume
     {
         set
@@ -50,27 +53,27 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    [SerializeField] AudioMixer audioMixer = null;
+    [SerializeField] private AudioMixer audioMixer = null;
 
-    [SerializeField] List<SoundData> loadingBGMSoundInfos = new List<SoundData>();
-    [SerializeField] List<SoundData> loadingSFXSoundInfos = new List<SoundData>();
+    [SerializeField] private List<SoundData> loadingBGMSoundInfos = new List<SoundData>();
+    [SerializeField] private List<SoundData> loadingSFXSoundInfos = new List<SoundData>();
 
-    Dictionary<string, SoundData> bgmContainer = new Dictionary<string, SoundData>();
-    Dictionary<string, SoundData> sfxContainer = new Dictionary<string, SoundData>();
+    private Dictionary<string, SoundData> bgmContainer = new Dictionary<string, SoundData>();
+    private Dictionary<string, SoundData> sfxContainer = new Dictionary<string, SoundData>();
 
-    GameObject bgmObj = null;   // 백그라운드 오브젝트
-    AudioSource bgmSrc = null;  // 백그라운드 AudioSource 컴포넌트
+    private GameObject bgmObj = null;   // 백그라운드 오브젝트
+    private AudioSource bgmSrc = null;  // 백그라운드 AudioSource 컴포넌트
 
-    int sfxMaxCount = 10;
-    int sfxCurCount = 0;
-    List<GameObject> sfxObjList = new List<GameObject>(); //ArrayList m_sndObjList = new ArrayList();          // 효과음 오브젝트
-    AudioSource[] sfxSrcList;
+    private int sfxMaxCount = 10;
+    private int sfxCurCount = 0;
+    private List<GameObject> sfxObjList = new List<GameObject>(); //ArrayList m_sndObjList = new ArrayList();          // 효과음 오브젝트
+    private AudioSource[] sfxSrcList;
 
-    SoundData soundData = null;
+    private SoundData soundData = null;
 
     // Start is called before the first frame update
 
-    void Awake()
+    private void Awake()
     {
         Instance = this;
         DontDestroyOnLoad(gameObject);
@@ -106,7 +109,7 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    void LoadSound()
+    private void LoadSound()
     {
         //bgm
         for (int i = 0; i < loadingBGMSoundInfos.Count; i++)
@@ -125,7 +128,7 @@ public class SoundManager : MonoBehaviour
 
     public void LoadChildGameObj()
     {
-        //m_bgmObj == null 이면 PlayBGM()하게 되면 다시 로딩하게 된다. 
+        //m_bgmObj == null 이면 PlayBGM()하게 되면 다시 로딩하게 된다.
         if (bgmObj == null)
         {
             bgmObj = new GameObject();
@@ -138,7 +141,7 @@ public class SoundManager : MonoBehaviour
 
         for (int a_ii = 0; a_ii < sfxMaxCount; a_ii++)
         {
-            // 최대 4개까지 재생되게 제어 렉방지(Androud: 4개, PC: 무제한)  
+            // 최대 4개까지 재생되게 제어 렉방지(Androud: 4개, PC: 무제한)
             if (sfxObjList.Count < sfxMaxCount)
             {
                 GameObject newSoundOBJ = new GameObject();
@@ -156,12 +159,13 @@ public class SoundManager : MonoBehaviour
     }
 
     #region BGM
+
     public void PlayBGM(string key)
     {
         soundData = bgmContainer[key];
 
-        //Scene이 넘어가면 GameObject는 지워지고, m_bgmObj == null 이면 
-        //PlayBGM()하게 되면 다시 로딩하게 된다. 
+        //Scene이 넘어가면 GameObject는 지워지고, m_bgmObj == null 이면
+        //PlayBGM()하게 되면 다시 로딩하게 된다.
         if (bgmObj == null)
         {
             bgmObj = new GameObject();
@@ -194,9 +198,11 @@ public class SoundManager : MonoBehaviour
             bgmSrc.clip = null;
         }
     }
-    #endregion
+
+    #endregion BGM
 
     #region SFX
+
     //효과음 플레이 함수
     public void PlaySFX(string key, float delay = 0, bool bLoop = false)
     {
@@ -329,6 +335,26 @@ public class SoundManager : MonoBehaviour
             src.Stop();
     }
 
+    //sfx를 멈추는 기능
+    public void StopSFX(string key)
+    {
+        //키 값이 없으면 빠져 나온다
+        if (sfxContainer.ContainsKey(key) == false) return;
+
+        soundData = sfxContainer[key];
+        //사운드를 하나씩 찾아서 데이터 사운 클립을 끈다.
+        foreach (var sfxSrc in sfxSrcList)
+        {
+            //사운드 클립이 사운드 데이터에 들어가 있다면
+            if (sfxSrc.clip == soundData.audioClip)
+            {
+                //사운드를 멈춘다.
+                if (!sfxSrc.isPlaying)
+                    sfxSrc.Stop();
+            }
+        }
+    }
+
     public void ChangeSFXPitch(float pitch)
     {
         foreach (var src in sfxSrcList)
@@ -338,5 +364,6 @@ public class SoundManager : MonoBehaviour
             else src.pitch = pitch;
         }
     }
-    #endregion
+
+    #endregion SFX
 }

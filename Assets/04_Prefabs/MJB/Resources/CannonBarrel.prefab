@@ -189,7 +189,6 @@ MonoBehaviour:
   fireAnimator: {fileID: 4209658090981302342}
   SmokeAnimator: {fileID: 4209658091456638217}
   isFiring: 0
-  force: 30
 --- !u!65 &4209658090981302362
 BoxCollider:
   m_ObjectHideFlags: 0
