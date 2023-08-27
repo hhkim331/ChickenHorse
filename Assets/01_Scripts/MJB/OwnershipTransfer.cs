@@ -68,7 +68,7 @@ public class OwnershipTransfer : MonoBehaviourPun
         }
         else
         {
-            photonView.RPC(nameof(CheckHasPlayer), RpcTarget.All, false, LobbyManager.instance.myColorIndex);
+            photonView.RPC(nameof(CheckHasPlayer), RpcTarget.AllBuffered, false, LobbyManager.instance.myColorIndex);
         }
     }
 
