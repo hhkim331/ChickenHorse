@@ -91,7 +91,8 @@ public class ChangeCursor : MonoBehaviourPun
         transform.GetChild(0).gameObject.SetActive(isActive);
         //커서 포톤 뷰 자식의 자식의 2번째 애니메이터 컴포넌트를 가져온다.
         Animator animator = transform.GetChild(1).GetComponent<Animator>();
-
+        animator.SetTrigger("explosion");
+        SoundManager.Instance.PlaySFX("explosion");
         //내가 아니라면
         if (photonView.IsMine)
         {
@@ -100,11 +101,6 @@ public class ChangeCursor : MonoBehaviourPun
             {
                 //커서 잠금을 끈다.
                 Cursor.lockState = CursorLockMode.Confined;
-            }
-            else
-            {
-                animator.SetTrigger("explosion");
-                SoundManager.Instance.PlaySFX("explosion");
             }
         }
     }
