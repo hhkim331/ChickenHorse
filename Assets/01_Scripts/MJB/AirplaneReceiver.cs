@@ -6,7 +6,18 @@ public class AirplaneReceiver : MonoBehaviour
 {
     public GameObject player;
 
-    //삭제시키는 이벤트 함수를 만든다.,
+    //boxCollider 두개를 모두 담을 변수
+    public BoxCollider[] airPlaneCollider;
+
+    public void StopMove()
+    {
+        //boxCollider들을 비활성화 한다.
+        foreach (var boxCollider in airPlaneCollider)
+        {
+            boxCollider.enabled = false;
+        }
+    }
+
     public void DestroyAirplane()
     {
         //플레이어의 부모가 있을때만

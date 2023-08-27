@@ -467,3 +467,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 7516020860710318139, guid: 097e29e1bf699b548ab7deeb4d316386, type: 3}
+  airPlaneCollider:
+  - {fileID: 269817500601790250}
+  - {fileID: 269817499958012611}
