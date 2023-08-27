@@ -39,8 +39,7 @@ public class StartGameManager : MonoBehaviourPun
     {
         //씬이동 동기화
         PhotonNetwork.AutomaticallySyncScene = true;
-        PhotonNetwork.SendRate = 60;
-        PhotonNetwork.SerializationRate = 30;
+        PhotonNetwork.SerializationRate = 20;
         //나 자신을 끈다.
         canvasGroup.alpha = 0;
         // 처음 시간을 초기화

@@ -566,6 +566,7 @@ MonoBehaviour:
   rPlayer: {fileID: 8871374406951339287}
   animator: {fileID: 8871374407232014107}
   explosionAni: {fileID: 7863334328762772146}
+  bodyCol: {fileID: 8871374407150014087}
   canvasTransform: {fileID: 1585342240289766176}
   nameBackBoardRT: {fileID: 1269223354368525791}
   nameText: {fileID: 7438653846698368562}
