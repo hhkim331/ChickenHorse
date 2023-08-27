@@ -87,7 +87,6 @@ public class OwnershipTransfer : MonoBehaviourPun
         {
             PlayerData.instance.AddPlayer(photonView.Owner.ActorNumber);
             PlayerData.instance.SelectCharacter(photonView.Owner.ActorNumber, characterData);
-            SoundManager.Instance.PlaySFX("Explosion");
         }
         else
         {

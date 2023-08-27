@@ -1444,7 +1444,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0.65882355}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1788,6 +1788,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timerUI: {fileID: 1439963308}
   timerBackground: {fileID: 210959172}
+  canvasGroup: {fileID: 1947516049}
 --- !u!1 &321975330
 GameObject:
   m_ObjectHideFlags: 0
@@ -8558,6 +8559,7 @@ GameObject:
   - component: {fileID: 1947516047}
   - component: {fileID: 1947516046}
   - component: {fileID: 1947516045}
+  - component: {fileID: 1947516049}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -8648,6 +8650,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!225 &1947516049
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1947516044}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1957959893
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,4 +1,5 @@
-﻿using Photon.Pun;
+﻿using DG.Tweening;
+using Photon.Pun;
 using System;
 using System.Collections.Generic;
 using TMPro;
@@ -14,7 +15,8 @@ public class StartGameManager : MonoBehaviourPun
     //시간을 증가시키는 카운트 다운을 만들고 싶다.
     public TextMeshProUGUI timerUI;
 
-    public Image timerBackground;
+    //Canvas group 컴포넌트를 public으로 가져오고 싶다.
+    public CanvasGroup canvasGroup;
 
     //3초 시간이 제한
     private readonly float MAX_TIME = 3.4f, LIMIT_TIME = 0f;
@@ -40,8 +42,7 @@ public class StartGameManager : MonoBehaviourPun
         PhotonNetwork.SendRate = 60;
         PhotonNetwork.SerializationRate = 30;
         //나 자신을 끈다.
-        timerUI.enabled = false;
-        timerBackground.enabled = false;
+        canvasGroup.alpha = 0;
         // 처음 시간을 초기화
         currentTime = MAX_TIME;
     }
@@ -56,14 +57,13 @@ public class StartGameManager : MonoBehaviourPun
 
     private void StartingGame()
     {
-        //딕셔너리에 내가 원하는 플레이어의 키가 있다면 UI를 실행시킨다.
-        //if (playerTag.ContainsKey(HORSE_TAG_NAME) && playerTag.ContainsKey(CHICKEN_TAG_NAME))
         if (playerCount == PhotonNetwork.CurrentRoom.PlayerCount)
-            ReadyToPlay(true);
-
+        {
+            ReadyToPlay(true, 1, 0.5f);
+        }
         if (playerCount < PhotonNetwork.CurrentRoom.PlayerCount)
         {
-            ReadyToPlay(false);
+            ReadyToPlay(false, 0, 0.5f);
             //sfx 사운드를 끈다.
             SoundManager.Instance.StopSFX("CountStart");
             //시간을 3초로 초기화 한다.
@@ -71,12 +71,11 @@ public class StartGameManager : MonoBehaviourPun
         }
     }
 
-    private void ReadyToPlay(bool isStarting)
+    private void ReadyToPlay(bool isStarting, float endValue, float duration)
     {
         hasPlayer = isStarting;
         //시간UI 비활성화 한다.
-        timerUI.enabled = isStarting;
-        timerBackground.enabled = isStarting;
+        canvasGroup.DOFade(endValue, duration);
     }
 
     private void SetCountDown()
@@ -92,8 +91,7 @@ public class StartGameManager : MonoBehaviourPun
             {
                 //시간이 지났다는 체크를 한다.
                 hasLimit = true;
-                timerUI.enabled = false;
-                timerBackground.enabled = false;
+                canvasGroup.alpha = 0;
             }
 
             SetTimerText();
@@ -120,9 +118,6 @@ public class StartGameManager : MonoBehaviourPun
                 PhotonNetwork.RemoveRPCs(player);
             PhotonNetwork.LoadLevel(NEXT_SCENE_NUMBER);
         }
-        //시간 UI 비활성화 한다.
-        timerUI.enabled = false;
-        timerBackground.enabled = false;
     }
 
     // 말 플레이어가 태그 되었다면 그 플레이어를 넣는다.
