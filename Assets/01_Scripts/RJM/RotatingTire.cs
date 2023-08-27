@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class RotatingTire : MonoBehaviour
+public class RotatingTire : ObjectScript
 {
     public float rotateTime = 2.0f;
     public float timer = 0.0f;
@@ -16,15 +16,21 @@ public class RotatingTire : MonoBehaviour
 
     public bool rotateStart = false;
 
-    // Start is called before the first frame update
-    void Start()
+    public override void ResetObject()
     {
-
+        transform.rotation = Quaternion.identity;
     }
+
+    //// Start is called before the first frame update
+    //void Start()
+    //{
+
+    //}
 
     // Update is called once per frame
     void Update()
     {
+        if (!active) return;
 
         //돌기 시작해라가 false 일때만 시간 측정
         if (rotateStart == false)
@@ -55,9 +61,9 @@ public class RotatingTire : MonoBehaviour
             if (rotateStart == true)
             {
                 //Z축 회전해라
-                transform.DOLocalRotate(new Vector3(0, 0, transform.rotation.eulerAngles.z+90), 0.5f).SetEase(Ease.Linear);
+                transform.DOLocalRotate(new Vector3(0, 0, transform.rotation.eulerAngles.z + 90), 0.5f).SetEase(Ease.Linear);
 
-               // zAngle += 90;
+                // zAngle += 90;
 
                 timer = 0.0f;
                 rotateStart = false;
