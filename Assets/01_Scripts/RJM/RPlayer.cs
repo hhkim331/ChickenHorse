@@ -215,7 +215,9 @@ public class RPlayer : MonoBehaviourPun, IPunObservable
                 rB.velocity = hVelocity;
             }
 
-            if (IsWall() && !IsGround())
+            int wall = IsWall();
+
+            if (wall !=0 && !IsGround())
             {
 
                 if (Input.GetKeyDown(KeyCode.X))
@@ -223,7 +225,7 @@ public class RPlayer : MonoBehaviourPun, IPunObservable
 
                     // 벽에 붙어 있는 경우
                     //anim.SetTrigger("Slide");
-                    rB.velocity = new Vector3(-dir.x * walljumpPower, walljumpPower, 0);
+                    rB.velocity = new Vector3(wall * walljumpPower, walljumpPower, 0);
                     // walljumpPower++;
                     //rB.AddForce(Vector3.left * jumpPower);
                     //if (h > 0)
@@ -323,18 +325,26 @@ public class RPlayer : MonoBehaviourPun, IPunObservable
 
     bool IsGround()
     {
-        Ray ray = new Ray(transform.position, Vector3.down);
-
-        return Physics.Raycast(ray, 1.02f, (-1) - (1 << LayerMask.NameToLayer("Player")));
-
+        //박스cast
+        return Physics.BoxCast(transform.position, new Vector3(0.5f, 0.1f, 0.5f), Vector3.down, Quaternion.identity, 1.02f, (-1) - (1 << LayerMask.NameToLayer("Player")));
+        //Ray ray = new Ray(transform.position, Vector3.down);
+        //return Physics.Raycast(ray, 1.02f, (-1) - (1 << LayerMask.NameToLayer("Player")));
     }
 
-    bool IsWall()
+    int IsWall()
     {
-        Ray rayRight = new Ray(transform.position, Vector3.right);
-        Ray rayLeft = new Ray(transform.position, Vector3.left);
+        //Ray rayRight = new Ray(transform.position, Vector3.right);
+        //Ray rayLeft = new Ray(transform.position, Vector3.left);
+        //return Physics.Raycast(rayRight, 1.02f) || Physics.Raycast(rayLeft, 1.02f);
 
-        return Physics.Raycast(rayRight, 1.02f) || Physics.Raycast(rayLeft, 1.02f);
+        bool isRight = Physics.BoxCast(transform.position, new Vector3(0.1f, 0.5f, 0.5f), Vector3.right, Quaternion.identity, 0.51f, (-1) - (1 << LayerMask.NameToLayer("Player")));
+        bool isLeft = Physics.BoxCast(transform.position, new Vector3(0.1f, 0.5f, 0.5f), Vector3.left, Quaternion.identity, 0.51f, (-1) - (1 << LayerMask.NameToLayer("Player")));
+        int wall = 0;
+        if (isRight)
+            wall = -1;
+        else if (isLeft)
+            wall = 1;
+        return wall;
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

@@ -26,6 +26,7 @@ public class OwnershipTransfer : MonoBehaviourPun
             if (PhotonNetwork.LocalPlayer.ActorNumber == curOwnerNum)
             {
                 photonView.TransferOwnership(PhotonNetwork.CurrentRoom.GetPlayer(curOwnerNum));
+                LobbyManager.instance.rPlayer = GetComponent<RPlayer>();
                 changePlayer = true;
                 newHasPlayer = true;
             }

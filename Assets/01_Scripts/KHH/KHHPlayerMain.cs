@@ -32,7 +32,6 @@ public class KHHPlayerMain : MonoBehaviourPun
         {
             transform.gameObject.layer = LayerMask.NameToLayer("Player");
         }
-
     }
 
     private void Start()
