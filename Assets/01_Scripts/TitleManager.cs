@@ -200,7 +200,7 @@ public class TitleManager : MonoBehaviourPunCallbacks
         foreach (RoomInfo info in roomCache.Values)
         {
             RoomItem item = Instantiate(roomItemFactory, rtContent).GetComponent<RoomItem>();
-            item.SetInfo(roomNum, info.PlayerCount, "로비", info.Name, JoinedRoom);
+            item.SetInfo(roomNum, info.PlayerCount, info.IsOpen, info.Name, JoinedRoom);
             roomNum++;
         }
     }

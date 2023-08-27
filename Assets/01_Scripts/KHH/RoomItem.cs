@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -27,12 +28,12 @@ public class RoomItem : MonoBehaviour
         button.onClick.AddListener(JoinRoom);
     }
 
-    public void SetInfo(int roomNum, int users, string match, string hostName, UnityAction<string> action)
+    public void SetInfo(int roomNum, int users, bool match, string hostName, UnityAction<string> action)
     {
         numText.text = roomNum.ToString() + ".";
         regionText.text = "한국";
         playerText.text = users.ToString() + "/4";
-        matchText.text = match;
+        matchText.text = match ? "로비" : "진행중";
         modeText.text = "파티";
         tagText.text = "재미";
         hostText.text = hostName;

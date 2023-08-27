@@ -15,6 +15,9 @@ public class KHHPlayerMain : MonoBehaviourPun
     [SerializeField] Animator explosionAni;
     //[SerializeField] SpriteRenderer spriteRenderer;
 
+    Rigidbody rB;
+    [SerializeField] Collider bodyCol;
+
     //bool rp = false;
     //bool ani = false;
 
@@ -24,6 +27,8 @@ public class KHHPlayerMain : MonoBehaviourPun
 
     private void Start()
     {
+        rB = GetComponent<Rigidbody>();
+        
         nameText.color = PlayerData.instance.GetCurPlayerColor(photonView.Owner.ActorNumber);
         nameText.text = photonView.Owner.NickName;
         nameBackBoardRT.sizeDelta = new Vector2(nameText.preferredWidth, nameText.preferredHeight);
@@ -35,7 +40,7 @@ public class KHHPlayerMain : MonoBehaviourPun
         else
         {
             animator.transform.localPosition = new Vector3(0, -0.95f, -photonView.Owner.ActorNumber * 0.001f);
-            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+            rB.constraints = RigidbodyConstraints.FreezeAll;
         }
     }
 
@@ -51,7 +56,8 @@ public class KHHPlayerMain : MonoBehaviourPun
                 animator.Rebind();
                 animator.enabled = true;
                 canvasTransform.gameObject.SetActive(true);
-                GetComponent<Rigidbody>().isKinematic = false;
+                rB.isKinematic = false;
+                bodyCol.isTrigger = false;
                 explosionAni.SetTrigger("explosion");
             }
             else
@@ -59,7 +65,7 @@ public class KHHPlayerMain : MonoBehaviourPun
                 animator.enabled = false;
                 animator.gameObject.SetActive(false);
                 canvasTransform.gameObject.SetActive(false);
-                GetComponent<Rigidbody>().isKinematic = true;
+                rB.isKinematic = true;
             }
             transform.position = pos;
 
@@ -78,7 +84,8 @@ public class KHHPlayerMain : MonoBehaviourPun
             animator.Rebind();
             animator.enabled = true;
             canvasTransform.gameObject.SetActive(true);
-            GetComponent<Rigidbody>().isKinematic = false;
+            rB.isKinematic = false;
+            bodyCol.isTrigger = false;
             explosionAni.SetTrigger("explosion");
         }
         else
@@ -86,7 +93,7 @@ public class KHHPlayerMain : MonoBehaviourPun
             animator.enabled = false;
             animator.gameObject.SetActive(false);
             canvasTransform.gameObject.SetActive(false);
-            GetComponent<Rigidbody>().isKinematic = true;
+            rB.isKinematic = true;
         }
         transform.position = pos;
     }
@@ -137,6 +144,7 @@ public class KHHPlayerMain : MonoBehaviourPun
     {
         isActive = false;
         rPlayer.enabled = false;
+        bodyCol.isTrigger = true;
         animator.SetTrigger("Dead");
         MainGameManager.instance.AnyPlayerDie();
         if (killerNum != -1 && photonView.Owner.ActorNumber != killerNum)
