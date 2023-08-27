@@ -56,11 +56,11 @@ public class StartGameManager : MonoBehaviourPun
 
     private void StartingGame()
     {
-        if (playerCount == PhotonNetwork.CurrentRoom.PlayerCount)
+        if (!hasPlayer && playerCount == PhotonNetwork.CurrentRoom.PlayerCount)
         {
             ReadyToPlay(true, 1, 0.5f);
         }
-        if (playerCount < PhotonNetwork.CurrentRoom.PlayerCount)
+        else if (hasPlayer && playerCount < PhotonNetwork.CurrentRoom.PlayerCount)
         {
             ReadyToPlay(false, 0, 0.5f);
             //sfx 사운드를 끈다.

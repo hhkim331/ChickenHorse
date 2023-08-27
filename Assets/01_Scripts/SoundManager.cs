@@ -349,7 +349,7 @@ public class SoundManager : MonoBehaviour
             if (sfxSrc.clip == soundData.audioClip)
             {
                 //사운드를 멈춘다.
-                if (!sfxSrc.isPlaying)
+                if (sfxSrc.isPlaying)
                     sfxSrc.Stop();
             }
         }
