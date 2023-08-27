@@ -25,10 +25,13 @@ public class KHHPlayerMain : MonoBehaviourPun
     [SerializeField] RectTransform nameBackBoardRT;
     [SerializeField] TextMeshProUGUI nameText;
 
-    private void Start()
+    private void Awake()
     {
         rB = GetComponent<Rigidbody>();
-        
+    }
+
+    private void Start()
+    {        
         nameText.color = PlayerData.instance.GetCurPlayerColor(photonView.Owner.ActorNumber);
         nameText.text = photonView.Owner.NickName;
         nameBackBoardRT.sizeDelta = new Vector2(nameText.preferredWidth, nameText.preferredHeight);
