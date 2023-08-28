@@ -97,7 +97,7 @@ public class MainGameManager : MonoBehaviourPunCallbacks
             actors.Add((player.photonView.Owner.ActorNumber, player.photonView.Owner.NickName));
         }
 
-        actors.OrderBy(a => a.Item1);
+        actors.Sort();
         scoreMgr = GetComponent<ScoreManager>();
         scoreMgr.Init(actors);
         followCamera.Set(players, actors, cursors);
