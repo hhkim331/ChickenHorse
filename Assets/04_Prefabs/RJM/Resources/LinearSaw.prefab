@@ -213,7 +213,7 @@ MonoBehaviour:
     - {x: 5, y: 0}
     objectLeftBottomPos: {x: -2, y: 0}
     objectPickUpPos: {x: 0, y: -1}
-    objectRotAxis: {x: 0, y: 0}
+    objectRotAxis: {x: 2, y: 0}
   cursor: {fileID: 0}
   objs:
   - {fileID: 3264395609435653544}

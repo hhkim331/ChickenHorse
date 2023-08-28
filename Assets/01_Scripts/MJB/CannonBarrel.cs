@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 //플레이어가 캐논에 들어가면 오른쪽 45도 각도로 플레이어를 날리고 싶다.
 public class CannonBarrel : MonoBehaviour

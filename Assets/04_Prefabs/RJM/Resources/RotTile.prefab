@@ -258,8 +258,8 @@ MonoBehaviour:
     - {x: 0, y: 1}
     - {x: 1, y: 0}
     - {x: 1, y: 1}
-    objectLeftBottomPos: {x: -0.5, y: 0}
-    objectPickUpPos: {x: -0.5, y: 0}
+    objectLeftBottomPos: {x: -0.5, y: -0.5}
+    objectPickUpPos: {x: -0.5, y: -0.5}
     objectRotAxis: {x: 0, y: 0}
   cursor: {fileID: 0}
   objs:

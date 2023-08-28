@@ -119,7 +119,7 @@ public class StageObject : MonoBehaviourPun, IPunObservable
                 }
             }
 
-            if(objScripts.Length > 0)
+            if (objScripts.Length > 0)
             {
                 foreach (var script in objScripts)
                 {
@@ -242,10 +242,14 @@ public class StageObject : MonoBehaviourPun, IPunObservable
                 canPlace = false;
                 if (rendererTransform != null)
                 {
-                    MeshRenderer meshRenderer = rendererTransform.GetComponent<MeshRenderer>();
-                    if (meshRenderer != null) meshRenderer.material.color = Color.red;
-                    SpriteRenderer spriteRenderer = rendererTransform.GetComponent<SpriteRenderer>();
-                    if (spriteRenderer != null) spriteRenderer.material.color = Color.red;
+                    MeshRenderer[] meshRenderers = rendererTransform.GetComponentsInChildren<MeshRenderer>();
+                    if (meshRenderers != null)
+                        foreach (MeshRenderer meshRenderer in meshRenderers)
+                            meshRenderer.material.color = Color.red;
+                    SpriteRenderer[] spriteRenderers = rendererTransform.GetComponentsInChildren<SpriteRenderer>();
+                    if (spriteRenderers != null)
+                        foreach (SpriteRenderer spriteRenderer in spriteRenderers)
+                            spriteRenderer.material.color = Color.red;
                 }
             }
         }
@@ -439,10 +443,14 @@ public class StageObject : MonoBehaviourPun, IPunObservable
         {
             if (rendererTransform != null)
             {
-                MeshRenderer meshRenderer = rendererTransform.GetComponent<MeshRenderer>();
-                if (meshRenderer != null) meshRenderer.material.color = Color.red;
-                SpriteRenderer spriteRenderer = rendererTransform.GetComponent<SpriteRenderer>();
-                if (spriteRenderer != null) spriteRenderer.material.color = Color.red;
+                MeshRenderer[] meshRenderers = rendererTransform.GetComponentsInChildren<MeshRenderer>();
+                if (meshRenderers != null)
+                    foreach (MeshRenderer meshRenderer in meshRenderers)
+                        meshRenderer.material.color = Color.red;
+                SpriteRenderer[] spriteRenderers = rendererTransform.GetComponentsInChildren<SpriteRenderer>();
+                if (spriteRenderers != null)
+                    foreach (SpriteRenderer spriteRenderer in spriteRenderers)
+                        spriteRenderer.material.color = Color.red;
             }
         }
     }
