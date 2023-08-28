@@ -25,6 +25,11 @@ public class KHHPlayerMain : MonoBehaviourPun
     [SerializeField] RectTransform nameBackBoardRT;
     [SerializeField] TextMeshProUGUI nameText;
 
+    private void OnDestroy()
+    {
+        Debug.Log("KHHPlayerMain OnDestroy");
+    }
+
     private void Awake()
     {
         rB = GetComponent<Rigidbody>();
@@ -68,6 +73,7 @@ public class KHHPlayerMain : MonoBehaviourPun
             }
             else
             {
+                transform.parent = null;
                 animator.enabled = false;
                 animator.gameObject.SetActive(false);
                 canvasTransform.gameObject.SetActive(false);
@@ -99,6 +105,7 @@ public class KHHPlayerMain : MonoBehaviourPun
         }
         else
         {
+            transform.parent = null;
             animator.enabled = false;
             animator.gameObject.SetActive(false);
             canvasTransform.gameObject.SetActive(false);
