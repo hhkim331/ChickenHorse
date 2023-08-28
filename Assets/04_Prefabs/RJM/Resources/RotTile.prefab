@@ -263,12 +263,11 @@ MonoBehaviour:
     objectRotAxis: {x: 0, y: 0}
   cursor: {fileID: 0}
   objs:
-  - {fileID: 2647152778339541906}
-  - {fileID: 2647152779305060620}
+  - {fileID: 7730346779082913845}
   animators: []
   objScripts:
   - {fileID: 7243101842799670000}
-  rendererTransform: {fileID: 2647152778339541904}
+  rendererTransform: {fileID: 505710063908646370}
 --- !u!114 &6708072595434898546
 MonoBehaviour:
   m_ObjectHideFlags: 0
