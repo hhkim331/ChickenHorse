@@ -43,7 +43,7 @@ public class OwnershipTransfer : MonoBehaviourPun
             changePlayer = false;
             GetComponent<Rigidbody>().isKinematic = false;
             LobbyManager.instance.cinemachineVirtualCamera.Follow = transform;
-            photonView.RPC("CheckHasPlayer", RpcTarget.AllBuffered, newHasPlayer, PlayerData.instance.PlayerColorDic[curOwnerNum]);
+            photonView.RPC("CheckHasPlayer", RpcTarget.AllBuffered, curOwnerNum, photonView.Owner.NickName, newHasPlayer, PlayerData.instance.PlayerColorDic[curOwnerNum]);
         }
 
         //rect localSacle을 나의 localsacle로 변경한다.
@@ -70,30 +70,30 @@ public class OwnershipTransfer : MonoBehaviourPun
         }
         else
         {
-            photonView.RPC(nameof(CheckHasPlayer), RpcTarget.AllBuffered, false, LobbyManager.instance.myColorIndex);
+            photonView.RPC(nameof(CheckHasPlayer), RpcTarget.AllBuffered, photonView.Owner.ActorNumber, photonView.Owner.NickName, false, LobbyManager.instance.myColorIndex);
         }
     }
 
     //플레이어를 선택했는지 모든 컴퓨터에 동기화
     [PunRPC]
-    public void CheckHasPlayer(bool has, int colorIndex)
+    public void CheckHasPlayer(int actorNum, string actorNick, bool has, int colorIndex)
     {
         hasPlayer = has;
         //들어온 플레이어의 player를 가져갔는지 동기화한다.
         GetComponent<RPlayer>().enabled = has;
         //플레이어의 4번째 child의 canvas를 킨다.
         photonView.transform.GetChild(3).gameObject.SetActive(has);
-        textMeshProUGUI.text = photonView.Owner.NickName;
+        textMeshProUGUI.text = actorNick;
         textMeshProUGUI.color = PlayerData.instance.nickNameColors[colorIndex];
 
         if (has)
         {
-            PlayerData.instance.AddPlayer(photonView.Owner.ActorNumber);
-            PlayerData.instance.SelectCharacter(photonView.Owner.ActorNumber, characterData);
+            PlayerData.instance.AddPlayer(actorNum);
+            PlayerData.instance.SelectCharacter(actorNum, characterData);
         }
         else
         {
-            PlayerData.instance.UnSelectCharacter(photonView.Owner.ActorNumber);
+            PlayerData.instance.UnSelectCharacter(actorNum);
             GetComponent<Rigidbody>().isKinematic = true;
         }
     }
