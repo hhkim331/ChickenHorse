@@ -48,9 +48,11 @@ public class StartGameManager : MonoBehaviourPun
 
     private void Update()
     {
+        if (load) return;
+
         SetCountDown();
         //일정 시간이 지난다면 씬을 바꾼다.
-        if (hasLimit && !load) ChangeScene();
+        if (hasLimit) ChangeScene();
         StartingGame();
     }
 
@@ -116,6 +118,8 @@ public class StartGameManager : MonoBehaviourPun
             foreach (var player in PhotonNetwork.PlayerList)
                 PhotonNetwork.RemoveRPCs(player);
             PhotonNetwork.LoadLevel(NEXT_SCENE_NUMBER);
+
+            SoundManager.Instance.StopSFX("CountStart");
         }
     }
 
