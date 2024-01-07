@@ -45,13 +45,5 @@ public class MapManager : MonoBehaviour
             fixedObjects[i].FixedPlace();
             objectList.Add(fixedObjects[i]);
         }
-
-        //mapData.fixedObjectDatas.Length
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 }

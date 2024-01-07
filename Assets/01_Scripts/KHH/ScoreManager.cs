@@ -11,10 +11,10 @@ public class Point
     {
         Goal,
         Solo,
-        Death,
+        //Death,
         Trap,
-        Coin,
-        Comeback,
+        //Coin,
+        //Comeback,
         First,
         //Second,
         //Third,
@@ -40,10 +40,10 @@ public class ScoreManager : MonoBehaviourPun
 
     readonly int goal = 5;
     readonly int solo = 3;
-    readonly int death = 2;
+    //readonly int death = 2;
     readonly int trap = 1;
-    readonly int coin = 3;
-    readonly int comeback = 4;
+    //readonly int coin = 3;
+    //readonly int comeback = 4;
     readonly int first = 1;
 
     Color goalColor = new Color(0f, 0f, 0.5f);
@@ -93,10 +93,10 @@ public class ScoreManager : MonoBehaviourPun
     {
         points.Add(Point.PointType.Goal, new Point(goal, goalColor, "골"));
         points.Add(Point.PointType.Solo, new Point(solo, soloColor, "솔로"));
-        points.Add(Point.PointType.Death, new Point(death, deathColor, "사후"));
+        //points.Add(Point.PointType.Death, new Point(death, deathColor, "사후"));
         points.Add(Point.PointType.Trap, new Point(trap, trapColor, "덫"));
-        points.Add(Point.PointType.Coin, new Point(coin, coinColor, "코인"));
-        points.Add(Point.PointType.Comeback, new Point(comeback, comebackColor, "컴백"));
+        //points.Add(Point.PointType.Coin, new Point(coin, coinColor, "코인"));
+        //points.Add(Point.PointType.Comeback, new Point(comeback, comebackColor, "컴백"));
         points.Add(Point.PointType.First, new Point(first, firstColor, "첫 도착자"));
     }
 
@@ -214,13 +214,6 @@ public class ScoreManager : MonoBehaviourPun
                 }
 
                 SoundManager.Instance.PlaySFX("PaperWrite");
-                //for (int j = 0; j < playerScoreDic[typeTemp].Count; j++)
-                //{
-                //    //점수 계산
-                //    PointArea area = Instantiate(pointAreaFactory, playerInfos[0].pointParent).GetComponent<PointArea>();
-                //    area.Set(playerScore[playerScoreDic[typeTemp][j]], typeTemp, points[typeTemp]);
-                //    playerScore[playerScoreDic[typeTemp][j]] += points[typeTemp].point;
-                //}
                 yield return new WaitForSeconds(0.5f);
             }
             else
@@ -235,15 +228,6 @@ public class ScoreManager : MonoBehaviourPun
                     SoundManager.Instance.PlaySFX("PaperWrite");
                     yield return new WaitForSeconds(0.5f);
                 }
-
-                //for (int j = 0; j < playerScoreDic[typeTemp].Count; j++)
-                //{
-                //    //점수 계산
-                //    PointArea area = Instantiate(pointAreaFactory, playerInfos[0].pointParent).GetComponent<PointArea>();
-                //    area.Set(playerScore[playerScoreDic[typeTemp][j]], typeTemp, points[typeTemp]);
-                //    playerScore[playerScoreDic[typeTemp][j]] += points[typeTemp].point;
-                //    yield return new WaitForSeconds(0.5f);
-                //}
             }
         }
 

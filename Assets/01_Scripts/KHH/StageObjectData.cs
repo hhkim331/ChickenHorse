@@ -1,21 +1,21 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
 public class StageObjectData
 {
-    //Å¸ÀÔ
+    //íƒ€ì…
     public enum ObjectType
     {
-        Fixed,  //°íÁ¤¿ÀºêÁ§Æ®
-        Normal, //¹èÄ¡°¡´É ¿ÀºêÁ§Æ®
-        Cover,  //±âº» ¿ÀºêÁ§Æ®¿¡ µ¤¾î¾º¿ì´Â ¿ÀºêÁ§Æ®
-        Top,    //±âº» ¿ÀºêÁ§Æ® À§¿¡ ¹èÄ¡µÇ´Â ¿ÀºêÁ§Æ®
+        Fixed,  //ê³ ì •ì˜¤ë¸Œì íŠ¸
+        Normal, //ë°°ì¹˜ê°€ëŠ¥ ì˜¤ë¸Œì íŠ¸
+        //Cover,  //ê¸°ë³¸ ì˜¤ë¸Œì íŠ¸ì— ë®ì–´ì”Œìš°ëŠ” ì˜¤ë¸Œì íŠ¸
+        //Top,    //ê¸°ë³¸ ì˜¤ë¸Œì íŠ¸ ìœ„ì— ë°°ì¹˜ë˜ëŠ” ì˜¤ë¸Œì íŠ¸
     }
     public ObjectType objectType = ObjectType.Fixed;
 
-    //È¸Àü
+    //íšŒì „
     public enum ObjectRotType
     {
         None,
@@ -26,8 +26,8 @@ public class StageObjectData
 
     public Vector2 objectSize;
 
-    public List<Vector2> objectTileList = new List<Vector2>(); //Å¸ÀÏ À§Ä¡
-    public Vector2 objectLeftBottomPos; //¿ÀºêÁ§Æ®ÀÇ ÁÂÃø ÇÏ´Ü
-    public Vector2 objectPickUpPos; //Å¸ÀÏÀ» Àâ´Â Àå¼Ò À§Ä¡
-    public Vector2 objectRotAxis; //Å¸ÀÏÀÇ È¸Àü Áß½ÉÃà
+    public List<Vector2> objectTileList = new List<Vector2>(); //íƒ€ì¼ ìœ„ì¹˜
+    public Vector2 objectLeftBottomPos; //ì˜¤ë¸Œì íŠ¸ì˜ ì¢Œì¸¡ í•˜ë‹¨
+    public Vector2 objectPickUpPos; //íƒ€ì¼ì„ ì¡ëŠ” ì¥ì†Œ ìœ„ì¹˜
+    public Vector2 objectRotAxis; //íƒ€ì¼ì˜ íšŒì „ ì¤‘ì‹¬ì¶•
 }
