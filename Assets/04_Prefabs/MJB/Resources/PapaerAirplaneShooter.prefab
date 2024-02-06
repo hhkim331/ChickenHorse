@@ -435,6 +435,7 @@ GameObject:
   - component: {fileID: 2168896796528607113}
   - component: {fileID: -2728441168664271930}
   - component: {fileID: 8935489265557510803}
+  - component: {fileID: 5725678644647278232}
   m_Layer: 0
   m_Name: PapaerAirplaneShooter
   m_TagString: Untagged
@@ -538,3 +539,16 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 1
   m_UseLocal: 1
+--- !u!114 &5725678644647278232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7220232275143496741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 399b15d40662e6643bd1cff824108a34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poolingAirPlane: {fileID: 269817499510675641, guid: ded383285d2b62e408f77d4f133f5596, type: 3}

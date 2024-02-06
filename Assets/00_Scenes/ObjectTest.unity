@@ -1290,6 +1290,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: PaperAirplane
       objectReference: {fileID: 0}
+    - target: {fileID: 269817499510675641, guid: ded383285d2b62e408f77d4f133f5596, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 269817499875954578, guid: ded383285d2b62e408f77d4f133f5596, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5109469085244455202, guid: ded383285d2b62e408f77d4f133f5596, type: 3}
       propertyPath: sceneViewId
       value: 12
@@ -1656,7 +1664,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7220232273238543602}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.94, y: 10.28, z: 0}
+  m_LocalPosition: {x: -5.94, y: -3.35, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
