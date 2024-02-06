@@ -29,7 +29,8 @@ public class AirplaneReceiver : MonoBehaviour
         else if (player.transform.parent == null)
         {
             //부모의 부모까지 다 삭제시킨다.
-            Destroy(transform.parent.parent.gameObject);
+            ObjectPool.DisabledAirplane(transform.parent.parent.gameObject);
         }
     }
+
 }
